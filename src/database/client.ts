@@ -1,5 +1,10 @@
 import { PrismaClient } from '@prisma/client';
 
+// Ensure DATABASE_URL is never empty in serverless environments
+if (!process.env.DATABASE_URL) {
+  process.env.DATABASE_URL = 'file:./dev.db';
+}
+
 let client: PrismaClient;
 
 try {
