@@ -24,8 +24,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(loggerMiddleware);
 
+const publicDir = path.join(process.cwd(), 'public');
+
 // Serve Static Frontend UI (Stitch Integrated Portal)
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(publicDir));
 
 /**
  * @openapi
@@ -59,7 +61,7 @@ app.use('/api/v1/metrics', metricsRouter);
 
 // Fallback to index.html for SPA routing
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
+  res.sendFile(path.join(publicDir, 'index.html'));
 });
 
 // Global Error Handler
