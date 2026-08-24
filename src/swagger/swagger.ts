@@ -12,7 +12,7 @@ const options: swaggerJsdoc.Options = {
       contact: {
         name: 'Aneevarp Solutions Tech Office',
         url: 'https://aneevarp.com',
-        email: 'tech@aneevarp.com',
+        email: 'support@zenresume.com',
       },
     },
     servers: [
@@ -21,7 +21,7 @@ const options: swaggerJsdoc.Options = {
         description: 'Local Development Server',
       },
       {
-        url: 'https://api.aneevarp.com',
+        url: 'https://aneevarpsolutions.vercel.app',
         description: 'Production Global API Gateway',
       },
     ],
@@ -34,7 +34,14 @@ const options: swaggerJsdoc.Options = {
       { name: 'Ecosystem Telemetry & Live Stats', description: 'Real-time aggregated portfolio statistics' },
     ],
   },
-  apis: ['./src/modules/**/*.router.ts', './src/app.ts'],
+  apis: [],
 };
 
-export const swaggerSpec = swaggerJsdoc(options);
+let spec: any;
+try {
+  spec = swaggerJsdoc(options);
+} catch (err) {
+  spec = options.definition;
+}
+
+export const swaggerSpec = spec;

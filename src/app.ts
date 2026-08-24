@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import path from 'path';
+import fs from 'fs';
 import swaggerUi from 'swagger-ui-express';
 import { env } from './config/env';
 import { loggerMiddleware } from './middleware/logger';
@@ -27,7 +28,9 @@ app.use(loggerMiddleware);
 const publicDir = path.join(process.cwd(), 'public');
 
 // Serve Static Frontend UI (Stitch Integrated Portal)
-app.use(express.static(publicDir));
+if (fs.existsSync(publicDir)) {
+  app.use(express.static(publicDir));
+}
 
 /**
  * @openapi
@@ -61,7 +64,12 @@ app.use('/api/v1/metrics', metricsRouter);
 
 // Fallback to index.html for SPA routing
 app.get('*', (req, res) => {
-  res.sendFile(path.join(publicDir, 'index.html'));
+  const indexPath = path.join(publicDir, 'index.html');
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    res.sendFile(path.join(__dirname, '../public/index.html'));
+  }
 });
 
 // Global Error Handler
