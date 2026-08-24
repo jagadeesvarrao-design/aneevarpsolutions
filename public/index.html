@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html class="light scroll-smooth" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Aneevarp Solutions — Global Technology Parent Holding Company</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "outline-variant": "#c2c8c1",
+                      "slate-deep": "#1A1F1F",
+                      "secondary-fixed-dim": "#c1c8c7",
+                      "primary": "#476550",
+                      "on-background": "#1a1c1a",
+                      "on-tertiary-container": "#2d2f2b",
+                      "on-secondary-fixed": "#161d1d",
+                      "surface-bright": "#faf9f6",
+                      "tertiary": "#5e5f5b",
+                      "surface-variant": "#e3e3df",
+                      "ivory-base": "#FCFAF5",
+                      "on-secondary-fixed-variant": "#414848",
+                      "primary-fixed-dim": "#adcfb5",
+                      "tertiary-fixed-dim": "#c7c7c2",
+                      "on-tertiary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "surface-dim": "#dadad7",
+                      "glass-border": "rgba(44, 51, 51, 0.08)",
+                      "on-primary-fixed": "#032110",
+                      "error-container": "#ffdad6",
+                      "secondary-container": "#dae1e1",
+                      "surface-container-lowest": "#ffffff",
+                      "on-tertiary-fixed-variant": "#464744",
+                      "on-primary": "#ffffff",
+                      "outline": "#727972",
+                      "tertiary-container": "#969692",
+                      "error": "#ba1a1a",
+                      "on-tertiary-fixed": "#1b1c19",
+                      "secondary": "#596060",
+                      "surface-container": "#eeeeea",
+                      "secondary-fixed": "#dde4e3",
+                      "tertiary-fixed": "#e3e3de",
+                      "on-primary-fixed-variant": "#304d39",
+                      "sage-muted": "#A2BCA8",
+                      "on-secondary-container": "#5d6464",
+                      "surface": "#faf9f6",
+                      "surface-container-low": "#f4f4f0",
+                      "primary-fixed": "#c9ebd0",
+                      "on-surface": "#1a1c1a",
+                      "on-primary-container": "#173422",
+                      "surface-container-high": "#e9e8e5",
+                      "on-secondary": "#ffffff",
+                      "inverse-on-surface": "#f1f1ed",
+                      "inverse-primary": "#adcfb5",
+                      "surface-container-highest": "#e3e3df",
+                      "primary-container": "#7d9d85",
+                      "surface-tint": "#476550",
+                      "inverse-surface": "#2f312f",
+                      "background": "#faf9f6",
+                      "on-error": "#ffffff",
+                      "on-surface-variant": "#424843"
+              },
+              "fontFamily": {
+                      "headline-lg": ["Manrope"],
+                      "body-lg": ["Hanken Grotesk"],
+                      "display-lg": ["Manrope"],
+                      "label-caps": ["IBM Plex Sans"]
+              }
+            }
+          }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: theme('colors.ivory-base');
+            color: theme('colors.on-surface');
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, theme('colors.ivory-base') 0%, theme('colors.surface-container-low') 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(20px);
+            border: 1px solid theme('colors.sage-muted');
+            box-shadow: 0 8px 32px rgba(44, 51, 51, 0.04);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-card:hover {
+            box-shadow: 0 20px 40px rgba(44, 51, 51, 0.08);
+            transform: translateY(-4px);
+        }
+        .badge-tag {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* Button Animations & Micro-Interactions */
+        .btn-animate {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, box-shadow;
+            cursor: pointer;
+            user-select: none;
+        }
+        .btn-animate:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 25px -5px rgba(71, 101, 80, 0.3);
+        }
+        .btn-animate:active {
+            transform: translateY(0px) scale(0.96);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Glossy Shimmer Effect on Hover */
+        .btn-shimmer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transition: left 0.6s ease;
+            pointer-events: none;
+        }
+        .btn-shimmer:hover::before {
+            left: 140%;
+        }
+
+        /* Ripple Wave Effect on Click */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: rippleWave 0.6s linear;
+            background-color: rgba(255, 255, 255, 0.45);
+            pointer-events: none;
+        }
+        @keyframes rippleWave {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Keyframe Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(28px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-14px) rotate(2deg); }
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.15; transform: scale(1); }
+            50% { opacity: 0.35; transform: scale(1.1); }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .floating-orb-1 {
+            animation: float 9s ease-in-out infinite;
+        }
+        .floating-orb-2 {
+            animation: float 11s ease-in-out infinite reverse;
+        }
+        .glow-orb {
+            animation: pulseGlow 7s ease-in-out infinite;
+        }
+
+        /* Scroll Reveal Utility Classes */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Nav Link Hover Underline */
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: theme('colors.primary');
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md antialiased overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <div id="toast-content" class="bg-slate-deep text-ivory-base px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 border border-sage-muted/30">
+            <span class="material-symbols-outlined text-primary-fixed-dim" id="toast-icon">check_circle</span>
+            <span id="toast-message" class="font-body-md text-sm">Action completed</span>
+        </div>
+    </div>
+
+    <!-- Top Navigation (Fixed Spacing & Responsive Buttons) -->
+    <nav class="fixed top-0 w-full z-50 bg-ivory-base/95 backdrop-blur-xl border-b border-sage-muted/20">
+        <div class="flex justify-between items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20">
+            <!-- Brand Logo & Clean Title -->
+            <a href="#" class="flex items-center gap-3 text-slate-deep hover:opacity-85 transition-opacity shrink-0">
+                <div class="w-10 h-10 bg-primary text-on-primary rounded-xl flex items-center justify-center font-headline-md font-extrabold text-xl shadow-sm shrink-0">
+                    A
+                </div>
+                <div class="flex flex-col justify-center leading-none">
+                    <span class="font-headline-md text-base font-extrabold text-slate-deep tracking-tight">Aneevarp Solutions</span>
+                    <span class="text-[10px] text-primary font-label-caps uppercase tracking-widest mt-0.5">Parent Holding Company</span>
+                </div>
+            </a>
+
+            <!-- Clean Desktop Navigation Links -->
+            <div class="hidden xl:flex items-center gap-6 font-label-caps text-xs tracking-wider uppercase text-secondary">
+                <a class="nav-link hover:text-primary transition-colors py-1" href="#portfolio">Ventures</a>
+                <a class="nav-link hover:text-primary transition-colors py-1" href="#identity">SSO Identity</a>
+                <a class="nav-link hover:text-primary transition-colors py-1" href="#studio">Venture Studio</a>
+                <a class="nav-link hover:text-primary transition-colors py-1" href="#timeline">Milestones</a>
+                <a class="nav-link hover:text-primary transition-colors py-1" href="#press">Newsroom</a>
+                <a class="nav-link hover:text-primary transition-colors py-1" href="#governance">Governance</a>
+                <a class="nav-link hover:text-primary transition-colors py-1" href="/docs" target="_blank">APIs (/docs)</a>
+            </div>
+
+            <!-- Action Buttons with Animations -->
+            <div class="hidden sm:flex items-center gap-3 shrink-0">
+                <button onclick="openMediaKitModal()" class="btn-animate border border-sage-muted text-primary font-label-caps text-xs tracking-wider uppercase px-4 py-2.5 rounded-xl hover:bg-sage-muted/15 transition-all font-semibold">
+                    Media Kit
+                </button>
+                <button onclick="openContactModal()" class="btn-animate btn-shimmer bg-primary text-on-primary font-label-caps text-xs tracking-wider uppercase px-5 py-2.5 rounded-xl hover:bg-primary/90 transition-all shadow-sm font-bold">
+                    Contact Us
+                </button>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button onclick="toggleMobileMenu()" class="btn-animate xl:hidden text-secondary hover:text-primary transition-colors p-2 rounded-xl border border-sage-muted/20">
+                <span class="material-symbols-outlined text-2xl">menu</span>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden xl:hidden bg-ivory-base border-b border-sage-muted/20 px-6 py-4 flex-col gap-3 font-label-caps text-xs uppercase text-secondary shadow-xl">
+            <a class="hover:text-primary py-2 border-b border-sage-muted/10" href="#portfolio" onclick="toggleMobileMenu()">Ventures</a>
+            <a class="hover:text-primary py-2 border-b border-sage-muted/10" href="#identity" onclick="toggleMobileMenu()">SSO Identity</a>
+            <a class="hover:text-primary py-2 border-b border-sage-muted/10" href="#studio" onclick="toggleMobileMenu()">Venture Studio</a>
+            <a class="hover:text-primary py-2 border-b border-sage-muted/10" href="#timeline" onclick="toggleMobileMenu()">Milestones</a>
+            <a class="hover:text-primary py-2 border-b border-sage-muted/10" href="#press" onclick="toggleMobileMenu()">Newsroom</a>
+            <a class="hover:text-primary py-2 border-b border-sage-muted/10" href="#governance" onclick="toggleMobileMenu()">Governance & IR</a>
+            <a class="hover:text-primary py-2 border-b border-sage-muted/10" href="/docs" target="_blank">Swagger API Docs</a>
+            <div class="flex gap-2 pt-2">
+                <button onclick="openMediaKitModal(); toggleMobileMenu();" class="btn-animate w-1/2 border border-sage-muted text-primary py-3 rounded-xl text-center font-bold">Media Kit</button>
+                <button onclick="openContactModal(); toggleMobileMenu();" class="btn-animate btn-shimmer w-1/2 bg-primary text-on-primary py-3 rounded-xl text-center font-bold">Contact Us</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-20">
+        <!-- Hero Section with Animated Responsive Buttons -->
+        <section class="relative min-h-[740px] flex items-center justify-center hero-gradient px-4 sm:px-6 lg:px-12 py-20 overflow-hidden">
+            <!-- Animated Background Glow Orbs -->
+            <div class="absolute inset-0 pointer-events-none opacity-30">
+                <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-container rounded-full blur-[100px] floating-orb-1 glow-orb"></div>
+                <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-sage-muted rounded-full blur-[120px] floating-orb-2 glow-orb"></div>
+            </div>
+            
+            <div class="relative z-10 max-w-4xl mx-auto text-center space-y-6 animate-fade-in-up">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sage-muted/15 text-primary border border-sage-muted/30 font-label-caps text-xs uppercase shadow-sm">
+                    <span class="w-2.5 h-2.5 rounded-full bg-primary animate-ping"></span>
+                    Aneevarp Parent Holding Entity & Software Ecosystem
+                </div>
+
+                <h1 class="font-display-lg text-4xl sm:text-5xl lg:text-6xl text-slate-deep font-extrabold leading-tight tracking-tight">
+                    Architecting the <br/><span class="text-primary italic">Future of Work & Autonomous AI</span>.
+                </h1>
+
+                <p class="font-body-lg text-base sm:text-lg text-secondary max-w-2xl mx-auto leading-relaxed">
+                    Aneevarp Solutions builds and governs high-impact software products powering modern career advancement. Governing flagship ventures including <strong class="text-slate-deep">ZenResume</strong> and the <strong class="text-slate-deep">Autonomous AI Job Search Agent</strong>.
+                </p>
+
+                <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
+                    <a href="#portfolio" class="btn-animate btn-shimmer group w-full sm:w-auto bg-primary text-on-primary font-label-caps text-xs uppercase px-8 py-4 rounded-xl hover:bg-primary/90 flex items-center justify-center gap-2 shadow-lg font-bold">
+                        Explore Portfolio Ventures
+                        <span class="material-symbols-outlined text-sm group-hover:translate-y-1 transition-transform">arrow_downward</span>
+                    </a>
+                    <button onclick="openPitchModal()" class="btn-animate btn-shimmer group w-full sm:w-auto bg-slate-deep text-ivory-base font-label-caps text-xs uppercase px-8 py-4 rounded-xl hover:bg-slate-deep/90 flex items-center justify-center gap-2 font-bold shadow-md">
+                        Pitch Your Product / Venture Studio
+                        <span class="material-symbols-outlined text-sm group-hover:rotate-12 transition-transform">rocket_launch</span>
+                    </button>
+                    <a href="/docs" target="_blank" class="btn-animate group w-full sm:w-auto border border-slate-deep/20 text-slate-deep hover:bg-slate-deep hover:text-on-primary font-label-caps text-xs uppercase px-6 py-4 rounded-xl flex items-center justify-center gap-2 font-semibold">
+                        Swagger APIs
+                        <span class="material-symbols-outlined text-sm group-hover:scale-110 transition-transform">api</span>
+                    </a>
+                </div>
+
+                <!-- Trust Badges Bar -->
+                <div class="flex flex-wrap items-center justify-center gap-6 pt-6 text-xs text-secondary font-label-caps">
+                    <span class="flex items-center gap-1.5 hover:text-primary transition-colors"><span class="material-symbols-outlined text-primary text-base">verified_user</span> End-to-End Privacy</span>
+                    <span class="flex items-center gap-1.5 hover:text-primary transition-colors"><span class="material-symbols-outlined text-primary text-base">lock</span> Zero Data Monetization</span>
+                    <span class="flex items-center gap-1.5 hover:text-primary transition-colors"><span class="material-symbols-outlined text-primary text-base">bolt</span> 99.9% Uptime Guarantee</span>
+                    <span class="flex items-center gap-1.5 hover:text-primary transition-colors"><span class="material-symbols-outlined text-primary text-base">gavel</span> Responsible AI Charter</span>
+                </div>
+
+                <!-- Live Ecosystem Stats Counter Bar -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12 pt-10 border-t border-sage-muted/20 text-left max-w-3xl mx-auto" id="metrics-counter-bar">
+                    <div class="p-5 bg-white/75 backdrop-blur-md rounded-2xl border border-sage-muted/30 shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
+                        <div class="text-xs text-secondary uppercase font-label-caps">Resumes Built</div>
+                        <div class="text-2xl lg:text-3xl font-extrabold text-slate-deep mt-1" id="stat-resumes">125,000+</div>
+                    </div>
+                    <div class="p-5 bg-white/75 backdrop-blur-md rounded-2xl border border-sage-muted/30 shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
+                        <div class="text-xs text-secondary uppercase font-label-caps">Jobs Indexed</div>
+                        <div class="text-2xl lg:text-3xl font-extrabold text-slate-deep mt-1" id="stat-jobs">850,000+</div>
+                    </div>
+                    <div class="p-5 bg-white/75 backdrop-blur-md rounded-2xl border border-sage-muted/30 shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
+                        <div class="text-xs text-secondary uppercase font-label-caps">AI Matches</div>
+                        <div class="text-2xl lg:text-3xl font-extrabold text-slate-deep mt-1" id="stat-matches">310,000+</div>
+                    </div>
+                    <div class="p-5 bg-white/75 backdrop-blur-md rounded-2xl border border-sage-muted/30 shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
+                        <div class="text-xs text-secondary uppercase font-label-caps">Active Ventures</div>
+                        <div class="text-2xl lg:text-3xl font-extrabold text-slate-deep mt-1" id="stat-ventures">3</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ecosystem & Portfolio Section -->
+        <section class="py-20 px-4 sm:px-6 lg:px-12 bg-surface-container-lowest relative z-20 scroll-reveal" id="portfolio">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
+                    <div>
+                        <div class="badge-tag text-primary mb-2">Our Operating Ventures</div>
+                        <h2 class="font-headline-lg text-3xl lg:text-4xl text-slate-deep font-bold">Portfolio Companies</h2>
+                    </div>
+                    <p class="font-body-md text-secondary max-w-md">
+                        Autonomous AI engines, document generation systems, and identity microservices.
+                    </p>
+                </div>
+
+                <!-- Category Filter Matrix Buttons -->
+                <div class="flex flex-wrap gap-2 mb-10 pb-4 border-b border-sage-muted/20 font-label-caps text-xs uppercase" id="category-filter-bar">
+                    <button onclick="filterVentures('ALL')" class="btn-animate category-btn active px-5 py-2.5 rounded-xl bg-primary text-on-primary font-bold shadow-sm">All Products</button>
+                    <button onclick="filterVentures('CONSUMER')" class="btn-animate category-btn px-5 py-2.5 rounded-xl bg-surface-container text-secondary hover:bg-sage-muted/20">Consumer AI</button>
+                    <button onclick="filterVentures('AUTONOMOUS')" class="btn-animate category-btn px-5 py-2.5 rounded-xl bg-surface-container text-secondary hover:bg-sage-muted/20">Autonomous Agents</button>
+                    <button onclick="filterVentures('INCUBATING')" class="btn-animate category-btn px-5 py-2.5 rounded-xl bg-surface-container text-secondary hover:bg-sage-muted/20">Cloud Labs</button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="ventures-container">
+                    <!-- Dynamic ventures loaded from API -->
+                    <div class="glass-card rounded-2xl p-8 animate-pulse min-h-[300px] flex items-center justify-center text-secondary">
+                        Loading Aneevarp ventures portfolio...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Single Sign-On & Unified Identity Section -->
+        <section class="py-20 px-4 sm:px-6 lg:px-12 bg-ivory-base border-t border-sage-muted/20 scroll-reveal" id="identity">
+            <div class="max-w-7xl mx-auto">
+                <div class="glass-card rounded-3xl p-8 sm:p-12 lg:p-14 border border-sage-muted/40 relative overflow-hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <div class="space-y-6">
+                            <div class="badge-tag text-primary">Cross-Product Architecture</div>
+                            <h2 class="font-headline-lg text-3xl lg:text-4xl text-slate-deep font-extrabold leading-tight">
+                                One Aneevarp Account.<br/><span class="text-primary italic">Universal Career Identity.</span>
+                            </h2>
+                            <p class="font-body-md text-secondary leading-relaxed">
+                                Aneevarp Solutions is building a unified single sign-on (SSO) identity layer. Your career profiles, ATS resumes built on <strong class="text-slate-deep">ZenResume</strong>, and job application preferences sync automatically with the <strong class="text-slate-deep">AI Job Search Agent</strong> in complete privacy.
+                            </p>
+                            
+                            <div class="space-y-3 pt-2">
+                                <div class="flex items-center gap-3 text-sm text-slate-deep font-medium">
+                                    <span class="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs">✓</span>
+                                    Instant synchronization between ZenResume & AI Job Hunter
+                                </div>
+                                <div class="flex items-center gap-3 text-sm text-slate-deep font-medium">
+                                    <span class="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs">✓</span>
+                                    Zero duplicate data entry across new Aneevarp products
+                                </div>
+                                <div class="flex items-center gap-3 text-sm text-slate-deep font-medium">
+                                    <span class="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs">✓</span>
+                                    Encrypted candidate data vault with strict access permissions
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Visual SSO Flow Graphic -->
+                        <div class="bg-surface-container-low p-8 rounded-2xl border border-sage-muted/30 space-y-4 shadow-inner">
+                            <div class="text-xs font-label-caps uppercase text-secondary mb-2 text-center">Unified Identity Token Flow</div>
+                            <div class="p-4 bg-white rounded-xl border border-sage-muted/30 flex items-center justify-between shadow-sm hover:border-primary transition-all">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-primary text-on-primary rounded-lg flex items-center justify-center font-bold">A</div>
+                                    <div>
+                                        <div class="font-bold text-slate-deep text-sm">Aneevarp Identity Vault</div>
+                                        <div class="text-xs text-primary font-label-caps">sso.aneevarp.com</div>
+                                    </div>
+                                </div>
+                                <span class="px-2.5 py-1 bg-primary/10 text-primary rounded-full text-xs font-label-caps font-bold">JWT SSO</span>
+                            </div>
+
+                            <div class="flex justify-center text-secondary">
+                                <span class="material-symbols-outlined text-2xl animate-bounce">arrow_downward</span>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="p-4 bg-white rounded-xl border border-sage-muted/30 text-center hover:border-primary transition-all">
+                                    <span class="material-symbols-outlined text-primary text-2xl mb-1">description</span>
+                                    <div class="font-bold text-xs text-slate-deep">ZenResume</div>
+                                    <div class="text-[10px] text-secondary">zenresume.online</div>
+                                </div>
+                                <div class="p-4 bg-white rounded-xl border border-sage-muted/30 text-center hover:border-primary transition-all">
+                                    <span class="material-symbols-outlined text-slate-deep text-2xl mb-1">radar</span>
+                                    <div class="font-bold text-xs text-slate-deep">AI Job Agent</div>
+                                    <div class="text-[10px] text-secondary">vercel.app</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Venture Studio & Pitch Partner Hub -->
+        <section class="py-20 px-4 sm:px-6 lg:px-12 bg-surface-container-lowest scroll-reveal" id="studio">
+            <div class="max-w-7xl mx-auto">
+                <div class="bg-slate-deep text-ivory-base rounded-3xl p-8 sm:p-12 lg:p-14 relative overflow-hidden shadow-2xl">
+                    <div class="max-w-3xl space-y-6 relative z-10">
+                        <div class="badge-tag text-primary-fixed-dim">Aneevarp Venture Studio</div>
+                        <h2 class="font-headline-lg text-3xl lg:text-4xl font-extrabold leading-tight">
+                            Build, Incubate, or Partner with Aneevarp.
+                        </h2>
+                        <p class="font-body-md text-secondary-fixed-dim leading-relaxed">
+                            Are you an independent developer, AI researcher, or product founder building tools in career automation, document synthesis, or productivity? We invite exceptional builders to incubate or integrate their applications into the Aneevarp Solutions holding suite.
+                        </p>
+                        
+                        <div class="flex flex-wrap items-center gap-4 pt-2">
+                            <button onclick="openPitchModal()" class="btn-animate btn-shimmer group w-full sm:w-auto bg-primary text-on-primary font-label-caps text-xs uppercase px-8 py-4 rounded-xl hover:bg-primary/90 font-bold flex items-center justify-center gap-2 shadow-lg">
+                                Submit Venture Proposal
+                                <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">send</span>
+                            </button>
+                            <button onclick="openContactModal()" class="btn-animate w-full sm:w-auto border border-secondary-fixed-dim/40 text-ivory-base font-label-caps text-xs uppercase px-6 py-4 rounded-xl hover:bg-white/10 font-semibold text-center">
+                                Partnership Inquiry
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Corporate Milestones Timeline Section -->
+        <section class="py-20 px-4 sm:px-6 lg:px-12 bg-ivory-base border-t border-sage-muted/20 scroll-reveal" id="timeline">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-12 text-center max-w-2xl mx-auto">
+                    <div class="badge-tag text-primary mb-2">Company Growth</div>
+                    <h2 class="font-headline-lg text-3xl lg:text-4xl text-slate-deep font-bold">Aneevarp Corporate Roadmap</h2>
+                    <p class="font-body-md text-secondary mt-2">Chronological journey from parent entity registration to flagship product launches.</p>
+                </div>
+
+                <div class="relative border-l-2 border-primary/30 max-w-3xl mx-auto space-y-10 pl-8">
+                    <!-- Milestone 1 -->
+                    <div class="relative">
+                        <span class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-primary border-4 border-ivory-base shadow-sm"></span>
+                        <div class="badge-tag text-primary text-xs mb-1">May 2026</div>
+                        <h3 class="font-headline-md text-xl font-bold text-slate-deep">Registration & ZenResume Launch</h3>
+                        <p class="text-sm text-secondary mt-2 leading-relaxed">
+                            Official company registration of <strong>Aneevarp Solutions</strong> and worldwide rollout of <strong>ZenResume</strong> (`zenresume.online`), bringing ATS resume generation to thousands of job seekers.
+                        </p>
+                    </div>
+
+                    <!-- Milestone 2 -->
+                    <div class="relative">
+                        <span class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-primary border-4 border-ivory-base shadow-sm"></span>
+                        <div class="badge-tag text-primary text-xs mb-1">August 2026</div>
+                        <h3 class="font-headline-md text-xl font-bold text-slate-deep">Autonomous AI Job Search Agent Unveiled</h3>
+                        <p class="text-sm text-secondary mt-2 leading-relaxed">
+                            Launch of second flagship platform, the <strong>Autonomous AI Job Search Agent</strong> (`ai-job-search-agent-chi.vercel.app`), orchestrating multi-agent real-time job indexing and candidate profile matching.
+                        </p>
+                    </div>
+
+                    <!-- Milestone 3 -->
+                    <div class="relative">
+                        <span class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-sage-muted border-4 border-ivory-base shadow-sm"></span>
+                        <div class="badge-tag text-secondary text-xs mb-1">Q4 2026 — Upcoming</div>
+                        <h3 class="font-headline-md text-xl font-bold text-slate-deep">Aneevarp Unified Identity & Cloud Labs</h3>
+                        <p class="text-sm text-secondary mt-2 leading-relaxed">
+                            Deployment of single sign-on (SSO) identity vault and high-throughput microservice infrastructure powering seamless cross-product synchronization.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Press & Newsroom Section -->
+        <section class="py-20 px-4 sm:px-6 lg:px-12 bg-surface-container-lowest scroll-reveal" id="press">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
+                    <div>
+                        <div class="badge-tag text-primary mb-2">Corporate Newsroom</div>
+                        <h2 class="font-headline-lg text-3xl lg:text-4xl text-slate-deep font-bold">Press & Announcements</h2>
+                    </div>
+                    <button onclick="openMediaKitModal()" class="btn-animate border border-sage-muted text-primary font-label-caps text-xs uppercase px-5 py-3 rounded-xl hover:bg-sage-muted/15 font-bold shadow-sm inline-flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm">download</span> Open Press & Brand Kit
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="press-container">
+                    <!-- Dynamic press releases loaded from API -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Careers & Talent Notice Section -->
+        <section class="py-20 px-4 sm:px-6 lg:px-12 bg-ivory-base border-t border-sage-muted/20 scroll-reveal" id="careers">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
+                    <div>
+                        <div class="badge-tag text-primary mb-2">Talent & Hiring Status</div>
+                        <h2 class="font-headline-lg text-3xl lg:text-4xl text-slate-deep font-bold">Careers & Opportunities</h2>
+                    </div>
+                </div>
+
+                <!-- Non-Hiring Corporate Talent Notice Card -->
+                <div class="glass-card rounded-3xl p-8 sm:p-10 border border-sage-muted/40 shadow-sm relative overflow-hidden">
+                    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+                        <div class="space-y-4 max-w-2xl">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 bg-surface-container rounded-full text-secondary font-label-caps text-xs">
+                                <span class="w-2 h-2 rounded-full bg-secondary"></span>
+                                Currently Not Hiring
+                            </div>
+                            <h3 class="font-headline-md text-2xl font-bold text-slate-deep">No Active Openings at Present</h3>
+                            <p class="font-body-md text-secondary leading-relaxed">
+                                Aneevarp Solutions and our portfolio ventures (<strong class="text-slate-deep">ZenResume</strong> and <strong class="text-slate-deep">AI Job Search Agent</strong>) are not actively recruiting for open roles at this time. We are focused on consolidating platform architecture and AI performance.
+                            </p>
+                            <p class="font-body-md text-secondary leading-relaxed">
+                                Exceptional talent may send speculative inquiries to <a href="mailto:support@zenresume.com" class="text-primary font-bold underline">support@zenresume.com</a> or connect via our talent desk.
+                            </p>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                            <button onclick="openContactModal()" class="btn-animate btn-shimmer w-full sm:w-auto bg-primary text-on-primary font-label-caps text-xs uppercase px-6 py-4 rounded-xl hover:bg-primary/90 font-bold text-center shadow-md">
+                                Submit Talent Inquiry
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Governance, Leadership & Capital Allocation Section -->
+        <section class="py-20 px-4 sm:px-6 lg:px-12 bg-surface-container-lowest border-t border-sage-muted/20 scroll-reveal" id="governance">
+            <div class="max-w-7xl mx-auto space-y-16">
+                <div class="max-w-3xl">
+                    <div class="badge-tag text-primary mb-2">Corporate Stewardship</div>
+                    <h2 class="font-headline-lg text-3xl lg:text-4xl text-slate-deep font-bold mb-6">Vision, Governance & Ethics</h2>
+                    <p class="font-body-lg text-lg text-secondary leading-relaxed" id="governance-mission">
+                        Loading corporate mission statement...
+                    </p>
+                </div>
+
+                <!-- Founder & Executive Leadership Showcase -->
+                <div>
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="font-headline-md text-2xl font-bold text-slate-deep">Executive Leadership & Advisory Board</h3>
+                        <span class="text-xs text-primary font-label-caps font-semibold">Governance Council</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="team-container">
+                        <!-- Dynamic team loaded from API -->
+                    </div>
+                </div>
+
+                <!-- Capital Allocation & Investor Overview -->
+                <div class="bg-white p-8 sm:p-10 rounded-3xl border border-sage-muted/30 shadow-sm">
+                    <div class="badge-tag text-primary mb-2">Capital & Investment Strategy</div>
+                    <h3 class="font-headline-md text-2xl font-bold text-slate-deep mb-4">Privately Held Parent Enterprise</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-secondary">
+                        <div>
+                            <strong class="text-slate-deep block mb-1">Ownership Structure</strong>
+                            Privately held technology holding entity operating with zero debt and sustainable organic revenue models.
+                        </div>
+                        <div>
+                            <strong class="text-slate-deep block mb-1">Incubation Model</strong>
+                            Focusing on internal micro-venture creation and strategic software acquisition in AI productivity & career tech.
+                        </div>
+                        <div>
+                            <strong class="text-slate-deep block mb-1">Strategic Allocation</strong>
+                            Long-term reinvestment into proprietary multi-agent AI frameworks, cloud scalability, and candidate privacy.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Policies & AI Ethics Charter -->
+                <div>
+                    <h3 class="font-headline-md text-xl font-bold text-slate-deep mb-6">Corporate Standards & Compliance</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="policies-container">
+                        <!-- Dynamic policies loaded from API -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full py-16 bg-slate-deep text-ivory-base border-t border-sage-muted/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="font-headline-md text-xl font-bold text-ivory-base mb-4 flex items-center gap-2">
+                        <div class="w-8 h-8 bg-primary text-on-primary rounded-lg flex items-center justify-center font-bold">A</div>
+                        Aneevarp Solutions
+                    </div>
+                    <p class="font-body-md text-sm text-secondary-fixed-dim leading-relaxed">
+                        Architecting the future of software, career acceleration, and autonomous intelligence.
+                    </p>
+                </div>
+
+                <div>
+                    <div class="badge-tag text-primary-fixed-dim mb-4">Portfolio Ventures</div>
+                    <ul class="space-y-2.5 text-sm text-secondary-fixed-dim">
+                        <li><a href="https://zenresume.online" target="_blank" class="hover:text-ivory-base transition-colors">ZenResume.online</a></li>
+                        <li><a href="https://ai-job-search-agent-chi.vercel.app/" target="_blank" class="hover:text-ivory-base transition-colors">AI Job Search Agent</a></li>
+                        <li><a href="#portfolio" class="hover:text-ivory-base transition-colors">Aneevarp Cloud Labs</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <div class="badge-tag text-primary-fixed-dim mb-4">Corporate APIs</div>
+                    <ul class="space-y-2.5 text-sm text-secondary-fixed-dim">
+                        <li><a href="/docs" target="_blank" class="hover:text-ivory-base transition-colors">OpenAPI Specification (/docs)</a></li>
+                        <li><a href="/health" target="_blank" class="hover:text-ivory-base transition-colors">System Health Status</a></li>
+                        <li><a href="/api/v1/metrics/live" target="_blank" class="hover:text-ivory-base transition-colors">Live Telemetry API</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <div class="badge-tag text-primary-fixed-dim mb-4">Corporate & Support</div>
+                    <p class="text-sm text-secondary-fixed-dim mb-1 font-bold">Aneevarp Solutions Private Ltd.</p>
+                    <p class="text-xs text-outline-variant mb-2">Hyderabad, TS, India & Global Remote Ops</p>
+                    <p class="text-xs text-secondary-fixed-dim">Direct Support Email:<br/>
+                        <a href="mailto:support@zenresume.com" class="text-primary-fixed-dim font-bold hover:underline">support@zenresume.com</a>
+                    </p>
+                    <p class="text-xs text-outline-variant mt-4">© 2026 Aneevarp Solutions. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Contact Modal -->
+    <div id="contact-modal" class="fixed inset-0 z-50 hidden bg-slate-deep/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-ivory-base rounded-3xl max-w-lg w-full p-8 shadow-2xl border border-sage-muted/30 relative animate-fade-in-up">
+            <button onclick="closeContactModal()" class="absolute top-6 right-6 text-secondary hover:text-slate-deep">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <h3 class="font-headline-md text-2xl font-bold text-slate-deep mb-1">Contact Aneevarp Solutions</h3>
+            <p class="text-xs text-secondary mb-4">
+                Direct Support Email: <a href="mailto:support@zenresume.com" class="text-primary font-bold underline">support@zenresume.com</a>
+            </p>
+
+            <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-label-caps uppercase text-secondary mb-1">Full Name</label>
+                    <input type="text" id="contact-name" required class="w-full px-4 py-3 rounded-xl border border-sage-muted/40 bg-white text-slate-deep focus:outline-none focus:border-primary text-sm"/>
+                </div>
+                <div>
+                    <label class="block text-xs font-label-caps uppercase text-secondary mb-1">Work Email</label>
+                    <input type="email" id="contact-email" required class="w-full px-4 py-3 rounded-xl border border-sage-muted/40 bg-white text-slate-deep focus:outline-none focus:border-primary text-sm"/>
+                </div>
+                <div>
+                    <label class="block text-xs font-label-caps uppercase text-secondary mb-1">Inquiry Category</label>
+                    <select id="contact-category" class="w-full px-4 py-3 rounded-xl border border-sage-muted/40 bg-white text-slate-deep focus:outline-none focus:border-primary text-sm">
+                        <option value="GENERAL">General Support & Info</option>
+                        <option value="PARTNERSHIP">Strategic & Ecosystem Partnerships</option>
+                        <option value="ENTERPRISE_LICENSING">B2B Enterprise & Institutional Licensing</option>
+                        <option value="PRESS_MEDIA">Press & Public Relations</option>
+                        <option value="INVESTOR_RELATIONS">Investor Relations</option>
+                        <option value="CAREERS">Talent Inquiry</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-label-caps uppercase text-secondary mb-1">Message</label>
+                    <textarea id="contact-message" required rows="4" class="w-full px-4 py-3 rounded-xl border border-sage-muted/40 bg-white text-slate-deep focus:outline-none focus:border-primary text-sm"></textarea>
+                </div>
+                <button type="submit" class="btn-animate btn-shimmer w-full bg-primary text-on-primary py-3.5 rounded-xl font-label-caps text-xs uppercase hover:bg-primary/90 font-bold shadow-md">
+                    Send Inquiry
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Venture Studio Pitch Modal -->
+    <div id="pitch-modal" class="fixed inset-0 z-50 hidden bg-slate-deep/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-ivory-base rounded-3xl max-w-lg w-full p-8 shadow-2xl border border-sage-muted/30 relative animate-fade-in-up">
+            <button onclick="closePitchModal()" class="absolute top-6 right-6 text-secondary hover:text-slate-deep">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <div class="badge-tag text-primary mb-1">Aneevarp Venture Studio</div>
+            <h3 class="font-headline-md text-2xl font-bold text-slate-deep mb-1">Pitch Your Product</h3>
+            <p class="text-xs text-secondary mb-4">Submit software tools or products for incubation or strategic partnership.</p>
+
+            <form id="pitch-form" onsubmit="handlePitchSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-label-caps uppercase text-secondary mb-1">Founder / Creator Name</label>
+                    <input type="text" id="pitch-name" required class="w-full px-4 py-3 rounded-xl border border-sage-muted/40 bg-white text-slate-deep focus:outline-none focus:border-primary text-sm"/>
+                </div>
+                <div>
+                    <label class="block text-xs font-label-caps uppercase text-secondary mb-1">Contact Email</label>
+                    <input type="email" id="pitch-email" required class="w-full px-4 py-3 rounded-xl border border-sage-muted/40 bg-white text-slate-deep focus:outline-none focus:border-primary text-sm"/>
+                </div>
+                <div>
+                    <label class="block text-xs font-label-caps uppercase text-secondary mb-1">Product Name & Live URL</label>
+                    <input type="text" id="pitch-product" required placeholder="e.g. MyTool.com" class="w-full px-4 py-3 rounded-xl border border-sage-muted/40 bg-white text-slate-deep focus:outline-none focus:border-primary text-sm"/>
+                </div>
+                <div>
+                    <label class="block text-xs font-label-caps uppercase text-secondary mb-1">Executive Summary / Pitch</label>
+                    <textarea id="pitch-message" required rows="4" placeholder="Describe what your product does, tech stack, and why it fits Aneevarp..." class="w-full px-4 py-3 rounded-xl border border-sage-muted/40 bg-white text-slate-deep focus:outline-none focus:border-primary text-sm"></textarea>
+                </div>
+                <button type="submit" class="btn-animate btn-shimmer w-full bg-slate-deep text-ivory-base py-3.5 rounded-xl font-label-caps text-xs uppercase hover:bg-primary font-bold shadow-md">
+                    Submit Proposal to Studio Desk
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Media Kit & Brand Asset Modal -->
+    <div id="mediakit-modal" class="fixed inset-0 z-50 hidden bg-slate-deep/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-ivory-base rounded-3xl max-w-xl w-full p-8 shadow-2xl border border-sage-muted/30 relative animate-fade-in-up">
+            <button onclick="closeMediaKitModal()" class="absolute top-6 right-6 text-secondary hover:text-slate-deep">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <div class="badge-tag text-primary mb-1">Press & Media Desk</div>
+            <h3 class="font-headline-md text-2xl font-bold text-slate-deep mb-4">Aneevarp Solutions Brand Kit</h3>
+
+            <div class="space-y-6 text-sm text-secondary">
+                <!-- Color Palette -->
+                <div>
+                    <div class="font-bold text-slate-deep mb-2 text-xs uppercase font-label-caps">Official Brand Color Palette</div>
+                    <div class="grid grid-cols-4 gap-3 text-center text-xs">
+                        <div class="p-3 rounded-xl bg-[#476550] text-white font-bold shadow-sm">Sage<br/>#476550</div>
+                        <div class="p-3 rounded-xl bg-[#1A1F1F] text-white font-bold shadow-sm">Slate<br/>#1A1F1F</div>
+                        <div class="p-3 rounded-xl bg-[#FCFAF5] text-slate-deep border border-sage-muted font-bold shadow-sm">Ivory<br/>#FCFAF5</div>
+                        <div class="p-3 rounded-xl bg-[#A2BCA8] text-slate-deep font-bold shadow-sm">Muted<br/>#A2BCA8</div>
+                    </div>
+                </div>
+
+                <!-- Logos & Guidelines Downloads -->
+                <div>
+                    <div class="font-bold text-slate-deep mb-2 text-xs uppercase font-label-caps">Approved Media Assets</div>
+                    <div class="space-y-2">
+                        <a href="/api/v1/press/media-kit" target="_blank" class="btn-animate flex items-center justify-between p-3.5 bg-white rounded-xl border border-sage-muted/30 hover:border-primary">
+                            <span class="font-medium text-slate-deep">Aneevarp Vector Logo Package (.SVG & .PNG)</span>
+                            <span class="material-symbols-outlined text-primary">download</span>
+                        </a>
+                        <a href="/api/v1/press/media-kit" target="_blank" class="btn-animate flex items-center justify-between p-3.5 bg-white rounded-xl border border-sage-muted/30 hover:border-primary">
+                            <span class="font-medium text-slate-deep">Brand Guidelines & Press Information PDF</span>
+                            <span class="material-symbols-outlined text-primary">download</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="font-bold text-slate-deep text-xs uppercase font-label-caps mb-1">Press Contact</div>
+                    <p class="text-xs text-secondary">For media interviews, press releases, or official inquiries: <a href="mailto:support@zenresume.com" class="text-primary font-bold underline">support@zenresume.com</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Frontend Script with Click Ripple Waves, Button Animations & Dynamic Data Fetching -->
+    <script>
+        const API_BASE = '/api/v1';
+        let allVenturesData = [];
+
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+            
+            toastMsg.innerText = message;
+            toastIcon.innerText = isError ? 'error' : 'check_circle';
+            toastIcon.className = isError ? 'material-symbols-outlined text-red-400' : 'material-symbols-outlined text-primary-fixed-dim';
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 4000);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+        }
+
+        function openContactModal() { document.getElementById('contact-modal').classList.remove('hidden'); }
+        function closeContactModal() { document.getElementById('contact-modal').classList.add('hidden'); }
+
+        function openPitchModal() { document.getElementById('pitch-modal').classList.remove('hidden'); }
+        function closePitchModal() { document.getElementById('pitch-modal').classList.add('hidden'); }
+
+        function openMediaKitModal() { document.getElementById('mediakit-modal').classList.remove('hidden'); }
+        function closeMediaKitModal() { document.getElementById('mediakit-modal').classList.add('hidden'); }
+
+        // Setup Ripple Effect on Click for ALL buttons
+        function initButtonRipples() {
+            document.querySelectorAll('button, a.btn-animate').forEach(btn => {
+                btn.addEventListener('click', function (e) {
+                    const circle = document.createElement('span');
+                    const diameter = Math.max(btn.clientWidth, btn.clientHeight);
+                    const radius = diameter / 2;
+                    const rect = btn.getBoundingClientRect();
+                    
+                    circle.style.width = circle.style.height = `${diameter}px`;
+                    circle.style.left = `${e.clientX - rect.left - radius}px`;
+                    circle.style.top = `${e.clientY - rect.top - radius}px`;
+                    circle.classList.add('ripple');
+                    
+                    const existingRipple = btn.querySelector('.ripple');
+                    if (existingRipple) existingRipple.remove();
+                    
+                    btn.appendChild(circle);
+                });
+            });
+        }
+
+        // Setup Intersection Observer for Scroll Animations
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.12 });
+
+            document.querySelectorAll('.scroll-reveal').forEach((el) => {
+                observer.observe(el);
+            });
+        }
+
+        // Fetch Live Metrics
+        async function loadMetrics() {
+            try {
+                const res = await fetch(`${API_BASE}/metrics/live`);
+                const json = await res.json();
+                if (json.success && json.data) {
+                    const totals = json.data.totals;
+                    if (totals.resumesGenerated) document.getElementById('stat-resumes').innerText = totals.resumesGenerated.toLocaleString() + '+';
+                    if (totals.jobsIndexed) document.getElementById('stat-jobs').innerText = totals.jobsIndexed.toLocaleString() + '+';
+                    if (totals.matchesMade) document.getElementById('stat-matches').innerText = totals.matchesMade.toLocaleString() + '+';
+                    if (totals.totalVenturesCount) document.getElementById('stat-ventures').innerText = totals.totalVenturesCount;
+                }
+            } catch (err) {
+                console.error('Failed to load metrics', err);
+            }
+        }
+
+        // Fetch Ventures Portfolio
+        async function loadVentures() {
+            try {
+                const res = await fetch(`${API_BASE}/ventures`);
+                const json = await res.json();
+                if (json.success && json.data) {
+                    allVenturesData = json.data;
+                    renderVentures(allVenturesData);
+                }
+            } catch (err) {
+                console.error('Failed to load ventures', err);
+            }
+        }
+
+        function renderVentures(ventures) {
+            const container = document.getElementById('ventures-container');
+            if (ventures.length === 0) {
+                container.innerHTML = '<div class="col-span-3 text-center text-secondary py-12">No products in this category.</div>';
+                return;
+            }
+
+            container.innerHTML = ventures.map(v => {
+                const isZen = v.slug === 'zenresume';
+                const isJobAgent = v.slug === 'ai-job-search-agent';
+                const icon = isZen ? 'description' : (isJobAgent ? 'radar' : 'cloud');
+
+                const statusPill = isZen 
+                    ? '<span class="inline-flex items-center gap-1.5 text-xs text-primary font-bold"><span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span> 🟢 99.9% Operational</span>'
+                    : (isJobAgent ? '<span class="inline-flex items-center gap-1.5 text-xs text-primary font-bold"><span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span> 🟢 Live & Operational</span>'
+                    : '<span class="inline-flex items-center gap-1.5 text-xs text-amber-600 font-bold"><span class="w-2 h-2 rounded-full bg-amber-500"></span> 🟡 In Cloud Incubation</span>');
+
+                const techBadges = (v.techStack || []).slice(0, 4).map(t => `<span class="px-2.5 py-1 bg-surface-container rounded text-xs text-secondary font-label-caps">${t}</span>`).join(' ');
+
+                return `
+                    <div class="glass-card rounded-2xl p-8 flex flex-col justify-between relative group overflow-hidden">
+                        <div>
+                            <div class="flex items-center justify-between mb-6">
+                                <div class="w-14 h-14 bg-surface-container-low rounded-xl border border-sage-muted/30 flex items-center justify-center group-hover:scale-105 transition-transform">
+                                    <span class="material-symbols-outlined text-primary text-3xl">${icon}</span>
+                                </div>
+                                <span class="badge-tag px-3 py-1 bg-primary/10 text-primary rounded-full">${v.stage}</span>
+                            </div>
+                            <h3 class="font-headline-md text-2xl font-bold text-slate-deep mb-1">${v.name}</h3>
+                            <div class="mb-3">${statusPill}</div>
+                            <p class="text-xs font-semibold text-primary mb-3">${v.tagline}</p>
+                            <p class="text-sm text-secondary mb-6 leading-relaxed">${v.description}</p>
+                            <div class="flex flex-wrap gap-1.5 mb-6">${techBadges}</div>
+                        </div>
+                        <div class="pt-4 border-t border-sage-muted/20 flex items-center justify-between">
+                            <a href="${v.websiteUrl}" target="_blank" class="btn-animate group/link inline-flex items-center gap-2 text-primary font-label-caps text-xs uppercase font-bold hover:gap-3 transition-all px-4 py-2 rounded-lg hover:bg-primary/10">
+                                Visit Product <span class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">open_in_new</span>
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Re-apply ripple listeners to dynamic buttons
+            initButtonRipples();
+        }
+
+        function filterVentures(category) {
+            const buttons = document.querySelectorAll('.category-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-primary', 'text-on-primary', 'font-bold', 'shadow-sm');
+                btn.classList.add('bg-surface-container', 'text-secondary');
+            });
+            event.target.classList.remove('bg-surface-container', 'text-secondary');
+            event.target.classList.add('bg-primary', 'text-on-primary', 'font-bold', 'shadow-sm');
+
+            if (category === 'ALL') renderVentures(allVenturesData);
+            else if (category === 'CONSUMER') renderVentures(allVenturesData.filter(v => v.slug === 'zenresume'));
+            else if (category === 'AUTONOMOUS') renderVentures(allVenturesData.filter(v => v.slug === 'ai-job-search-agent'));
+            else if (category === 'INCUBATING') renderVentures(allVenturesData.filter(v => v.stage === 'INCUBATING'));
+        }
+
+        // Fetch Newsroom Press Releases
+        async function loadPress() {
+            try {
+                const res = await fetch(`${API_BASE}/press`);
+                const json = await res.json();
+                if (json.success && json.data) {
+                    const container = document.getElementById('press-container');
+                    container.innerHTML = json.data.map(p => `
+                        <div class="bg-white p-8 rounded-2xl border border-sage-muted/30 shadow-sm hover:shadow-md hover:border-primary/40 transition-all">
+                            <div class="flex items-center justify-between text-xs text-secondary font-label-caps uppercase mb-3">
+                                <span>${p.category}</span>
+                                <span>${new Date(p.publishedAt).toLocaleDateString()}</span>
+                            </div>
+                            <h3 class="font-headline-md text-xl font-bold text-slate-deep mb-3">${p.title}</h3>
+                            <p class="text-sm text-secondary leading-relaxed mb-4">${p.summary}</p>
+                            <div class="text-xs text-outline italic">— ${p.author}</div>
+                        </div>
+                    `).join('');
+                }
+            } catch (err) {
+                console.error('Failed to load press', err);
+            }
+        }
+
+        // Fetch Corporate Governance & Vision
+        async function loadGovernance() {
+            try {
+                const resOverview = await fetch(`${API_BASE}/governance/overview`);
+                const jsonOverview = await resOverview.json();
+                if (jsonOverview.success && jsonOverview.data) {
+                    document.getElementById('governance-mission').innerText = jsonOverview.data.missionStatement;
+                }
+
+                const resTeam = await fetch(`${API_BASE}/governance/team`);
+                const jsonTeam = await resTeam.json();
+                if (jsonTeam.success && jsonTeam.data) {
+                    document.getElementById('team-container').innerHTML = jsonTeam.data.map(t => `
+                        <div class="bg-white p-6 rounded-2xl border border-sage-muted/30 flex items-start gap-4 shadow-sm hover:border-primary/40 transition-all">
+                            <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary font-bold text-xl shrink-0">
+                                ${t.name.charAt(0)}
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-deep">${t.name}</h4>
+                                <div class="text-xs text-primary font-label-caps mb-2 font-semibold">${t.role}</div>
+                                <p class="text-xs text-secondary leading-relaxed">${t.bio}</p>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+
+                const resPolicies = await fetch(`${API_BASE}/governance/policies`);
+                const jsonPolicies = await resPolicies.json();
+                if (jsonPolicies.success && jsonPolicies.data) {
+                    document.getElementById('policies-container').innerHTML = jsonPolicies.data.map(pol => `
+                        <div class="bg-white p-6 rounded-2xl border border-sage-muted/30 shadow-sm hover:border-primary/40 transition-all">
+                            <div class="badge-tag text-xs text-primary mb-2">${pol.type}</div>
+                            <h4 class="font-bold text-slate-deep mb-2">${pol.title}</h4>
+                            <p class="text-xs text-secondary leading-relaxed">${pol.content}</p>
+                        </div>
+                    `).join('');
+                }
+            } catch (err) {
+                console.error('Failed to load governance', err);
+            }
+        }
+
+        // Contact Form Submission Handler
+        async function handleContactSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('contact-name').value;
+            const email = document.getElementById('contact-email').value;
+            const category = document.getElementById('contact-category').value;
+            const message = document.getElementById('contact-message').value;
+
+            try {
+                const res = await fetch(`${API_BASE}/contact`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, category, message }),
+                });
+                const json = await res.json();
+                if (json.success) {
+                    showToast('Inquiry submitted to Aneevarp Solutions corporate desk!');
+                    closeContactModal();
+                    document.getElementById('contact-form').reset();
+                } else {
+                    showToast('Failed to submit inquiry.', true);
+                }
+            } catch (err) {
+                showToast('Error submitting inquiry.', true);
+            }
+        }
+
+        // Venture Studio Pitch Submission Handler
+        async function handlePitchSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('pitch-name').value;
+            const email = document.getElementById('pitch-email').value;
+            const product = document.getElementById('pitch-product').value;
+            const message = document.getElementById('pitch-message').value;
+
+            try {
+                const res = await fetch(`${API_BASE}/contact`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name,
+                        email,
+                        company: product,
+                        category: 'VENTURE_PITCH',
+                        message: `VENTURE PITCH FOR: ${product}\n\n${message}`,
+                    }),
+                });
+                const json = await res.json();
+                if (json.success) {
+                    showToast('Venture pitch successfully received by Aneevarp Studio!');
+                    closePitchModal();
+                    document.getElementById('pitch-form').reset();
+                } else {
+                    showToast('Failed to submit pitch.', true);
+                }
+            } catch (err) {
+                showToast('Error submitting pitch proposal.', true);
+            }
+        }
+
+        // Initialize Page Data, Animations & Button Interactions
+        document.addEventListener('DOMContentLoaded', () => {
+            loadMetrics();
+            loadVentures();
+            loadPress();
+            loadGovernance();
+            initScrollAnimations();
+            initButtonRipples();
+        });
+    </script>
+</body>
+</html>

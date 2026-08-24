@@ -1,0 +1,115 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Venture {
+  id            String         @id @default(uuid())
+  name          String
+  slug          String         @unique
+  tagline       String
+  description   String
+  stage         String         @default("LIVE") // LIVE | BETA | INCUBATING
+  websiteUrl    String
+  logoUrl       String?
+  techStackJson String         @default("[]")
+  metricsJson   String         @default("{}")
+  isFeatured    Boolean        @default(true)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  careers       CareerPosting[]
+}
+
+model PressRelease {
+  id             String   @id @default(uuid())
+  title          String
+  slug           String   @unique
+  summary        String
+  content        String
+  category       String   @default("Product Launch")
+  author         String   @default("Aneevarp Press Team")
+  mediaAssetsUrl String?
+  publishedAt    DateTime @default(now())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model CareerPosting {
+  id           String           @id @default(uuid())
+  title        String
+  ventureId    String?
+  ventureName  String           @default("Aneevarp Solutions HQ")
+  department   String
+  location     String           @default("Remote")
+  type         String           @default("FULL_TIME") // FULL_TIME | PART_TIME | CONTRACT | INTERNSHIP | REMOTE
+  description  String
+  requirements String
+  isActive     Boolean          @default(true)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  venture      Venture?         @relation(fields: [ventureId], references: [id], onDelete: SetNull)
+  applications JobApplication[]
+}
+
+model JobApplication {
+  id             String        @id @default(uuid())
+  postingId      String
+  applicantName  String
+  applicantEmail String
+  resumeUrl      String?
+  portfolioUrl   String?
+  coverLetter    String?
+  status         String        @default("RECEIVED") // RECEIVED | REVIEWING | SHORTLISTED | INTERVIEWING | REJECTED | ACCEPTED
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  posting        CareerPosting @relation(fields: [postingId], references: [id], onDelete: Cascade)
+}
+
+model TeamMember {
+  id           String   @id @default(uuid())
+  name         String
+  role         String
+  bio          String
+  photoUrl     String?
+  linkedinUrl  String?
+  twitterUrl   String?
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model ContactSubmission {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  company   String?
+  category  String   @default("GENERAL") // GENERAL | PARTNERSHIP | ENTERPRISE_LICENSING | PRESS_MEDIA | INVESTOR_RELATIONS | CAREERS
+  message   String
+  status    String   @default("NEW") // NEW | IN_PROGRESS | RESOLVED
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CorporatePolicy {
+  id        String   @id @default(uuid())
+  type      String   @unique // PRIVACY | TERMS | AI_ETHICS | ESG | GOVERNANCE
+  title     String
+  content   String
+  updatedAt DateTime @updatedAt
+}
+
+model EcosystemMetric {
+  id           String   @id @default(uuid())
+  ventureSlug  String
+  metricKey    String
+  metricValue  Float
+  metricLabel  String
+  unit         String?
+  lastSyncedAt DateTime @default(now())
+
+  @@unique([ventureSlug, metricKey])
+}
