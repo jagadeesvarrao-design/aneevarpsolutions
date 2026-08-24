@@ -4,7 +4,7 @@
   "description": "Backend engine and API service for Aneevarp Solutions parent holding company overseeing ZenResume, AI Job Search Agent, Press, Careers, IR, Governance, and Ecosystem Metrics.",
   "main": "dist/server.js",
   "scripts": {
-    "build": "tsc",
+    "build": "prisma generate && tsc",
     "start": "node dist/server.js",
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "db:push": "prisma db push",
