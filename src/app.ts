@@ -62,13 +62,17 @@ app.use('/api/v1/governance', governanceRouter);
 app.use('/api/v1/contact', contactRouter);
 app.use('/api/v1/metrics', metricsRouter);
 
-// Fallback to index.html for SPA routing
+// Fallback for unmatched routes
 app.get('*', (req, res) => {
   const indexPath = path.join(publicDir, 'index.html');
+  const fallbackPath = path.join(__dirname, '../public/index.html');
+
   if (fs.existsSync(indexPath)) {
-    res.sendFile(indexPath);
+    return res.sendFile(indexPath);
+  } else if (fs.existsSync(fallbackPath)) {
+    return res.sendFile(fallbackPath);
   } else {
-    res.sendFile(path.join(__dirname, '../public/index.html'));
+    return res.redirect('/');
   }
 });
 
