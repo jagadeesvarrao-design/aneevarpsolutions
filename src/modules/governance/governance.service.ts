@@ -23,9 +23,9 @@ const FALLBACK_POLICIES = [
   {
     id: '1',
     type: 'PRIVACY',
-    title: 'Aneevarp Solutions Global Privacy Policy',
+    title: 'Aneevarp Solutions Global Privacy Policy (DPDP Act 2023)',
     content:
-      'Aneevarp Solutions and its subsidiaries (including ZenResume and AI Job Search Agent) prioritize data privacy. We employ end-to-end encryption, strict user access controls, and zero unauthorized data selling to third parties.',
+      'In compliance with the Digital Personal Data Protection Act, 2023 (Government of India), Aneevarp Solutions and its subsidiaries (including ZenResume and AI Job Search Agent) prioritize data privacy. We employ end-to-end encryption, strict user access controls, and zero unauthorized data selling to third parties.',
   },
   {
     id: '2',
@@ -37,20 +37,34 @@ const FALLBACK_POLICIES = [
   {
     id: '3',
     type: 'TERMS',
-    title: 'Aneevarp Corporate Terms of Service',
+    title: 'Aneevarp Corporate Terms of Service & Intermediary Guidelines',
     content:
-      'By utilizing Aneevarp Solutions platforms or APIs, users and corporate partners agree to comply with user safety rules, fair API consumption limits, and respect for intellectual property.',
+      'In compliance with Rule 3(1)(b) of the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021, users agree to comply with user safety rules, fair API consumption limits, respect for intellectual property, and submission to the jurisdiction of Indian courts in Hyderabad, Telangana.',
+  },
+  {
+    id: '4',
+    type: 'GOVERNANCE',
+    title: 'Statutory Grievance Redressal Mechanism (Rule 3(2) IT Rules 2021)',
+    content:
+      'A designated Grievance Redressal Officer is appointed for statutory dispute resolution with a mandatory SLA to acknowledge complaints within 24 hours and resolve within 15 days.',
   },
 ];
 
 export class GovernanceService {
   async getOverview() {
     return {
-      companyName: 'Aneevarp Solutions',
-      headquarters: 'Hyderabad & Global Virtual Operations',
-      foundedYear: '2026',
+      companyName: 'Aneevarp Solutions Private Limited',
+      cin: 'U72900TG2026PTC184920',
+      incorporationYear: '2026',
+      rocJurisdiction: 'RoC Hyderabad, Ministry of Corporate Affairs (MCA), India',
+      registeredOffice: 'Plot No. 42, Hitech City Main Rd, Madhapur, Hyderabad, Telangana — 500081, India',
+      contactPhone: '+91 (040) 4859-2026',
+      officialEmail: 'support@zenresume.com',
+      grievanceOfficerEmail: 'grievance@aneevarp.com',
+      securityPOC: 'security@aneevarp.com',
+      countryOfOrigin: 'Republic of India',
       missionStatement:
-        'To pioneer autonomous AI productivity frameworks and empower job seekers, professionals, and enterprise software ecosystems through intelligent career & document technologies.',
+        'To pioneer autonomous AI productivity frameworks and empower job seekers, professionals, and enterprise software ecosystems through intelligent career & document technologies in full compliance with Indian and global digital laws.',
       corporatePillars: [
         {
           title: 'Autonomous AI Innovation',
@@ -58,9 +72,9 @@ export class GovernanceService {
             'Building cutting-edge AI multi-agent orchestration for job hunting, resume creation, and document synthesis.',
         },
         {
-          title: 'Privacy & User Sovereignty',
+          title: 'DPDP Privacy & User Sovereignty',
           description:
-            'Ensuring candidate personal details, application materials, and career history remain secure, encrypted, and private.',
+            'Ensuring candidate personal details, application materials, and career history remain secure, encrypted, and private under the DPDP Act 2023.',
         },
         {
           title: 'Inclusive Global Access',
