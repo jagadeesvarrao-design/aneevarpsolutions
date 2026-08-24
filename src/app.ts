@@ -3,7 +3,6 @@ import cors from 'cors';
 import helmet from 'helmet';
 import path from 'path';
 import fs from 'fs';
-import swaggerUi from 'swagger-ui-express';
 import { env } from './config/env';
 import { loggerMiddleware } from './middleware/logger';
 import { errorHandler } from './middleware/errorHandler';
@@ -47,13 +46,7 @@ if (fs.existsSync(publicDir)) {
 }
 
 /**
- * @openapi
- * /health:
- *   get:
- *     summary: System health check endpoint
- *     responses:
- *       200:
- *         description: Server is operational
+ * System health check endpoint
  */
 app.get('/health', (req: Request, res: Response) => {
   res.status(200).json({
@@ -65,8 +58,57 @@ app.get('/health', (req: Request, res: Response) => {
   });
 });
 
-// Swagger API Documentation
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// OpenAPI Spec JSON Endpoint
+app.get('/api/swagger.json', (req: Request, res: Response) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.status(200).json(swaggerSpec);
+});
+
+// Standalone High-Speed Swagger UI Endpoint (CDN-powered for 100% Vercel Serverless Reliability)
+app.get('/docs', (req: Request, res: Response) => {
+  const specJson = JSON.stringify(swaggerSpec);
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aneevarp Solutions — API Documentation</title>
+  <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css" />
+  <link rel="icon" type="image/png" href="https://unpkg.com/swagger-ui-dist@5/favicon-32x32.png" />
+  <style>
+    body { margin: 0; background: #faf9f6; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    .topbar { display: none !important; }
+    .swagger-ui .info { margin: 24px 0; }
+    .swagger-ui .info .title { color: #1A1F1F; font-weight: 800; font-size: 28px; }
+    .swagger-ui .btn.authorize { background-color: #476550; color: #fff; border-color: #476550; }
+    .swagger-ui .opblock.opblock-get .opblock-summary-method { background: #476550; }
+    .swagger-ui .opblock.opblock-post .opblock-summary-method { background: #1A1F1F; }
+  </style>
+</head>
+<body>
+  <div id="swagger-ui"></div>
+  <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
+  <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-standalone-preset.js"></script>
+  <script>
+    window.onload = () => {
+      window.ui = SwaggerUIBundle({
+        spec: ${specJson},
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIStandalonePreset
+        ],
+        layout: "BaseLayout"
+      });
+    };
+  </script>
+</body>
+</html>`;
+
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.status(200).send(html);
+});
 
 // API v1 Routes
 app.use('/api/v1/ventures', venturesRouter);
@@ -94,7 +136,7 @@ app.get('/favicon.ico', (req: Request, res: Response) => {
 
 // Fallback for unmatched routes
 app.get('*', (req: Request, res: Response, next: NextFunction) => {
-  if (req.path.startsWith('/api/') || req.path.startsWith('/docs')) {
+  if (req.path.startsWith('/api/')) {
     return next();
   }
   if (indexHtmlContent) {
