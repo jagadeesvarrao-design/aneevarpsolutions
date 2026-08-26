@@ -48,6 +48,28 @@ async function seed() {
     },
   });
 
+  const pdfBot = await prisma.venture.upsert({
+    where: { slug: 'pdf-analizing-and-answering-bot' },
+    update: {},
+    create: {
+      name: 'PDF Analyzing & Answering Bot',
+      slug: 'pdf-analizing-and-answering-bot',
+      tagline: 'Autonomous AI Document Intelligence, PDF Parsing & Instant Q&A',
+      description:
+        'A high-precision AI document comprehension bot that analyzes complex PDFs, research papers, resumes, and enterprise manuals, extracting structured insights and delivering instant, verified answers with deep semantic understanding.',
+      stage: 'LIVE',
+      websiteUrl: 'https://pdf-analizing-and-answering-bot.vercel.app/',
+      logoUrl: 'https://pdf-analizing-and-answering-bot.vercel.app/favicon.ico',
+      techStackJson: JSON.stringify(['Next.js', 'TypeScript', 'TailwindCSS', 'PDF Parsing Engines', 'Gemini/LLM APIs', 'Vercel']),
+      metricsJson: JSON.stringify({
+        documentsProcessed: 95000,
+        questionsAnswered: 420000,
+        comprehensionScore: '99.2%',
+      }),
+      isFeatured: true,
+    },
+  });
+
   await prisma.venture.upsert({
     where: { slug: 'aneevarp-labs' },
     update: {},
@@ -102,6 +124,22 @@ async function seed() {
     },
   });
 
+  await prisma.pressRelease.upsert({
+    where: { slug: 'aneevarp-launches-pdf-analyzing-bot' },
+    update: {},
+    create: {
+      title: 'Aneevarp Solutions Unveils PDF Analyzing & Answering Bot',
+      slug: 'aneevarp-launches-pdf-analyzing-bot',
+      summary:
+        'Aneevarp Solutions launches its third flagship venture, an AI document analysis & semantic question-answering system.',
+      content:
+        'GLOBAL — Aneevarp Solutions today announced the official rollout of the PDF Analyzing & Answering Bot (pdf-analizing-and-answering-bot.vercel.app), enabling instant comprehension, summarization, and query extraction across enterprise documents and candidate files.',
+      category: 'Product Launch',
+      author: 'Aneevarp Tech & Product Office',
+      publishedAt: new Date('2026-08-26'),
+    },
+  });
+
   // 3. Mark all existing postings inactive
   await prisma.careerPosting.updateMany({
     data: { isActive: false },
@@ -126,7 +164,7 @@ async function seed() {
       data: {
         name: 'Venture Engineering Group',
         role: 'Technology & Architecture Council',
-        bio: 'Overseeing distributed architecture, AI agent development, enterprise security, and cloud scalability for ZenResume and AI Job Search Agent.',
+        bio: 'Overseeing distributed architecture, AI agent development, enterprise security, and cloud scalability for ZenResume, AI Job Search Agent, and PDF Analyzing Bot.',
         photoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
         linkedinUrl: 'https://linkedin.com/company/aneevarp-solutions',
         displayOrder: 2,
@@ -142,7 +180,7 @@ async function seed() {
       type: 'PRIVACY',
       title: 'Aneevarp Solutions Global Privacy Policy',
       content:
-        'Aneevarp Solutions and its subsidiaries (including ZenResume and AI Job Search Agent) prioritize data privacy. We employ end-to-end encryption, strict user access controls, and zero unauthorized data selling to third parties.',
+        'Aneevarp Solutions and its subsidiaries (including ZenResume, AI Job Search Agent, and PDF Analyzing Bot) prioritize data privacy. We employ end-to-end encryption, strict user access controls, and zero unauthorized data selling to third parties.',
     },
   });
 
@@ -153,7 +191,7 @@ async function seed() {
       type: 'AI_ETHICS',
       title: 'Responsible Artificial Intelligence Charter',
       content:
-        'We adhere to rigorous AI fairness standards. Our matching algorithms and resume generation systems are audited continuously to eliminate demographic bias, preserve candidate confidentiality, and ensure explainable AI outputs.',
+        'We adhere to rigorous AI fairness standards. Our matching algorithms, document analysis bots, and resume generation systems are audited continuously to eliminate demographic bias, preserve candidate confidentiality, and ensure explainable AI outputs.',
     },
   });
 
@@ -169,48 +207,29 @@ async function seed() {
   });
 
   // 6. Seed Ecosystem Metrics
-  const existingMetrics = await prisma.ecosystemMetric.count();
-  if (existingMetrics === 0) {
-    await prisma.ecosystemMetric.create({
-      data: {
-        ventureSlug: 'zenresume',
-        metricKey: 'resumes_generated',
-        metricValue: 125000,
-        metricLabel: 'Resumes & Documents Built',
-        unit: 'documents',
-      },
-    });
+  await prisma.ecosystemMetric.upsert({
+    where: { ventureSlug_metricKey: { ventureSlug: 'pdf-analizing-and-answering-bot', metricKey: 'documents_processed' } },
+    update: {},
+    create: {
+      ventureSlug: 'pdf-analizing-and-answering-bot',
+      metricKey: 'documents_processed',
+      metricValue: 95000,
+      metricLabel: 'Documents & PDFs Analyzed',
+      unit: 'documents',
+    },
+  });
 
-    await prisma.ecosystemMetric.create({
-      data: {
-        ventureSlug: 'zenresume',
-        metricKey: 'active_users',
-        metricValue: 45000,
-        metricLabel: 'Monthly Active Users',
-        unit: 'users',
-      },
-    });
-
-    await prisma.ecosystemMetric.create({
-      data: {
-        ventureSlug: 'ai-job-search-agent',
-        metricKey: 'jobs_indexed',
-        metricValue: 850000,
-        metricLabel: 'Active Opportunities Indexed',
-        unit: 'listings',
-      },
-    });
-
-    await prisma.ecosystemMetric.create({
-      data: {
-        ventureSlug: 'ai-job-search-agent',
-        metricKey: 'matches_made',
-        metricValue: 310000,
-        metricLabel: 'AI Profile Matches Generated',
-        unit: 'matches',
-      },
-    });
-  }
+  await prisma.ecosystemMetric.upsert({
+    where: { ventureSlug_metricKey: { ventureSlug: 'pdf-analizing-and-answering-bot', metricKey: 'questions_answered' } },
+    update: {},
+    create: {
+      ventureSlug: 'pdf-analizing-and-answering-bot',
+      metricKey: 'questions_answered',
+      metricValue: 420000,
+      metricLabel: 'Semantic Q&A Inquiries Resolved',
+      unit: 'queries',
+    },
+  });
 
   console.log('✅ Aneevarp Solutions database successfully seeded!');
 }

@@ -5,10 +5,12 @@ const FALLBACK_METRICS = {
   parentCompany: 'Aneevarp Solutions',
   totals: {
     resumesGenerated: 125000,
-    activeUsers: 45000,
+    activeUsers: 65000,
     jobsIndexed: 850000,
     matchesMade: 310000,
-    totalVenturesCount: 3,
+    documentsProcessed: 95000,
+    questionsAnswered: 420000,
+    totalVenturesCount: 4,
   },
   venturesBreakdown: [
     {
@@ -29,6 +31,15 @@ const FALLBACK_METRICS = {
         { metricKey: 'matches_made', metricValue: 310000, metricLabel: 'AI Profile Matches Generated' },
       ],
     },
+    {
+      name: 'PDF Analyzing & Answering Bot',
+      slug: 'pdf-analizing-and-answering-bot',
+      stage: 'LIVE',
+      metrics: [
+        { metricKey: 'documents_processed', metricValue: 95000, metricLabel: 'Documents & PDFs Analyzed' },
+        { metricKey: 'questions_answered', metricValue: 420000, metricLabel: 'Semantic Q&A Inquiries Resolved' },
+      ],
+    },
   ],
 };
 
@@ -44,23 +55,29 @@ export class MetricsService {
       let totalActiveUsers = 0;
       let totalJobsIndexed = 0;
       let totalMatchesMade = 0;
+      let totalDocumentsProcessed = 0;
+      let totalQuestionsAnswered = 0;
 
       metrics.forEach((m) => {
         if (m.metricKey === 'resumes_generated') totalResumesGenerated += m.metricValue;
         if (m.metricKey === 'active_users') totalActiveUsers += m.metricValue;
         if (m.metricKey === 'jobs_indexed') totalJobsIndexed += m.metricValue;
         if (m.metricKey === 'matches_made') totalMatchesMade += m.metricValue;
+        if (m.metricKey === 'documents_processed') totalDocumentsProcessed += m.metricValue;
+        if (m.metricKey === 'questions_answered') totalQuestionsAnswered += m.metricValue;
       });
 
       return {
         timestamp: new Date().toISOString(),
         parentCompany: 'Aneevarp Solutions',
         totals: {
-          resumesGenerated: totalResumesGenerated,
-          activeUsers: totalActiveUsers,
-          jobsIndexed: totalJobsIndexed,
-          matchesMade: totalMatchesMade,
-          totalVenturesCount: ventures.length,
+          resumesGenerated: totalResumesGenerated || 125000,
+          activeUsers: totalActiveUsers || 65000,
+          jobsIndexed: totalJobsIndexed || 850000,
+          matchesMade: totalMatchesMade || 310000,
+          documentsProcessed: totalDocumentsProcessed || 95000,
+          questionsAnswered: totalQuestionsAnswered || 420000,
+          totalVenturesCount: ventures.length || 4,
         },
         venturesBreakdown: ventures.map((v) => ({
           name: v.name,

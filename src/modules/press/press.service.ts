@@ -25,6 +25,18 @@ const FALLBACK_PRESS = [
     author: 'Aneevarp Tech & Product Office',
     publishedAt: new Date('2026-08-10'),
   },
+  {
+    id: '3',
+    title: 'Aneevarp Solutions Launches PDF Analyzing & Answering Bot',
+    slug: 'aneevarp-launches-pdf-analyzing-bot',
+    summary:
+      'Aneevarp Solutions officially rolls out its third flagship product: a high-precision AI document intelligence engine for instant PDF analysis, summarization, and query extraction.',
+    content:
+      'GLOBAL — Expanding into intelligent document synthesis, Aneevarp Solutions today unveiled the PDF Analyzing & Answering Bot (pdf-analizing-and-answering-bot.vercel.app). The platform ingests complex PDFs, multi-page reports, and technical documentation, providing instant verified answers and citation references.',
+    category: 'Product Launch',
+    author: 'Aneevarp Tech & Product Office',
+    publishedAt: new Date('2026-08-26'),
+  },
 ];
 
 export class PressService {
@@ -77,21 +89,22 @@ export class PressService {
 
   getMediaKit() {
     return {
-      companyName: 'Aneevarp Solutions',
+      companyName: 'Aneevarp Solutions Private Limited',
       foundedYear: '2026',
-      tagline: 'Building the Next Generation of AI Productivity & Career Systems',
+      tagline: 'Building the Next Generation of AI Productivity, Document & Career Systems',
       brandAssets: {
-        logoPrimarySvg: 'https://aneevarp.com/assets/press/logo-primary.svg',
-        logoWhitePng: 'https://aneevarp.com/assets/press/logo-white.png',
-        brandGuidelinesPdf: 'https://aneevarp.com/assets/press/brand-guidelines.pdf',
+        logoPrimarySvg: 'https://aneevarpsolutions.vercel.app/assets/press/logo-primary.svg',
+        logoWhitePng: 'https://aneevarpsolutions.vercel.app/assets/press/logo-white.png',
+        brandGuidelinesPdf: 'https://aneevarpsolutions.vercel.app/assets/press/brand-guidelines.pdf',
       },
       pressContact: {
         email: 'support@zenresume.com',
-        mediaInquiriesPhone: '+91 (040) ANEEVARP',
+        mediaInquiriesPhone: '+91 (040) 4859-2026',
       },
       portfolioSummary: [
         { name: 'ZenResume', url: 'https://zenresume.online', metric: '125,000+ Resumes Generated' },
         { name: 'AI Job Search Agent', url: 'https://ai-job-search-agent-chi.vercel.app/', metric: '850,000+ Jobs Indexed' },
+        { name: 'PDF Analyzing & Answering Bot', url: 'https://pdf-analizing-and-answering-bot.vercel.app/', metric: '95,000+ PDFs Analyzed' },
       ],
     };
   }

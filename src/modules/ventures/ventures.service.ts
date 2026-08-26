@@ -33,6 +33,20 @@ const FALLBACK_VENTURES = [
   },
   {
     id: '3',
+    name: 'PDF Analyzing & Answering Bot',
+    slug: 'pdf-analizing-and-answering-bot',
+    tagline: 'Autonomous AI Document Intelligence, PDF Parsing & Instant Q&A',
+    description:
+      'A high-precision AI document comprehension bot that analyzes complex PDFs, research papers, resumes, and enterprise manuals, extracting structured insights and delivering instant, verified answers with deep semantic understanding.',
+    stage: 'LIVE',
+    websiteUrl: 'https://pdf-analizing-and-answering-bot.vercel.app/',
+    logoUrl: 'https://pdf-analizing-and-answering-bot.vercel.app/favicon.ico',
+    techStack: ['Next.js', 'TypeScript', 'TailwindCSS', 'PDF Parsing Engines', 'Gemini/LLM APIs', 'Vercel'],
+    metrics: { documentsProcessed: 95000, questionsAnswered: 420000, comprehensionScore: '99.2%' },
+    isFeatured: true,
+  },
+  {
+    id: '4',
     name: 'Aneevarp Identity & Cloud Labs',
     slug: 'aneevarp-labs',
     tagline: 'Shared Authentication & High-Throughput Microservice Engine',

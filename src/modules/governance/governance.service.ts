@@ -14,7 +14,7 @@ const FALLBACK_TEAM = [
     id: '2',
     name: 'Venture Engineering Group',
     role: 'Technology & Architecture Council',
-    bio: 'Overseeing distributed architecture, AI agent development, enterprise security, and cloud scalability for ZenResume and AI Job Search Agent.',
+    bio: 'Overseeing distributed architecture, AI agent development, enterprise security, and cloud scalability for ZenResume, AI Job Search Agent, and PDF Analyzing Bot.',
     displayOrder: 2,
   },
 ];
@@ -25,14 +25,14 @@ const FALLBACK_POLICIES = [
     type: 'PRIVACY',
     title: 'Aneevarp Solutions Global Privacy Policy (DPDP Act 2023)',
     content:
-      'In compliance with the Digital Personal Data Protection Act, 2023 (Government of India), Aneevarp Solutions and its subsidiaries (including ZenResume and AI Job Search Agent) prioritize data privacy. We employ end-to-end encryption, strict user access controls, and zero unauthorized data selling to third parties.',
+      'In compliance with the Digital Personal Data Protection Act, 2023 (Government of India), Aneevarp Solutions and its subsidiaries (including ZenResume, AI Job Search Agent, and PDF Analyzing Bot) prioritize data privacy. We employ end-to-end encryption, strict user access controls, and zero unauthorized data selling to third parties.',
   },
   {
     id: '2',
     type: 'AI_ETHICS',
     title: 'Responsible Artificial Intelligence Charter',
     content:
-      'We adhere to rigorous AI fairness standards. Our matching algorithms and resume generation systems are audited continuously to eliminate demographic bias, preserve candidate confidentiality, and ensure explainable AI outputs.',
+      'We adhere to rigorous AI fairness standards. Our matching algorithms, document analysis bots, and resume generation systems are audited continuously to eliminate demographic bias, preserve candidate confidentiality, and ensure explainable AI outputs.',
   },
   {
     id: '3',
@@ -83,9 +83,13 @@ export class GovernanceService {
         },
       ],
       quickStats: {
-        totalPortfolioVentures: 3,
+        totalPortfolioVentures: 4,
         activeJobsOpen: 0,
-        liveProducts: ['ZenResume (zenresume.online)', 'AI Job Search Agent (vercel.app)'],
+        liveProducts: [
+          'ZenResume (zenresume.online)',
+          'AI Job Search Agent (vercel.app)',
+          'PDF Analyzing & Answering Bot (vercel.app)',
+        ],
       },
     };
   }

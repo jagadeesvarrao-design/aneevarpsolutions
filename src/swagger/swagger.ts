@@ -6,7 +6,7 @@ export const swaggerSpec = {
     title: 'Aneevarp Solutions — Parent Corporate Platform API',
     version: '1.0.0',
     description:
-      'Official REST API platform for Aneevarp Solutions (Parent Holding Entity governing ZenResume, AI Job Search Agent, Corporate Governance, Unified Careers, Newsroom Press, and Live Ecosystem Telemetry).',
+      'Official REST API platform for Aneevarp Solutions (Parent Holding Entity governing ZenResume, AI Job Search Agent, PDF Analyzing & Answering Bot, Corporate Governance, Unified Careers, Newsroom Press, and Live Ecosystem Telemetry).',
     contact: {
       name: 'Aneevarp Solutions Tech Office',
       url: 'https://aneevarpsolutions.vercel.app',
@@ -24,7 +24,7 @@ export const swaggerSpec = {
     },
   ],
   tags: [
-    { name: 'Ventures', description: 'Portfolio ventures & product showcase (ZenResume, AI Job Search Agent, Cloud Labs)' },
+    { name: 'Ventures', description: 'Portfolio ventures & product showcase (ZenResume, AI Job Search Agent, PDF Analyzing & Answering Bot, Cloud Labs)' },
     { name: 'Press & Newsroom', description: 'Corporate announcements, releases, & official brand media kit' },
     { name: 'Careers & Talent Desk', description: 'Cross-venture job positions & talent inquiries' },
     { name: 'Governance & IR', description: 'Corporate mission, leadership board, capital structure & policies' },
@@ -175,7 +175,7 @@ export const swaggerSpec = {
     '/api/v1/metrics/sync': {
       post: {
         tags: ['Ecosystem Telemetry'],
-        summary: 'Sync metric telemetry from child venture (ZenResume, AI Job Agent)',
+        summary: 'Sync metric telemetry from child venture (ZenResume, AI Job Agent, PDF Bot)',
         requestBody: {
           required: true,
           content: {
