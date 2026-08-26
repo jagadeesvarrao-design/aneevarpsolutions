@@ -1,5 +1,8 @@
 import { Router } from 'express';
 import { CareersController } from './careers.controller';
+import { validateRequest } from '../../middleware/validate';
+import { submitApplicationSchema } from './careers.schema';
+import { submissionRateLimiter, requireApiKey } from '../../middleware/security';
 
 const router = Router();
 const controller = new CareersController();
@@ -9,7 +12,7 @@ const controller = new CareersController();
  * /api/v1/careers:
  *   get:
  *     summary: List open career positions across Aneevarp parent company and portfolio ventures
- *     tags: [Careers & Global Job Board]
+ *     tags: [Careers & Talent Desk]
  *     parameters:
  *       - in: query
  *         name: department
@@ -35,7 +38,7 @@ router.get('/', (req, res, next) => controller.getJobPostings(req, res, next));
  * /api/v1/careers/apply:
  *   post:
  *     summary: Submit a candidate job application for a career position
- *     tags: [Careers & Global Job Board]
+ *     tags: [Careers & Talent Desk]
  *     requestBody:
  *       required: true
  *       content:
@@ -60,14 +63,19 @@ router.get('/', (req, res, next) => controller.getJobPostings(req, res, next));
  *       201:
  *         description: Application submitted successfully
  */
-router.post('/apply', (req, res, next) => controller.submitJobApplication(req, res, next));
+router.post(
+  '/apply',
+  submissionRateLimiter,
+  validateRequest(submitApplicationSchema),
+  (req, res, next) => controller.submitJobApplication(req, res, next)
+);
 
 /**
  * @openapi
  * /api/v1/careers/{id}:
  *   get:
  *     summary: Retrieve single job posting details
- *     tags: [Careers & Global Job Board]
+ *     tags: [Careers & Talent Desk]
  *     parameters:
  *       - in: path
  *         name: id
@@ -86,34 +94,14 @@ router.get('/:id', (req, res, next) => controller.getJobPostingById(req, res, ne
  * @openapi
  * /api/v1/careers:
  *   post:
- *     summary: Create a new job opening in Aneevarp parent or subsidiary
- *     tags: [Careers & Global Job Board]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required: [title, department, description, requirements]
- *             properties:
- *               title:
- *                 type: string
- *               ventureId:
- *                 type: string
- *               ventureName:
- *                 type: string
- *               department:
- *                 type: string
- *               location:
- *                 type: string
- *               description:
- *                 type: string
- *               requirements:
- *                 type: string
+ *     summary: Create a new job opening (Admin Protected)
+ *     tags: [Careers & Talent Desk]
+ *     security:
+ *       - ApiKeyAuth: []
  *     responses:
  *       201:
  *         description: Job posting created
  */
-router.post('/', (req, res, next) => controller.createJobPosting(req, res, next));
+router.post('/', requireApiKey, (req, res, next) => controller.createJobPosting(req, res, next));
 
 export default router;

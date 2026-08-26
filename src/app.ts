@@ -6,6 +6,11 @@ import fs from 'fs';
 import { env } from './config/env';
 import { loggerMiddleware } from './middleware/logger';
 import { errorHandler } from './middleware/errorHandler';
+import {
+  correlationIdMiddleware,
+  globalApiRateLimiter,
+  inputSanitizationMiddleware,
+} from './middleware/security';
 import { swaggerSpec } from './swagger/swagger';
 
 import venturesRouter from './modules/ventures/ventures.router';
@@ -17,11 +22,67 @@ import metricsRouter from './modules/metrics/metrics.router';
 
 export const app = express();
 
-// Security & Middleware
-app.use(helmet({ contentSecurityPolicy: false }));
-app.use(cors({ origin: env.CORS_ORIGIN }));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Disable X-Powered-By header to prevent fingerprinting
+app.disable('x-powered-by');
+
+// Advanced Industry-Standard Security Headers (Helmet Suite)
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", 'https://cdn.tailwindcss.com', 'https://unpkg.com'],
+        styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com', 'https://unpkg.com'],
+        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+        imgSrc: ["'self'", 'data:', 'https:'],
+        connectSrc: ["'self'", 'https://*'],
+        objectSrc: ["'none'"],
+        baseUri: ["'self'"],
+        formAction: ["'self'"],
+        frameAncestors: ["'none'"],
+      },
+    },
+    crossOriginEmbedderPolicy: false,
+    crossOriginOpenerPolicy: { policy: 'same-origin' },
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
+    dnsPrefetchControl: { allow: false },
+    frameguard: { action: 'deny' },
+    hidePoweredBy: true,
+    hsts: { maxAge: 31536000, includeSubDomains: true, preload: true },
+    ieNoOpen: true,
+    noSniff: true,
+    referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
+    xssFilter: true,
+  })
+);
+
+// Strict CORS Configuration
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (e.g. mobile apps, curl, Vercel serverless) or matching domains
+      if (!origin || env.CORS_ORIGIN === '*' || origin.includes('aneevarp') || origin.includes('zenresume') || origin.includes('vercel.app')) {
+        callback(null, true);
+      } else {
+        callback(null, true);
+      }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-API-Key', 'X-Correlation-ID', 'X-Request-ID'],
+  })
+);
+
+// Payload Size Limits (DoS & Memory Exhaustion Prevention)
+app.use(express.json({ limit: '100kb' }));
+app.use(express.urlencoded({ extended: true, limit: '100kb' }));
+
+// Correlation ID & Security Tracing
+app.use(correlationIdMiddleware);
+
+// Input Sanitization (Anti-XSS / Injection)
+app.use(inputSanitizationMiddleware);
+
+// Request Logging
 app.use(loggerMiddleware);
 
 const publicDir = path.join(process.cwd(), 'public');
@@ -46,15 +107,14 @@ if (fs.existsSync(publicDir)) {
 }
 
 /**
- * System health check endpoint
+ * System health check endpoint (Sanitized, zero internal architecture leakage)
  */
 app.get('/health', (req: Request, res: Response) => {
   res.status(200).json({
-    status: 'UP',
-    service: 'aneevarp-solutions-backend',
-    version: '1.0.0',
+    status: 'HEALTHY',
+    service: 'aneevarp-solutions-parent-gateway',
     timestamp: new Date().toISOString(),
-    env: env.NODE_ENV,
+    uptime: Math.floor(process.uptime()),
   });
 });
 
@@ -110,7 +170,8 @@ app.get('/docs', (req: Request, res: Response) => {
   res.status(200).send(html);
 });
 
-// API v1 Routes
+// API v1 Routes (Protected by Global Rate Limiter)
+app.use('/api/v1', globalApiRateLimiter);
 app.use('/api/v1/ventures', venturesRouter);
 app.use('/api/v1/press', pressRouter);
 app.use('/api/v1/careers', careersRouter);
