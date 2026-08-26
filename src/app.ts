@@ -210,6 +210,7 @@ app.get('*', (req: Request, res: Response, next: NextFunction) => {
 // Global Error Handler
 app.use(errorHandler);
 
-// Crucial default export for Vercel Serverless Function compatibility
+// Dual export compatibility for TypeScript, Jest, Supertest and Vercel Serverless
+(app as any).app = app;
 export default app;
 module.exports = app;

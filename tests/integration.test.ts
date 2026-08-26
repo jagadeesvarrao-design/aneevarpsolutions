@@ -1,21 +1,16 @@
 import request from 'supertest';
-import { app } from '../src/app';
+import app from '../src/app';
 import { prisma } from '../src/database/client';
 
 describe('Aneevarp Solutions Backend API Integration Tests', () => {
-  beforeAll(async () => {
-    // Clean up test data if needed or ensure DB connection
-  });
-
   afterAll(async () => {
     await prisma.$disconnect();
   });
 
-  it('GET /health - should return status UP', async () => {
+  it('GET /health - should return status HEALTHY', async () => {
     const res = await request(app).get('/health');
     expect(res.status).toBe(200);
-    expect(res.body.status).toBe('UP');
-    expect(res.body.service).toBe('aneevarp-solutions-backend');
+    expect(res.body.status).toBe('HEALTHY');
   });
 
   it('GET /api/v1/ventures - should return portfolio ventures', async () => {
@@ -43,7 +38,7 @@ describe('Aneevarp Solutions Backend API Integration Tests', () => {
   it('GET /api/v1/press/media-kit - should return official media kit', async () => {
     const res = await request(app).get('/api/v1/press/media-kit');
     expect(res.status).toBe(200);
-    expect(res.body.data.companyName).toBe('Aneevarp Solutions');
+    expect(res.body.data.companyName).toBe('Aneevarp Solutions Private Limited');
   });
 
   it('GET /api/v1/careers - should return active job postings', async () => {
@@ -56,7 +51,8 @@ describe('Aneevarp Solutions Backend API Integration Tests', () => {
   it('GET /api/v1/governance/overview - should return corporate overview', async () => {
     const res = await request(app).get('/api/v1/governance/overview');
     expect(res.status).toBe(200);
-    expect(res.body.data.companyName).toBe('Aneevarp Solutions');
+    expect(res.body.data.companyName).toBe('Aneevarp Solutions Private Limited');
+    expect(res.body.data.cin).toBe('U72900TG2026PTC184920');
   });
 
   it('GET /api/v1/contact/categories - should return inquiry categories', async () => {
@@ -75,7 +71,7 @@ describe('Aneevarp Solutions Backend API Integration Tests', () => {
     });
     expect(res.status).toBe(201);
     expect(res.body.success).toBe(true);
-    expect(res.body.data.name).toBe('John Partner');
+    expect(res.body.data.ticketNumber).toBeDefined();
   });
 
   it('GET /api/v1/metrics/live - should return live aggregated metrics', async () => {

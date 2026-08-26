@@ -17,8 +17,8 @@ export class ContactController {
     }
   }
 
-  getCategories(req: Request, res: Response) {
-    const categories = contactService.getCategories();
+  async getCategories(req: Request, res: Response) {
+    const categories = await contactService.getCategories();
     return res.json({
       success: true,
       data: categories,
