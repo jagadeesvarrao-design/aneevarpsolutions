@@ -292,12 +292,13 @@
             </a>
 
             <!-- Clean Desktop Navigation Links (Visible on Large Desktops, Clutter-Free) -->
-            <div class="hidden lg:flex items-center gap-4 xl:gap-6 font-label-caps text-[11px] xl:text-xs uppercase font-semibold text-secondary">
+            <div class="hidden lg:flex items-center gap-3 xl:gap-5 font-label-caps text-[11px] xl:text-xs uppercase font-semibold text-secondary">
                 <a class="nav-link hover:text-primary transition-colors py-1 flex items-center gap-1.5" href="#portfolio">
                     Ventures
                     <span class="px-1.5 py-0.2 rounded-full bg-primary/10 text-primary text-[10px] font-bold">3</span>
                 </a>
                 <a class="nav-link hover:text-primary transition-colors py-1" href="#identity">SSO Vault</a>
+                <a class="nav-link hover:text-primary transition-colors py-1" href="#founder">Founder</a>
                 <a class="nav-link hover:text-primary transition-colors py-1" href="#studio">Studio</a>
                 <a class="nav-link hover:text-primary transition-colors py-1" href="#timeline">Roadmap</a>
                 <a class="nav-link hover:text-primary transition-colors py-1" href="#press">Newsroom</a>
@@ -337,6 +338,10 @@
                 <a class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-primary-light hover:text-primary" href="#identity" onclick="toggleMobileMenu()">
                     <span class="material-symbols-outlined text-primary text-sm">key</span>
                     SSO Vault
+                </a>
+                <a class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-primary-light hover:text-primary" href="#founder" onclick="toggleMobileMenu()">
+                    <span class="material-symbols-outlined text-primary text-sm">person</span>
+                    Founder
                 </a>
                 <a class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-primary-light hover:text-primary" href="#studio" onclick="toggleMobileMenu()">
                     <span class="material-symbols-outlined text-primary text-sm">apartment</span>
@@ -567,6 +572,51 @@
                             <button onclick="openContactModal()" class="btn-animate w-full sm:w-auto border border-white/25 text-ivory-base font-label-caps text-xs uppercase px-6 py-3.5 sm:py-4 rounded-xl hover:bg-white/10 font-semibold text-center">
                                 Partnership Inquiry
                             </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Founder & Leadership Spotlight Section (Indie Studio & High-Trust Founder Model) -->
+        <section class="py-16 sm:py-24 bg-surface-container-low/50 border-t border-sage-border scroll-reveal" id="founder">
+            <div class="content-container">
+                <div class="mb-10 sm:mb-12 text-center max-w-2xl mx-auto">
+                    <div class="badge-tag text-primary mb-2">Leadership & Builder</div>
+                    <h2 class="font-display-lg text-2xl sm:text-3xl lg:text-4xl text-slate-deep font-bold">Behind the Studio</h2>
+                    <p class="text-xs sm:text-sm text-secondary mt-2">Built with relentless engineering speed, lean architecture, and human accountability.</p>
+                </div>
+
+                <div class="max-w-3xl mx-auto bg-white rounded-3xl p-6 sm:p-10 border border-sage-border shadow-xl relative overflow-hidden">
+                    <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
+                        <div class="relative flex-shrink-0">
+                            <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl overflow-hidden shadow-md border-2 border-primary/20 bg-surface-container-low">
+                                <img src="/images/founder.jpg" alt="Jagadeeswara Rao Peddada - Founder of Aneevarp Solutions" class="w-full h-full object-cover"/>
+                            </div>
+                            <div class="absolute -bottom-2 -right-2 px-2.5 py-1 bg-white rounded-full shadow border border-sage-border flex items-center gap-1.5 text-[10px] font-bold text-primary">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Active Builder
+                            </div>
+                        </div>
+
+                        <div class="flex-1 text-center sm:text-left space-y-3">
+                            <div>
+                                <div class="badge-tag text-[10px] text-primary mb-1">Founder & Chief Architect</div>
+                                <h3 class="font-display-lg text-xl sm:text-2xl font-bold text-slate-deep">Jagadeeswara Rao Peddada</h3>
+                                <p class="text-xs font-semibold text-secondary">Founder, Aneevarp Solutions Private Limited</p>
+                            </div>
+
+                            <p class="text-xs sm:text-sm text-secondary leading-relaxed">
+                                "I architect and build autonomous AI tools and software platforms—including <strong>ZenResume</strong>, <strong>AI Job Search Agent</strong>, and <strong>PDF Analyzing Bot</strong>. We believe in high execution velocity, zero-bloat engineering, and building software that directly solves real human problems."
+                            </p>
+
+                            <div class="pt-2 flex flex-wrap items-center justify-center sm:justify-start gap-3 text-xs">
+                                <a href="mailto:aneevarpsolutions@gmail.com" class="btn-animate inline-flex items-center gap-1.5 px-3.5 py-2 bg-primary text-on-primary rounded-xl font-label-caps text-xs uppercase font-bold hover:bg-primary-hover shadow-sm">
+                                    <span class="material-symbols-outlined text-sm">mail</span> Contact Founder
+                                </a>
+                                <a href="#ventures" class="btn-animate inline-flex items-center gap-1.5 px-3.5 py-2 border border-sage-border text-slate-deep rounded-xl font-label-caps text-xs uppercase font-semibold hover:bg-surface-container">
+                                    <span class="material-symbols-outlined text-sm">rocket_launch</span> Explore 3 Ventures
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
