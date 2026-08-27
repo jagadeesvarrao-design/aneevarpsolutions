@@ -32,7 +32,7 @@ export class ContactService {
         id: created.id,
         status: 'RECEIVED',
         ticketNumber: `ANV-${Date.now().toString().slice(-6)}`,
-        routedTo: 'support@zenresume.com',
+        routedTo: 'aneevarpsolutions@gmail.com',
         receivedAt: created.createdAt,
       };
     } catch (err) {
@@ -41,7 +41,7 @@ export class ContactService {
         id: `submission-${Date.now()}`,
         status: 'RECEIVED',
         ticketNumber: `ANV-${Date.now().toString().slice(-6)}`,
-        routedTo: 'support@zenresume.com',
+        routedTo: 'aneevarpsolutions@gmail.com',
         receivedAt: new Date(),
       };
     }

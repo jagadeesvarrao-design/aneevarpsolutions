@@ -10,7 +10,7 @@ export const swaggerSpec = {
     contact: {
       name: 'Aneevarp Solutions Tech Office',
       url: 'https://aneevarpsolutions.vercel.app',
-      email: 'support@zenresume.com',
+      email: 'aneevarpsolutions@gmail.com',
     },
   },
   servers: [
