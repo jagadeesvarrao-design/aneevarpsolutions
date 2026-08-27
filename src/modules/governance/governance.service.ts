@@ -87,8 +87,8 @@ export class GovernanceService {
         activeJobsOpen: 0,
         liveProducts: [
           'ZenResume (zenresume.online)',
-          'AI Job Search Agent (vercel.app)',
-          'PDF Analyzing & Answering Bot (vercel.app)',
+          'ZenScout AI (vercel.app)',
+          'ZenDoc AI (vercel.app)',
         ],
       },
     };

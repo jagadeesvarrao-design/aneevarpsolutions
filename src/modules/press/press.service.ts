@@ -15,24 +15,24 @@ const FALLBACK_PRESS = [
   },
   {
     id: '2',
-    title: 'Aneevarp Solutions Unveils Autonomous AI Job Search Agent Platform',
-    slug: 'aneevarp-unveils-ai-job-search-agent',
+    title: 'Aneevarp Solutions Unveils ZenScout AI — Autonomous Career Matchmaker',
+    slug: 'aneevarp-unveils-zenscout-ai',
     summary:
-      'Aneevarp Solutions launches its second flagship venture, an autonomous AI-driven agent framework built for real-time job matching and career automation.',
+      'Aneevarp Solutions launches its second flagship venture, ZenScout AI, an autonomous AI-driven agent framework built for real-time job matching and career automation.',
     content:
-      'GLOBAL — Expanding its portfolio of high-impact talent tech solutions, Aneevarp Solutions today revealed its Autonomous AI Job Search Agent (ai-job-search-agent-chi.vercel.app).',
+      'GLOBAL — Expanding its portfolio of high-impact talent tech solutions, Aneevarp Solutions today revealed ZenScout AI (ai-job-search-agent-chi.vercel.app).',
     category: 'Innovation Notice',
     author: 'Aneevarp Tech & Product Office',
     publishedAt: new Date('2026-08-10'),
   },
   {
     id: '3',
-    title: 'Aneevarp Solutions Launches PDF Analyzing & Answering Bot',
-    slug: 'aneevarp-launches-pdf-analyzing-bot',
+    title: 'Aneevarp Solutions Launches ZenDoc AI — Document Intelligence & PDF Q&A Bot',
+    slug: 'aneevarp-launches-zendoc-ai',
     summary:
-      'Aneevarp Solutions officially rolls out its third flagship product: a high-precision AI document intelligence engine for instant PDF analysis, summarization, and query extraction.',
+      'Aneevarp Solutions officially rolls out its third flagship product, ZenDoc AI: a high-precision AI document intelligence engine for instant PDF analysis, summarization, and query extraction.',
     content:
-      'GLOBAL — Expanding into intelligent document synthesis, Aneevarp Solutions today unveiled the PDF Analyzing & Answering Bot (pdf-analizing-and-answering-bot.vercel.app). The platform ingests complex PDFs, multi-page reports, and technical documentation, providing instant verified answers and citation references.',
+      'GLOBAL — Expanding into intelligent document synthesis, Aneevarp Solutions today unveiled ZenDoc AI (pdf-analizing-and-answering-bot.vercel.app). The platform ingests complex PDFs, multi-page reports, and technical documentation, providing instant verified answers and citation references.',
     category: 'Product Launch',
     author: 'Aneevarp Tech & Product Office',
     publishedAt: new Date('2026-08-26'),
@@ -103,8 +103,8 @@ export class PressService {
       },
       portfolioSummary: [
         { name: 'ZenResume', url: 'https://zenresume.online', metric: '125,000+ Resumes Generated' },
-        { name: 'AI Job Search Agent', url: 'https://ai-job-search-agent-chi.vercel.app/', metric: '850,000+ Jobs Indexed' },
-        { name: 'PDF Analyzing & Answering Bot', url: 'https://pdf-analizing-and-answering-bot.vercel.app/', metric: '95,000+ PDFs Analyzed' },
+        { name: 'ZenScout AI', url: 'https://ai-job-search-agent-chi.vercel.app/', metric: '850,000+ Jobs Indexed' },
+        { name: 'ZenDoc AI', url: 'https://pdf-analizing-and-answering-bot.vercel.app/', metric: '95,000+ PDFs Analyzed' },
       ],
     };
   }

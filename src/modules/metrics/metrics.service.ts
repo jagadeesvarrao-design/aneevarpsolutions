@@ -23,8 +23,8 @@ const FALLBACK_METRICS = {
       ],
     },
     {
-      name: 'AI Job Search Agent',
-      slug: 'ai-job-search-agent',
+      name: 'ZenScout AI',
+      slug: 'zenscout-ai',
       stage: 'LIVE',
       metrics: [
         { metricKey: 'jobs_indexed', metricValue: 850000, metricLabel: 'Active Opportunities Indexed' },
@@ -32,8 +32,8 @@ const FALLBACK_METRICS = {
       ],
     },
     {
-      name: 'PDF Analyzing & Answering Bot',
-      slug: 'pdf-analizing-and-answering-bot',
+      name: 'ZenDoc AI',
+      slug: 'zendoc-ai',
       stage: 'LIVE',
       metrics: [
         { metricKey: 'documents_processed', metricValue: 95000, metricLabel: 'Documents & PDFs Analyzed' },

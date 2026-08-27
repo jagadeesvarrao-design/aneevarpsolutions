@@ -19,8 +19,8 @@ const FALLBACK_VENTURES = [
   },
   {
     id: '2',
-    name: 'AI Job Search Agent',
-    slug: 'ai-job-search-agent',
+    name: 'ZenScout AI',
+    slug: 'zenscout-ai',
     tagline: 'Autonomous AI Career Matchmaker & Opportunity Finder',
     description:
       'An autonomous AI multi-agent system that scans thousands of real-time job portals, matches candidate profiles to open roles with deep semantic analysis, and streamlines job hunting.',
@@ -33,8 +33,8 @@ const FALLBACK_VENTURES = [
   },
   {
     id: '3',
-    name: 'PDF Analyzing & Answering Bot',
-    slug: 'pdf-analizing-and-answering-bot',
+    name: 'ZenDoc AI',
+    slug: 'zendoc-ai',
     tagline: 'Autonomous AI Document Intelligence, PDF Parsing & Instant Q&A',
     description:
       'A high-precision AI document comprehension bot that analyzes complex PDFs, research papers, resumes, and enterprise manuals, extracting structured insights and delivering instant, verified answers with deep semantic understanding.',
@@ -61,6 +61,25 @@ const FALLBACK_VENTURES = [
   },
 ];
 
+function normalizeVenture(v: any) {
+  let name = v.name;
+  let slug = v.slug;
+  if (v.slug === 'ai-job-search-agent' || v.slug === 'zenscout-ai') {
+    name = 'ZenScout AI';
+    slug = 'zenscout-ai';
+  } else if (v.slug === 'pdf-analizing-and-answering-bot' || v.slug === 'zendoc-ai') {
+    name = 'ZenDoc AI';
+    slug = 'zendoc-ai';
+  }
+  return {
+    ...v,
+    name,
+    slug,
+    techStack: typeof v.techStackJson === 'string' ? JSON.parse(v.techStackJson || '[]') : v.techStack || [],
+    metrics: typeof v.metricsJson === 'string' ? JSON.parse(v.metricsJson || '{}') : v.metrics || {},
+  };
+}
+
 export class VenturesService {
   async getAllVentures(stage?: VentureStageType, featuredOnly?: boolean) {
     try {
@@ -75,11 +94,7 @@ export class VenturesService {
 
       if (!ventures || ventures.length === 0) return FALLBACK_VENTURES;
 
-      return ventures.map((v) => ({
-        ...v,
-        techStack: JSON.parse(v.techStackJson || '[]'),
-        metrics: JSON.parse(v.metricsJson || '{}'),
-      }));
+      return ventures.map(normalizeVenture);
     } catch (err) {
       console.warn('[Prisma Fallback] Using in-memory ventures data:', err);
       return FALLBACK_VENTURES;
@@ -88,8 +103,16 @@ export class VenturesService {
 
   async getVentureBySlug(slug: string) {
     try {
-      const venture = await prisma.venture.findUnique({
-        where: { slug },
+      const venture = await prisma.venture.findFirst({
+        where: {
+          OR: [
+            { slug },
+            ...(slug === 'zenscout-ai' ? [{ slug: 'ai-job-search-agent' }] : []),
+            ...(slug === 'ai-job-search-agent' ? [{ slug: 'zenscout-ai' }] : []),
+            ...(slug === 'zendoc-ai' ? [{ slug: 'pdf-analizing-and-answering-bot' }] : []),
+            ...(slug === 'pdf-analizing-and-answering-bot' ? [{ slug: 'zendoc-ai' }] : []),
+          ],
+        },
         include: {
           careers: {
             where: { isActive: true },
@@ -98,18 +121,26 @@ export class VenturesService {
       });
 
       if (!venture) {
-        const fallback = FALLBACK_VENTURES.find((v) => v.slug === slug);
+        const fallback = FALLBACK_VENTURES.find(
+          (v) =>
+            v.slug === slug ||
+            (slug === 'ai-job-search-agent' && v.slug === 'zenscout-ai') ||
+            (slug === 'pdf-analizing-and-answering-bot' && v.slug === 'zendoc-ai')
+        );
         return fallback || null;
       }
 
-      return {
-        ...venture,
-        techStack: JSON.parse(venture.techStackJson || '[]'),
-        metrics: JSON.parse(venture.metricsJson || '{}'),
-      };
+      return normalizeVenture(venture);
     } catch (err) {
       console.warn('[Prisma Fallback] Using in-memory venture details for slug:', slug);
-      return FALLBACK_VENTURES.find((v) => v.slug === slug) || null;
+      return (
+        FALLBACK_VENTURES.find(
+          (v) =>
+            v.slug === slug ||
+            (slug === 'ai-job-search-agent' && v.slug === 'zenscout-ai') ||
+            (slug === 'pdf-analizing-and-answering-bot' && v.slug === 'zendoc-ai')
+        ) || null
+      );
     }
   }
 
@@ -141,11 +172,7 @@ export class VenturesService {
         },
       });
 
-      return {
-        ...created,
-        techStack: JSON.parse(created.techStackJson),
-        metrics: JSON.parse(created.metricsJson),
-      };
+      return normalizeVenture(created);
     } catch (err) {
       return {
         id: 'new-venture',

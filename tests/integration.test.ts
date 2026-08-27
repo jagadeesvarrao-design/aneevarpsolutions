@@ -28,6 +28,20 @@ describe('Aneevarp Solutions Backend API Integration Tests', () => {
     expect(res.body.data.websiteUrl).toBe('https://zenresume.online');
   });
 
+  it('GET /api/v1/ventures/zenscout-ai - should return ZenScout AI venture details', async () => {
+    const res = await request(app).get('/api/v1/ventures/zenscout-ai');
+    expect(res.status).toBe(200);
+    expect(res.body.success).toBe(true);
+    expect(res.body.data.name).toBe('ZenScout AI');
+  });
+
+  it('GET /api/v1/ventures/zendoc-ai - should return ZenDoc AI venture details', async () => {
+    const res = await request(app).get('/api/v1/ventures/zendoc-ai');
+    expect(res.status).toBe(200);
+    expect(res.body.success).toBe(true);
+    expect(res.body.data.name).toBe('ZenDoc AI');
+  });
+
   it('GET /api/v1/press - should return press releases', async () => {
     const res = await request(app).get('/api/v1/press');
     expect(res.status).toBe(200);

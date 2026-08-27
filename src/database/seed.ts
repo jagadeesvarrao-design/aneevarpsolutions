@@ -27,11 +27,13 @@ async function seed() {
   });
 
   const jobSearchAgent = await prisma.venture.upsert({
-    where: { slug: 'ai-job-search-agent' },
-    update: {},
+    where: { slug: 'zenscout-ai' },
+    update: {
+      name: 'ZenScout AI',
+    },
     create: {
-      name: 'AI Job Search Agent',
-      slug: 'ai-job-search-agent',
+      name: 'ZenScout AI',
+      slug: 'zenscout-ai',
       tagline: 'Autonomous AI Career Matchmaker & Opportunity Finder',
       description:
         'An autonomous AI multi-agent system that scans thousands of real-time job portals, matches candidate profiles to open roles with deep semantic analysis, and streamlines job hunting.',
@@ -49,11 +51,13 @@ async function seed() {
   });
 
   const pdfBot = await prisma.venture.upsert({
-    where: { slug: 'pdf-analizing-and-answering-bot' },
-    update: {},
+    where: { slug: 'zendoc-ai' },
+    update: {
+      name: 'ZenDoc AI',
+    },
     create: {
-      name: 'PDF Analyzing & Answering Bot',
-      slug: 'pdf-analizing-and-answering-bot',
+      name: 'ZenDoc AI',
+      slug: 'zendoc-ai',
       tagline: 'Autonomous AI Document Intelligence, PDF Parsing & Instant Q&A',
       description:
         'A high-precision AI document comprehension bot that analyzes complex PDFs, research papers, resumes, and enterprise manuals, extracting structured insights and delivering instant, verified answers with deep semantic understanding.',
