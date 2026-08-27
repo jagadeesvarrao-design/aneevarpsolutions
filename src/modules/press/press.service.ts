@@ -95,12 +95,11 @@ export class PressService {
       brandAssets: {
         logoPrimaryJpg: 'https://aneevarpsolutions.vercel.app/images/brand-logo.jpg',
         logoZenResumePng: 'https://aneevarpsolutions.vercel.app/images/zenresume-logo.png',
-        pressContactEmail: 'support@zenresume.com',
+        pressContactEmail: 'aneevarpsolutions@gmail.com',
       },
       pressContact: {
-        email: 'support@zenresume.com',
-        founderEmail: 'aneevarpsolutions@gmail.com',
-        mediaInquiriesPhone: '+91 (040) 4859-2026',
+        email: 'aneevarpsolutions@gmail.com',
+        mediaInquiriesPhone: '+91 8790906267',
       },
       portfolioSummary: [
         { name: 'ZenResume', url: 'https://zenresume.online', metric: '125,000+ Resumes Generated' },
