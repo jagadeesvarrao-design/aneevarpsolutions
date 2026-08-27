@@ -769,7 +769,7 @@
                         <div class="badge-tag text-primary mb-2">Corporate Newsroom</div>
                         <h2 class="font-display-lg text-2xl sm:text-3xl lg:text-4xl text-slate-deep font-bold">Press & Announcements</h2>
                     </div>
-                    <button onclick="openMediaKitModal()" class="btn-animate border border-sage-border text-primary font-label-caps text-xs uppercase px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl hover:bg-primary-light font-bold shadow-sm gap-2">
+                    <button type="button" data-modal-target="mediakit-modal" onclick="openMediaKitModal()" class="btn-animate border border-sage-border text-primary font-label-caps text-xs uppercase px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl hover:bg-primary-light font-bold shadow-sm gap-2 cursor-pointer inline-flex items-center">
                         <span class="material-symbols-outlined text-sm">download</span> Open Media Kit
                     </button>
                 </div>
@@ -1072,33 +1072,62 @@
             <h3 class="font-display-lg text-xl sm:text-2xl font-bold text-slate-deep mb-4">Aneevarp Solutions Brand Kit</h3>
 
             <div class="space-y-5 text-xs sm:text-sm text-secondary">
+                <!-- Brand Visual Preview Card -->
+                <div class="p-4 bg-slate-deep rounded-2xl border border-white/10 flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl overflow-hidden border border-white/20 bg-black shrink-0">
+                            <img src="/images/brand-logo.jpg" alt="Aneevarp Logo" class="w-full h-full object-cover"/>
+                        </div>
+                        <div class="text-ivory-base">
+                            <div class="font-bold text-sm">Aneevarp Solutions</div>
+                            <div class="text-[11px] text-sage-muted font-label-caps">Official Master Emblem (Obsidian Dark)</div>
+                        </div>
+                    </div>
+                    <a href="/images/brand-logo.jpg" download="Aneevarp_Solutions_Logo.jpg" class="btn-animate inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-primary text-on-primary text-xs font-bold font-label-caps uppercase hover:bg-primary-hover shrink-0">
+                        <span class="material-symbols-outlined text-sm">download</span> Download
+                    </a>
+                </div>
+
                 <div>
                     <div class="font-bold text-slate-deep mb-2 uppercase font-label-caps text-[11px]">Official Brand Color Palette</div>
                     <div class="grid grid-cols-4 gap-2 text-center text-[10px] sm:text-xs">
                         <div class="p-2.5 rounded-xl bg-[#476550] text-white font-bold shadow-sm">Sage<br/>#476550</div>
                         <div class="p-2.5 rounded-xl bg-[#1A1F1F] text-white font-bold shadow-sm">Slate<br/>#1A1F1F</div>
                         <div class="p-2.5 rounded-xl bg-[#FCFAF5] text-slate-deep border border-sage-border font-bold shadow-sm">Ivory<br/>#FCFAF5</div>
-                        <div class="p-2.5 rounded-xl bg-[#A2BCA8] text-slate-deep font-bold shadow-sm">Muted<br/>#A2BCA8</div>
+                        <div class="p-2.5 rounded-xl bg-[#F59E0B] text-slate-deep font-bold shadow-sm">Amber<br/>#F59E0B</div>
                     </div>
                 </div>
 
                 <div>
-                    <div class="font-bold text-slate-deep mb-2 uppercase font-label-caps text-[11px]">Approved Media Assets</div>
+                    <div class="font-bold text-slate-deep mb-2 uppercase font-label-caps text-[11px]">Approved Brand & Product Assets</div>
                     <div class="space-y-2">
-                        <a href="/api/v1/press/media-kit" class="btn-animate flex items-center justify-between p-3 bg-white rounded-xl border border-sage-border hover:border-primary text-xs">
-                            <span class="font-medium text-slate-deep">Aneevarp Vector Logo Package (.SVG & .PNG)</span>
+                        <a href="/images/brand-logo.jpg" download="Aneevarp_Brand_Logo.jpg" class="btn-animate flex items-center justify-between p-3 bg-white rounded-xl border border-sage-border hover:border-primary text-xs cursor-pointer">
+                            <div class="flex items-center gap-2.5">
+                                <span class="material-symbols-outlined text-primary">image</span>
+                                <span class="font-medium text-slate-deep">Aneevarp Master Brand Logo (High-Res JPG)</span>
+                            </div>
                             <span class="material-symbols-outlined text-primary">download</span>
                         </a>
-                        <a href="/api/v1/press/media-kit" class="btn-animate flex items-center justify-between p-3 bg-white rounded-xl border border-sage-border hover:border-primary text-xs">
-                            <span class="font-medium text-slate-deep">Brand Guidelines & Press Information PDF</span>
+                        <a href="/images/zenresume-logo.png" download="ZenResume_Logo.png" class="btn-animate flex items-center justify-between p-3 bg-white rounded-xl border border-sage-border hover:border-primary text-xs cursor-pointer">
+                            <div class="flex items-center gap-2.5">
+                                <span class="material-symbols-outlined text-primary">description</span>
+                                <span class="font-medium text-slate-deep">ZenResume Official Product Logo (PNG)</span>
+                            </div>
                             <span class="material-symbols-outlined text-primary">download</span>
+                        </a>
+                        <a href="/api/v1/press/media-kit" target="_blank" class="btn-animate flex items-center justify-between p-3 bg-white rounded-xl border border-sage-border hover:border-primary text-xs cursor-pointer">
+                            <div class="flex items-center gap-2.5">
+                                <span class="material-symbols-outlined text-primary">newspaper</span>
+                                <span class="font-medium text-slate-deep">JSON Media Kit & Verified Corporate Portfolio</span>
+                            </div>
+                            <span class="material-symbols-outlined text-primary">open_in_new</span>
                         </a>
                     </div>
                 </div>
 
                 <div>
                     <div class="font-bold text-slate-deep uppercase font-label-caps text-[11px] mb-1">Press Contact</div>
-                    <p class="text-xs text-secondary">For media inquiries: <a href="mailto:support@zenresume.com" class="text-primary font-bold underline">support@zenresume.com</a></p>
+                    <p class="text-xs text-secondary">Official Communications: <a href="mailto:support@zenresume.com" class="text-primary font-bold underline">support@zenresume.com</a> / <a href="mailto:aneevarpsolutions@gmail.com" class="text-primary font-bold underline">aneevarpsolutions@gmail.com</a></p>
                 </div>
             </div>
         </div>

@@ -93,12 +93,13 @@ export class PressService {
       foundedYear: '2026',
       tagline: 'Building the Next Generation of AI Productivity, Document & Career Systems',
       brandAssets: {
-        logoPrimarySvg: 'https://aneevarpsolutions.vercel.app/assets/press/logo-primary.svg',
-        logoWhitePng: 'https://aneevarpsolutions.vercel.app/assets/press/logo-white.png',
-        brandGuidelinesPdf: 'https://aneevarpsolutions.vercel.app/assets/press/brand-guidelines.pdf',
+        logoPrimaryJpg: 'https://aneevarpsolutions.vercel.app/images/brand-logo.jpg',
+        logoZenResumePng: 'https://aneevarpsolutions.vercel.app/images/zenresume-logo.png',
+        pressContactEmail: 'support@zenresume.com',
       },
       pressContact: {
         email: 'support@zenresume.com',
+        founderEmail: 'aneevarpsolutions@gmail.com',
         mediaInquiriesPhone: '+91 (040) 4859-2026',
       },
       portfolioSummary: [
