@@ -236,6 +236,26 @@
                 padding-right: 2rem;
             }
         }
+
+        /* Bulletproof Modal Overlay System */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(26, 31, 31, 0.78);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+        .modal-overlay.active {
+            display: flex !important;
+        }
     </style>
 </head>
 <body class="font-body-md antialiased selection:bg-primary-light selection:text-primary">
@@ -306,20 +326,16 @@
                 <a class="nav-link hover:text-primary transition-colors py-1" href="/docs">APIs</a>
             </div>
 
-            <!-- Action Buttons Area -->
-            <div class="hidden sm:flex items-center gap-2 shrink-0">
-                <button type="button" onclick="openGrievanceModal()" class="btn-animate border border-sage-muted/60 text-primary font-label-caps text-xs uppercase px-3 py-2 rounded-xl hover:bg-primary-light transition-all font-semibold flex items-center gap-1.5 cursor-pointer" title="Statutory Grievance Redressal Desk (IT Rules 2021)">
-                    <span class="material-symbols-outlined text-base">gavel</span>
-                    <span class="inline">Grievance</span>
-                </button>
-                <button type="button" onclick="openContactModal()" class="btn-animate btn-shimmer bg-primary text-on-primary font-label-caps text-xs uppercase px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl hover:bg-primary-hover transition-all shadow-sm font-bold whitespace-nowrap cursor-pointer">
+            <!-- Action Buttons Area (Clean Single CTA) -->
+            <div class="hidden sm:flex items-center gap-3 shrink-0">
+                <button type="button" onclick="openContactModal()" class="btn-animate btn-shimmer bg-primary text-on-primary font-label-caps text-xs uppercase px-5 py-2.5 rounded-xl hover:bg-primary-hover transition-all shadow-sm font-bold whitespace-nowrap cursor-pointer">
                     Contact Us
                 </button>
             </div>
 
             <!-- Mobile & Tablet Menu Toggle Button -->
             <div class="flex items-center gap-1.5 lg:hidden">
-                <button onclick="openContactModal()" class="sm:hidden btn-animate bg-primary text-on-primary font-label-caps text-[11px] uppercase px-3 py-1.5 rounded-lg font-bold">
+                <button onclick="openContactModal()" class="sm:hidden btn-animate bg-primary text-on-primary font-label-caps text-[11px] uppercase px-3.5 py-1.5 rounded-lg font-bold">
                     Contact
                 </button>
                 <button onclick="toggleMobileMenu()" class="btn-animate text-slate-deep hover:text-primary p-2 rounded-xl border border-sage-border/60 hover:bg-white transition-colors" aria-label="Toggle Navigation Menu">
@@ -365,12 +381,9 @@
                 </a>
             </div>
 
-            <!-- Quick Action Buttons inside Mobile Menu -->
-            <div class="flex gap-2 pt-3">
-                <button onclick="openGrievanceModal(); toggleMobileMenu();" class="btn-animate w-1/2 border border-sage-muted text-primary py-2.5 rounded-xl text-center text-xs font-label-caps uppercase font-bold flex items-center justify-center gap-1.5">
-                    <span class="material-symbols-outlined text-sm">gavel</span> Grievance
-                </button>
-                <button onclick="openContactModal(); toggleMobileMenu();" class="btn-animate btn-shimmer w-1/2 bg-primary text-on-primary py-2.5 rounded-xl text-center text-xs font-label-caps uppercase font-bold">
+            <!-- Quick Action Button inside Mobile Menu -->
+            <div class="pt-3">
+                <button onclick="openContactModal(); toggleMobileMenu();" class="btn-animate btn-shimmer w-full bg-primary text-on-primary py-2.5 rounded-xl text-center text-xs font-label-caps uppercase font-bold">
                     Contact Us
                 </button>
             </div>
@@ -725,7 +738,7 @@
                                 Formal grievance redressal mechanism with mandatory 24-hour statutory acknowledgment and 15-day resolution turnaround.
                             </p>
                         </div>
-                        <button onclick="openGrievanceModal()" class="btn-animate bg-primary text-on-primary py-2.5 px-4 rounded-xl text-xs font-label-caps uppercase font-bold text-center">
+                        <button type="button" onclick="openGrievanceModal()" class="btn-animate bg-primary text-on-primary py-2.5 px-4 rounded-xl text-xs font-label-caps uppercase font-bold text-center cursor-pointer hover:bg-primary-hover shadow-sm">
                             Access Grievance Desk
                         </button>
                     </div>
@@ -738,7 +751,7 @@
                                 Exercise your statutory rights under Indian Data Protection Law — access personal summaries, correct records, or request complete data erasure.
                             </p>
                         </div>
-                        <button onclick="openDataRightsModal()" class="btn-animate border border-primary text-primary hover:bg-primary-light py-2.5 px-4 rounded-xl text-xs font-label-caps uppercase font-bold text-center">
+                        <button type="button" onclick="openDataRightsModal()" class="btn-animate border border-primary text-primary hover:bg-primary-light py-2.5 px-4 rounded-xl text-xs font-label-caps uppercase font-bold text-center cursor-pointer">
                             Submit Data Privacy Request
                         </button>
                     </div>
@@ -821,9 +834,9 @@
     </footer>
 
     <!-- Contact Modal -->
-    <div id="contact-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-slate-deep/75 backdrop-blur-sm p-3 sm:p-4" onclick="if(event.target===this)closeContactModal()" role="dialog" aria-modal="true">
+    <div id="contact-modal" class="modal-overlay" onclick="if(event.target===this)closeContactModal()" role="dialog" aria-modal="true">
         <div class="bg-ivory-base rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border relative animate-fade-in-up">
-            <button onclick="closeContactModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5" aria-label="Close Modal">
+            <button onclick="closeContactModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5 cursor-pointer" aria-label="Close Modal">
                 <span class="material-symbols-outlined">close</span>
             </button>
             <h3 class="font-display-lg text-xl sm:text-2xl font-bold text-slate-deep mb-1">Contact Aneevarp Solutions</h3>
@@ -855,7 +868,7 @@
                     <label class="block text-[11px] font-label-caps uppercase text-secondary mb-1">Message</label>
                     <textarea id="contact-message" required rows="3" class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border bg-white text-slate-deep focus:outline-none focus:border-primary text-xs sm:text-sm"></textarea>
                 </div>
-                <button type="submit" class="btn-animate btn-shimmer w-full bg-primary text-on-primary py-3 rounded-xl font-label-caps text-xs uppercase hover:bg-primary-hover font-bold shadow-md">
+                <button type="submit" class="btn-animate btn-shimmer w-full bg-primary text-on-primary py-3 rounded-xl font-label-caps text-xs uppercase hover:bg-primary-hover font-bold shadow-md cursor-pointer">
                     Send Inquiry
                 </button>
             </form>
@@ -863,7 +876,7 @@
     </div>
 
     <!-- Statutory IT Rules 2021 Grievance Redressal Modal -->
-    <div id="grievance-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-slate-deep/75 backdrop-blur-sm p-3 sm:p-4" onclick="if(event.target===this)closeGrievanceModal()" role="dialog" aria-modal="true">
+    <div id="grievance-modal" class="modal-overlay" onclick="if(event.target===this)closeGrievanceModal()" role="dialog" aria-modal="true">
         <div class="bg-ivory-base rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border relative animate-fade-in-up">
             <button onclick="closeGrievanceModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5 cursor-pointer" aria-label="Close Modal">
                 <span class="material-symbols-outlined">close</span>
@@ -900,9 +913,9 @@
     </div>
 
     <!-- DPDP Act 2023 Data Principal Rights (DSR) Modal -->
-    <div id="datarights-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-slate-deep/75 backdrop-blur-sm p-3 sm:p-4" onclick="if(event.target===this)closeDataRightsModal()" role="dialog" aria-modal="true">
+    <div id="datarights-modal" class="modal-overlay" onclick="if(event.target===this)closeDataRightsModal()" role="dialog" aria-modal="true">
         <div class="bg-ivory-base rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border relative animate-fade-in-up">
-            <button onclick="closeDataRightsModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5" aria-label="Close Modal">
+            <button onclick="closeDataRightsModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5 cursor-pointer" aria-label="Close Modal">
                 <span class="material-symbols-outlined">close</span>
             </button>
             <div class="badge-tag text-primary mb-1">Digital Personal Data Protection Act, 2023</div>
@@ -930,7 +943,7 @@
                     <label class="block text-[11px] font-label-caps uppercase text-secondary mb-1">Request Notes</label>
                     <textarea id="dsr-details" required rows="3" placeholder="Provide any details for verification..." class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border bg-white text-slate-deep text-xs"></textarea>
                 </div>
-                <button type="submit" class="btn-animate btn-shimmer w-full bg-primary text-on-primary py-3 rounded-xl font-label-caps text-xs uppercase font-bold shadow-md">
+                <button type="submit" class="btn-animate btn-shimmer w-full bg-primary text-on-primary py-3 rounded-xl font-label-caps text-xs uppercase font-bold shadow-md cursor-pointer">
                     Submit Data Principal Request (DSR)
                 </button>
             </form>
@@ -938,9 +951,9 @@
     </div>
 
     <!-- Venture Studio Pitch Modal -->
-    <div id="pitch-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-slate-deep/75 backdrop-blur-sm p-3 sm:p-4" onclick="if(event.target===this)closePitchModal()" role="dialog" aria-modal="true">
+    <div id="pitch-modal" class="modal-overlay" onclick="if(event.target===this)closePitchModal()" role="dialog" aria-modal="true">
         <div class="bg-ivory-base rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border relative animate-fade-in-up">
-            <button onclick="closePitchModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5" aria-label="Close Modal">
+            <button onclick="closePitchModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5 cursor-pointer" aria-label="Close Modal">
                 <span class="material-symbols-outlined">close</span>
             </button>
             <div class="badge-tag text-primary mb-1">Aneevarp Venture Studio</div>
@@ -964,7 +977,7 @@
                     <label class="block text-[11px] font-label-caps uppercase text-secondary mb-1">Executive Summary / Pitch</label>
                     <textarea id="pitch-message" required rows="3" placeholder="Describe product value, tech stack, and partnership vision..." class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border bg-white text-slate-deep text-xs sm:text-sm"></textarea>
                 </div>
-                <button type="submit" class="btn-animate btn-shimmer w-full bg-slate-deep text-ivory-base py-3 rounded-xl font-label-caps text-xs uppercase hover:bg-primary font-bold shadow-md">
+                <button type="submit" class="btn-animate btn-shimmer w-full bg-slate-deep text-ivory-base py-3 rounded-xl font-label-caps text-xs uppercase hover:bg-primary font-bold shadow-md cursor-pointer">
                     Submit Proposal to Studio Desk
                 </button>
             </form>
@@ -972,7 +985,7 @@
     </div>
 
     <!-- Media Kit & Brand Asset Modal -->
-    <div id="mediakit-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-slate-deep/75 backdrop-blur-sm p-3 sm:p-4" onclick="if(event.target===this)closeMediaKitModal()" role="dialog" aria-modal="true">
+    <div id="mediakit-modal" class="modal-overlay" onclick="if(event.target===this)closeMediaKitModal()" role="dialog" aria-modal="true">
         <div class="bg-ivory-base rounded-2xl sm:rounded-3xl max-w-xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border relative animate-fade-in-up">
             <button onclick="closeMediaKitModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5" aria-label="Close Modal">
                 <span class="material-symbols-outlined">close</span>
@@ -1062,34 +1075,37 @@
 
         function openModal(id) {
             const el = document.getElementById(id);
-            if (!el) return;
-            el.classList.remove('hidden');
-            el.classList.add('flex');
+            if (!el) {
+                console.error('[Modal Error] Element not found:', id);
+                return;
+            }
+            el.classList.add('active');
+            el.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
 
         function closeModal(id) {
             const el = document.getElementById(id);
             if (!el) return;
-            el.classList.add('hidden');
-            el.classList.remove('flex');
+            el.classList.remove('active');
+            el.style.display = 'none';
             document.body.style.overflow = '';
         }
 
-        function openContactModal() { openModal('contact-modal'); }
-        function closeContactModal() { closeModal('contact-modal'); }
+        window.openContactModal = function() { openModal('contact-modal'); };
+        window.closeContactModal = function() { closeModal('contact-modal'); };
 
-        function openPitchModal() { openModal('pitch-modal'); }
-        function closePitchModal() { closeModal('pitch-modal'); }
+        window.openPitchModal = function() { openModal('pitch-modal'); };
+        window.closePitchModal = function() { closeModal('pitch-modal'); };
 
-        function openMediaKitModal() { openModal('mediakit-modal'); }
-        function closeMediaKitModal() { closeModal('mediakit-modal'); }
+        window.openMediaKitModal = function() { openModal('mediakit-modal'); };
+        window.closeMediaKitModal = function() { closeModal('mediakit-modal'); };
 
-        function openGrievanceModal() { openModal('grievance-modal'); }
-        function closeGrievanceModal() { closeModal('grievance-modal'); }
+        window.openGrievanceModal = function() { openModal('grievance-modal'); };
+        window.closeGrievanceModal = function() { closeModal('grievance-modal'); };
 
-        function openDataRightsModal() { openModal('datarights-modal'); }
-        function closeDataRightsModal() { closeModal('datarights-modal'); }
+        window.openDataRightsModal = function() { openModal('datarights-modal'); };
+        window.closeDataRightsModal = function() { closeModal('datarights-modal'); };
 
         // Close modals on ESC key
         document.addEventListener('keydown', (e) => {
