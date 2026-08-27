@@ -308,11 +308,11 @@
 
             <!-- Action Buttons Area -->
             <div class="hidden sm:flex items-center gap-2 shrink-0">
-                <button onclick="openGrievanceModal()" class="btn-animate border border-sage-muted/60 text-primary font-label-caps text-xs uppercase px-3 py-2 rounded-xl hover:bg-primary-light transition-all font-semibold flex items-center gap-1.5" title="Statutory Grievance Redressal Desk (IT Rules 2021)">
+                <button type="button" onclick="openGrievanceModal()" class="btn-animate border border-sage-muted/60 text-primary font-label-caps text-xs uppercase px-3 py-2 rounded-xl hover:bg-primary-light transition-all font-semibold flex items-center gap-1.5 cursor-pointer" title="Statutory Grievance Redressal Desk (IT Rules 2021)">
                     <span class="material-symbols-outlined text-base">gavel</span>
-                    <span class="hidden xl:inline">Grievance</span>
+                    <span class="inline">Grievance</span>
                 </button>
-                <button onclick="openContactModal()" class="btn-animate btn-shimmer bg-primary text-on-primary font-label-caps text-xs uppercase px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl hover:bg-primary-hover transition-all shadow-sm font-bold whitespace-nowrap">
+                <button type="button" onclick="openContactModal()" class="btn-animate btn-shimmer bg-primary text-on-primary font-label-caps text-xs uppercase px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl hover:bg-primary-hover transition-all shadow-sm font-bold whitespace-nowrap cursor-pointer">
                     Contact Us
                 </button>
             </div>
@@ -777,8 +777,8 @@
                     <div class="badge-tag text-sage-muted mb-3">Portfolio Ventures (3 Live)</div>
                     <ul class="space-y-2 text-xs sm:text-sm text-white/70">
                         <li><a href="https://zenresume.online" target="_blank" class="hover:text-white transition-colors flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> ZenResume.online</a></li>
-                        <li><a href="https://ai-job-search-agent-chi.vercel.app/" target="_blank" class="hover:text-white transition-colors flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> AI Job Search Agent</a></li>
-                        <li><a href="https://pdf-analizing-and-answering-bot.vercel.app/" target="_blank" class="hover:text-white transition-colors flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-red-400"></span> PDF Analyzing Bot</a></li>
+                        <li><a href="https://ai-job-search-agent-chi.vercel.app/" target="_blank" class="hover:text-white transition-colors flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> ZenScout AI</a></li>
+                        <li><a href="https://pdf-analizing-and-answering-bot.vercel.app/" target="_blank" class="hover:text-white transition-colors flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-red-400"></span> ZenDoc AI</a></li>
                         <li><a href="#portfolio" class="hover:text-white transition-colors flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> Aneevarp Cloud Labs</a></li>
                     </ul>
                 </div>
@@ -821,7 +821,7 @@
     </footer>
 
     <!-- Contact Modal -->
-    <div id="contact-modal" class="fixed inset-0 z-50 hidden bg-slate-deep/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4" role="dialog" aria-modal="true">
+    <div id="contact-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-slate-deep/75 backdrop-blur-sm p-3 sm:p-4" onclick="if(event.target===this)closeContactModal()" role="dialog" aria-modal="true">
         <div class="bg-ivory-base rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border relative animate-fade-in-up">
             <button onclick="closeContactModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5" aria-label="Close Modal">
                 <span class="material-symbols-outlined">close</span>
@@ -863,15 +863,15 @@
     </div>
 
     <!-- Statutory IT Rules 2021 Grievance Redressal Modal -->
-    <div id="grievance-modal" class="fixed inset-0 z-50 hidden bg-slate-deep/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4" role="dialog" aria-modal="true">
+    <div id="grievance-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-slate-deep/75 backdrop-blur-sm p-3 sm:p-4" onclick="if(event.target===this)closeGrievanceModal()" role="dialog" aria-modal="true">
         <div class="bg-ivory-base rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border relative animate-fade-in-up">
-            <button onclick="closeGrievanceModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5" aria-label="Close Modal">
+            <button onclick="closeGrievanceModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5 cursor-pointer" aria-label="Close Modal">
                 <span class="material-symbols-outlined">close</span>
             </button>
             <div class="badge-tag text-primary mb-1">Rule 3(2) IT Rules, 2021</div>
             <h3 class="font-display-lg text-xl sm:text-2xl font-bold text-slate-deep mb-2">Grievance Redressal Officer</h3>
             <p class="text-xs text-secondary mb-4 leading-relaxed">
-                In compliance with the Information Technology Act, 2000 and Intermediary Guidelines Rules 2021:
+                In statutory compliance with the Information Technology Act, 2000 and Intermediary Guidelines Rules 2021:
             </p>
 
             <div class="bg-white p-4 rounded-xl border border-sage-border space-y-2 text-xs text-secondary mb-4">
@@ -892,7 +892,7 @@
                 <div>
                     <textarea id="grievance-desc" required rows="3" placeholder="Describe the grievance or concern..." class="w-full px-3 py-2 rounded-lg border border-sage-border bg-white text-xs"></textarea>
                 </div>
-                <button type="submit" class="btn-animate btn-shimmer w-full bg-slate-deep text-ivory-base py-3 rounded-xl font-label-caps text-xs uppercase font-bold shadow-md">
+                <button type="submit" class="btn-animate btn-shimmer w-full bg-slate-deep text-ivory-base py-3 rounded-xl font-label-caps text-xs uppercase font-bold shadow-md cursor-pointer">
                     File Statutory Grievance Ticket
                 </button>
             </form>
@@ -900,7 +900,7 @@
     </div>
 
     <!-- DPDP Act 2023 Data Principal Rights (DSR) Modal -->
-    <div id="datarights-modal" class="fixed inset-0 z-50 hidden bg-slate-deep/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4" role="dialog" aria-modal="true">
+    <div id="datarights-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-slate-deep/75 backdrop-blur-sm p-3 sm:p-4" onclick="if(event.target===this)closeDataRightsModal()" role="dialog" aria-modal="true">
         <div class="bg-ivory-base rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border relative animate-fade-in-up">
             <button onclick="closeDataRightsModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5" aria-label="Close Modal">
                 <span class="material-symbols-outlined">close</span>
@@ -938,7 +938,7 @@
     </div>
 
     <!-- Venture Studio Pitch Modal -->
-    <div id="pitch-modal" class="fixed inset-0 z-50 hidden bg-slate-deep/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4" role="dialog" aria-modal="true">
+    <div id="pitch-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-slate-deep/75 backdrop-blur-sm p-3 sm:p-4" onclick="if(event.target===this)closePitchModal()" role="dialog" aria-modal="true">
         <div class="bg-ivory-base rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border relative animate-fade-in-up">
             <button onclick="closePitchModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5" aria-label="Close Modal">
                 <span class="material-symbols-outlined">close</span>
@@ -972,7 +972,7 @@
     </div>
 
     <!-- Media Kit & Brand Asset Modal -->
-    <div id="mediakit-modal" class="fixed inset-0 z-50 hidden bg-slate-deep/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4" role="dialog" aria-modal="true">
+    <div id="mediakit-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-slate-deep/75 backdrop-blur-sm p-3 sm:p-4" onclick="if(event.target===this)closeMediaKitModal()" role="dialog" aria-modal="true">
         <div class="bg-ivory-base rounded-2xl sm:rounded-3xl max-w-xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border relative animate-fade-in-up">
             <button onclick="closeMediaKitModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5" aria-label="Close Modal">
                 <span class="material-symbols-outlined">close</span>
@@ -1060,20 +1060,36 @@
             }
         }
 
-        function openContactModal() { document.getElementById('contact-modal').classList.remove('hidden'); }
-        function closeContactModal() { document.getElementById('contact-modal').classList.add('hidden'); }
+        function openModal(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.classList.remove('hidden');
+            el.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
 
-        function openPitchModal() { document.getElementById('pitch-modal').classList.remove('hidden'); }
-        function closePitchModal() { document.getElementById('pitch-modal').classList.add('hidden'); }
+        function closeModal(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.classList.add('hidden');
+            el.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
 
-        function openMediaKitModal() { document.getElementById('mediakit-modal').classList.remove('hidden'); }
-        function closeMediaKitModal() { document.getElementById('mediakit-modal').classList.add('hidden'); }
+        function openContactModal() { openModal('contact-modal'); }
+        function closeContactModal() { closeModal('contact-modal'); }
 
-        function openGrievanceModal() { document.getElementById('grievance-modal').classList.remove('hidden'); }
-        function closeGrievanceModal() { document.getElementById('grievance-modal').classList.add('hidden'); }
+        function openPitchModal() { openModal('pitch-modal'); }
+        function closePitchModal() { closeModal('pitch-modal'); }
 
-        function openDataRightsModal() { document.getElementById('datarights-modal').classList.remove('hidden'); }
-        function closeDataRightsModal() { document.getElementById('datarights-modal').classList.add('hidden'); }
+        function openMediaKitModal() { openModal('mediakit-modal'); }
+        function closeMediaKitModal() { closeModal('mediakit-modal'); }
+
+        function openGrievanceModal() { openModal('grievance-modal'); }
+        function closeGrievanceModal() { closeModal('grievance-modal'); }
+
+        function openDataRightsModal() { openModal('datarights-modal'); }
+        function closeDataRightsModal() { closeModal('datarights-modal'); }
 
         // Close modals on ESC key
         document.addEventListener('keydown', (e) => {
