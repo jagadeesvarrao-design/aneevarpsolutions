@@ -602,7 +602,9 @@
                             <div class="text-[10px] sm:text-xs font-label-caps uppercase text-secondary mb-2 text-center">Unified Identity Token Flow</div>
                             <div class="p-3.5 bg-white rounded-xl border border-sage-border flex items-center justify-between shadow-sm">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-9 h-9 bg-primary text-on-primary rounded-lg flex items-center justify-center font-bold text-sm">A</div>
+                                    <div class="w-9 h-9 rounded-lg overflow-hidden border border-slate-deep/20 shrink-0 bg-slate-deep">
+                                        <img src="/images/brand-logo.jpg" alt="Aneevarp Identity" class="w-full h-full object-cover"/>
+                                    </div>
                                     <div>
                                         <div class="font-bold text-slate-deep text-xs sm:text-sm">Aneevarp Identity Vault</div>
                                         <div class="text-[10px] text-primary font-label-caps">sso.aneevarp.com</div>
@@ -616,8 +618,8 @@
                             </div>
 
                             <div class="grid grid-cols-3 gap-2 sm:gap-3">
-                                <div class="p-3 bg-white rounded-xl border border-sage-border text-center hover:border-primary transition-all">
-                                    <span class="material-symbols-outlined text-primary text-xl sm:text-2xl mb-1">description</span>
+                                <div class="p-3 bg-white rounded-xl border border-sage-border text-center hover:border-primary transition-all flex flex-col items-center justify-center">
+                                    <img src="/images/zenresume-logo.png" alt="ZenResume" class="w-7 h-7 object-contain mb-1"/>
                                     <div class="font-bold text-[10px] sm:text-xs text-slate-deep">ZenResume</div>
                                     <div class="text-[8px] sm:text-[9px] text-secondary truncate">zenresume.online</div>
                                 </div>
@@ -1283,6 +1285,10 @@
                 const isPdfBot = v.slug === 'zendoc-ai' || v.slug === 'pdf-analizing-and-answering-bot';
                 const icon = isZen ? 'description' : (isJobAgent ? 'radar' : (isPdfBot ? 'picture_as_pdf' : 'cloud'));
 
+                const iconOrLogo = (isZen)
+                    ? `<img src="/images/zenresume-logo.png" alt="${escapeHtml(v.name)} Logo" class="w-full h-full object-contain p-0.5 rounded-xl"/>`
+                    : `<span class="material-symbols-outlined text-primary text-2xl sm:text-3xl">${icon}</span>`;
+
                 const statusPill = (isZen || isJobAgent || isPdfBot)
                     ? '<span class="inline-flex items-center gap-1.5 text-xs text-primary font-bold"><span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span> 🟢 Live & Operational</span>'
                     : '<span class="inline-flex items-center gap-1.5 text-xs text-amber-600 font-bold"><span class="w-2 h-2 rounded-full bg-amber-500"></span> 🟡 In Cloud Incubation</span>';
@@ -1293,8 +1299,8 @@
                     <div class="glass-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between relative group">
                         <div>
                             <div class="flex items-center justify-between mb-5">
-                                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-surface-container-low rounded-xl border border-sage-border flex items-center justify-center group-hover:scale-105 transition-transform">
-                                    <span class="material-symbols-outlined text-primary text-2xl sm:text-3xl">${icon}</span>
+                                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-surface-container-low rounded-xl border border-sage-border flex items-center justify-center group-hover:scale-105 transition-transform overflow-hidden">
+                                    ${iconOrLogo}
                                 </div>
                                 <span class="badge-tag px-3 py-1 bg-primary/10 text-primary rounded-full text-[10px]">${escapeHtml(v.stage)}</span>
                             </div>

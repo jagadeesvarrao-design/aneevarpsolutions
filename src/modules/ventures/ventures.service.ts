@@ -12,7 +12,7 @@ const FALLBACK_VENTURES = [
       'ZenResume empowers millions of job seekers worldwide to generate ATS-friendly resumes, compelling cover letters, and tailored application strategies in seconds using intelligent design & career AI models.',
     stage: 'LIVE',
     websiteUrl: 'https://zenresume.online',
-    logoUrl: 'https://zenresume.online/favicon.png',
+    logoUrl: '/images/zenresume-logo.png',
     techStack: ['HTML5', 'JavaScript', 'Firebase', 'Node.js', 'Vercel'],
     metrics: { resumesGenerated: 125000, activeUsers: 45000, atsSuccessRate: '98.4%' },
     isFeatured: true,
@@ -64,7 +64,10 @@ const FALLBACK_VENTURES = [
 function normalizeVenture(v: any) {
   let name = v.name;
   let slug = v.slug;
-  if (v.slug === 'ai-job-search-agent' || v.slug === 'zenscout-ai') {
+  let logoUrl = v.logoUrl;
+  if (v.slug === 'zenresume') {
+    logoUrl = '/images/zenresume-logo.png';
+  } else if (v.slug === 'ai-job-search-agent' || v.slug === 'zenscout-ai') {
     name = 'ZenScout AI';
     slug = 'zenscout-ai';
   } else if (v.slug === 'pdf-analizing-and-answering-bot' || v.slug === 'zendoc-ai') {
@@ -75,6 +78,7 @@ function normalizeVenture(v: any) {
     ...v,
     name,
     slug,
+    logoUrl: logoUrl || v.logoUrl,
     techStack: typeof v.techStackJson === 'string' ? JSON.parse(v.techStackJson || '[]') : v.techStack || [],
     metrics: typeof v.metricsJson === 'string' ? JSON.parse(v.metricsJson || '{}') : v.metrics || {},
   };

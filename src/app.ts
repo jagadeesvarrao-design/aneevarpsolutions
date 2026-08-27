@@ -137,6 +137,21 @@ app.get(['/images/brand-logo.jpg', '/images/logo.png'], (req: Request, res: Resp
   return res.status(204).end();
 });
 
+app.get(['/images/zenresume-logo.png', '/images/zenresume.png'], (req: Request, res: Response) => {
+  const possiblePaths = [
+    path.join(process.cwd(), 'public/images/zenresume-logo.png'),
+    path.join(__dirname, '../public/images/zenresume-logo.png'),
+    path.join(__dirname, '../../public/images/zenresume-logo.png'),
+  ];
+  for (const p of possiblePaths) {
+    if (fs.existsSync(p)) {
+      res.setHeader('Content-Type', 'image/png');
+      return res.sendFile(p);
+    }
+  }
+  return res.status(204).end();
+});
+
 /**
  * System health check endpoint (Sanitized, zero internal architecture leakage)
  */
