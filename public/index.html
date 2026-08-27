@@ -402,14 +402,14 @@
 
             <!-- Action Buttons Area (Clean Single CTA) -->
             <div class="hidden sm:flex items-center gap-3 shrink-0">
-                <button type="button" onclick="openContactModal()" class="btn-animate btn-shimmer bg-primary text-on-primary font-label-caps text-xs uppercase px-5 py-2.5 rounded-xl hover:bg-primary-hover transition-all shadow-sm font-bold whitespace-nowrap cursor-pointer">
+                <button type="button" data-modal-target="contact-modal" onclick="openContactModal()" class="btn-animate btn-shimmer bg-primary text-on-primary font-label-caps text-xs uppercase px-5 py-2.5 rounded-xl hover:bg-primary-hover transition-all shadow-sm font-bold whitespace-nowrap cursor-pointer">
                     Contact Us
                 </button>
             </div>
 
             <!-- Mobile & Tablet Menu Toggle Button -->
             <div class="flex items-center gap-1.5 lg:hidden">
-                <button onclick="openContactModal()" class="sm:hidden btn-animate bg-primary text-on-primary font-label-caps text-[11px] uppercase px-3.5 py-1.5 rounded-lg font-bold">
+                <button type="button" data-modal-target="contact-modal" onclick="openContactModal()" class="sm:hidden btn-animate bg-primary text-on-primary font-label-caps text-[11px] uppercase px-3.5 py-1.5 rounded-lg font-bold cursor-pointer">
                     Contact
                 </button>
                 <button onclick="toggleMobileMenu()" class="btn-animate text-slate-deep hover:text-primary p-2 rounded-xl border border-sage-border/60 hover:bg-white transition-colors" aria-label="Toggle Navigation Menu">
@@ -457,7 +457,7 @@
 
             <!-- Quick Action Button inside Mobile Menu -->
             <div class="pt-3">
-                <button onclick="openContactModal(); toggleMobileMenu();" class="btn-animate btn-shimmer w-full bg-primary text-on-primary py-2.5 rounded-xl text-center text-xs font-label-caps uppercase font-bold">
+                <button type="button" data-modal-target="contact-modal" onclick="openContactModal(); toggleMobileMenu();" class="btn-animate btn-shimmer w-full bg-primary text-on-primary py-2.5 rounded-xl text-center text-xs font-label-caps uppercase font-bold cursor-pointer">
                     Contact Us
                 </button>
             </div>
@@ -699,9 +699,9 @@
                             </p>
 
                             <div class="pt-2 flex flex-wrap items-center justify-center sm:justify-start gap-3 text-xs">
-                                <a href="mailto:aneevarpsolutions@gmail.com" class="btn-animate inline-flex items-center gap-1.5 px-3.5 py-2 bg-primary text-on-primary rounded-xl font-label-caps text-xs uppercase font-bold hover:bg-primary-hover shadow-sm">
+                                <button type="button" data-modal-target="contact-modal" onclick="openContactModal()" class="btn-animate inline-flex items-center gap-1.5 px-3.5 py-2 bg-primary text-on-primary rounded-xl font-label-caps text-xs uppercase font-bold hover:bg-primary-hover shadow-sm cursor-pointer">
                                     <span class="material-symbols-outlined text-sm">mail</span> Contact Founder
-                                </a>
+                                </button>
                                 <a href="#ventures" class="btn-animate inline-flex items-center gap-1.5 px-3.5 py-2 border border-sage-border text-slate-deep rounded-xl font-label-caps text-xs uppercase font-semibold hover:bg-surface-container">
                                     <span class="material-symbols-outlined text-sm">rocket_launch</span> Explore 3 Ventures
                                 </a>
