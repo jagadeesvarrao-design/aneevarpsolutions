@@ -239,24 +239,89 @@
 
         /* Bulletproof Modal Overlay System */
         .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 99999;
-            align-items: center;
-            justify-content: center;
-            background-color: rgba(26, 31, 31, 0.78);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            padding: 1rem;
-            box-sizing: border-box;
+            display: none !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            z-index: 999999 !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background-color: rgba(26, 31, 31, 0.82) !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
+            padding: 1rem !important;
+            box-sizing: border-box !important;
         }
         .modal-overlay.active {
             display: flex !important;
         }
     </style>
+    
+    <!-- Instant Modal Activation Engine (Zero Race Condition) -->
+    <script>
+        window.openModal = function(id) {
+            var el = document.getElementById(id);
+            if (!el) {
+                console.error('[Modal Error] Element not found:', id);
+                return;
+            }
+            el.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.closeModal = function(id) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        window.openContactModal = function() { window.openModal('contact-modal'); };
+        window.closeContactModal = function() { window.closeModal('contact-modal'); };
+
+        window.openPitchModal = function() { window.openModal('pitch-modal'); };
+        window.closePitchModal = function() { window.closeModal('pitch-modal'); };
+
+        window.openMediaKitModal = function() { window.openModal('mediakit-modal'); };
+        window.closeMediaKitModal = function() { window.closeModal('mediakit-modal'); };
+
+        window.openGrievanceModal = function() { window.openModal('grievance-modal'); };
+        window.closeGrievanceModal = function() { window.closeModal('grievance-modal'); };
+
+        window.openDataRightsModal = function() { window.openModal('datarights-modal'); };
+        window.closeDataRightsModal = function() { window.closeModal('datarights-modal'); };
+
+        // Global Event Delegation for all modal buttons
+        document.addEventListener('click', function(e) {
+            var targetBtn = e.target.closest ? e.target.closest('[data-modal-target]') : null;
+            if (targetBtn) {
+                e.preventDefault();
+                var modalId = targetBtn.getAttribute('data-modal-target');
+                window.openModal(modalId);
+                return;
+            }
+            var closeBtn = e.target.closest ? e.target.closest('[data-modal-close]') : null;
+            if (closeBtn) {
+                e.preventDefault();
+                var closeId = closeBtn.getAttribute('data-modal-close');
+                window.closeModal(closeId);
+                return;
+            }
+        });
+
+        // Close on Escape Key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                ['contact-modal', 'pitch-modal', 'mediakit-modal', 'grievance-modal', 'datarights-modal'].forEach(function(m) {
+                    window.closeModal(m);
+                });
+            }
+        });
+    </script>
 </head>
 <body class="font-body-md antialiased selection:bg-primary-light selection:text-primary">
 
@@ -418,15 +483,15 @@
 
                 <!-- Primary CTAs -->
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-3 sm:pt-4 w-full px-4 sm:px-0">
-                    <a href="#portfolio" class="btn-animate btn-shimmer group w-full sm:w-auto bg-primary text-on-primary font-label-caps text-xs uppercase px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl hover:bg-primary-hover shadow-lg font-bold gap-2">
+                    <a href="#portfolio" class="btn-animate btn-shimmer group w-full sm:w-auto bg-primary text-on-primary font-label-caps text-xs uppercase px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl hover:bg-primary-hover shadow-lg font-bold gap-2 flex items-center justify-center">
                         Explore Portfolio Ventures (3)
                         <span class="material-symbols-outlined text-sm group-hover:translate-y-1 transition-transform">arrow_downward</span>
                     </a>
-                    <button onclick="openPitchModal()" class="btn-animate btn-shimmer group w-full sm:w-auto bg-slate-deep text-ivory-base font-label-caps text-xs uppercase px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl hover:bg-slate-deep/90 font-bold gap-2 shadow-md">
+                    <button type="button" data-modal-target="pitch-modal" onclick="openPitchModal()" class="btn-animate btn-shimmer group w-full sm:w-auto bg-slate-deep text-ivory-base font-label-caps text-xs uppercase px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl hover:bg-slate-deep/90 font-bold gap-2 shadow-md cursor-pointer flex items-center justify-center">
                         Pitch Venture Studio
                         <span class="material-symbols-outlined text-sm group-hover:rotate-12 transition-transform">rocket_launch</span>
                     </button>
-                    <a href="/docs" class="btn-animate group w-full sm:w-auto border border-slate-deep/20 text-slate-deep hover:bg-slate-deep hover:text-on-primary font-label-caps text-xs uppercase px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl font-semibold gap-2">
+                    <a href="/docs" class="btn-animate group w-full sm:w-auto border border-slate-deep/20 text-slate-deep hover:bg-slate-deep hover:text-on-primary font-label-caps text-xs uppercase px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl font-semibold gap-2 flex items-center justify-center">
                         Swagger APIs
                         <span class="material-symbols-outlined text-sm group-hover:scale-110 transition-transform">api</span>
                     </a>
@@ -578,11 +643,11 @@
                         </p>
                         
                         <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 pt-2">
-                            <button onclick="openPitchModal()" class="btn-animate btn-shimmer group w-full sm:w-auto bg-primary text-on-primary font-label-caps text-xs uppercase px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl hover:bg-primary-hover font-bold gap-2 shadow-lg">
+                            <button type="button" data-modal-target="pitch-modal" onclick="openPitchModal()" class="btn-animate btn-shimmer group w-full sm:w-auto bg-primary text-on-primary font-label-caps text-xs uppercase px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl hover:bg-primary-hover font-bold gap-2 shadow-lg cursor-pointer flex items-center justify-center">
                                 Submit Venture Proposal
                                 <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">send</span>
                             </button>
-                            <button onclick="openContactModal()" class="btn-animate w-full sm:w-auto border border-white/25 text-ivory-base font-label-caps text-xs uppercase px-6 py-3.5 sm:py-4 rounded-xl hover:bg-white/10 font-semibold text-center">
+                            <button type="button" data-modal-target="contact-modal" onclick="openContactModal()" class="btn-animate w-full sm:w-auto border border-white/25 text-ivory-base font-label-caps text-xs uppercase px-6 py-3.5 sm:py-4 rounded-xl hover:bg-white/10 font-semibold text-center cursor-pointer">
                                 Partnership Inquiry
                             </button>
                         </div>
@@ -738,7 +803,7 @@
                                 Formal grievance redressal mechanism with mandatory 24-hour statutory acknowledgment and 15-day resolution turnaround.
                             </p>
                         </div>
-                        <button type="button" onclick="openGrievanceModal()" class="btn-animate bg-primary text-on-primary py-2.5 px-4 rounded-xl text-xs font-label-caps uppercase font-bold text-center cursor-pointer hover:bg-primary-hover shadow-sm">
+                        <button type="button" data-modal-target="grievance-modal" onclick="openGrievanceModal()" class="btn-animate bg-primary text-on-primary py-2.5 px-4 rounded-xl text-xs font-label-caps uppercase font-bold text-center cursor-pointer hover:bg-primary-hover shadow-sm">
                             Access Grievance Desk
                         </button>
                     </div>
@@ -751,7 +816,7 @@
                                 Exercise your statutory rights under Indian Data Protection Law — access personal summaries, correct records, or request complete data erasure.
                             </p>
                         </div>
-                        <button type="button" onclick="openDataRightsModal()" class="btn-animate border border-primary text-primary hover:bg-primary-light py-2.5 px-4 rounded-xl text-xs font-label-caps uppercase font-bold text-center cursor-pointer">
+                        <button type="button" data-modal-target="datarights-modal" onclick="openDataRightsModal()" class="btn-animate border border-primary text-primary hover:bg-primary-light py-2.5 px-4 rounded-xl text-xs font-label-caps uppercase font-bold text-center cursor-pointer">
                             Submit Data Privacy Request
                         </button>
                     </div>
@@ -836,7 +901,7 @@
     <!-- Contact Modal -->
     <div id="contact-modal" class="modal-overlay" onclick="if(event.target===this)closeContactModal()" role="dialog" aria-modal="true">
         <div class="bg-ivory-base rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border relative animate-fade-in-up">
-            <button onclick="closeContactModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5 cursor-pointer" aria-label="Close Modal">
+            <button type="button" data-modal-close="contact-modal" onclick="closeContactModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5 cursor-pointer" aria-label="Close Modal">
                 <span class="material-symbols-outlined">close</span>
             </button>
             <h3 class="font-display-lg text-xl sm:text-2xl font-bold text-slate-deep mb-1">Contact Aneevarp Solutions</h3>
@@ -878,7 +943,7 @@
     <!-- Statutory IT Rules 2021 Grievance Redressal Modal -->
     <div id="grievance-modal" class="modal-overlay" onclick="if(event.target===this)closeGrievanceModal()" role="dialog" aria-modal="true">
         <div class="bg-ivory-base rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border relative animate-fade-in-up">
-            <button onclick="closeGrievanceModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5 cursor-pointer" aria-label="Close Modal">
+            <button type="button" data-modal-close="grievance-modal" onclick="closeGrievanceModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5 cursor-pointer" aria-label="Close Modal">
                 <span class="material-symbols-outlined">close</span>
             </button>
             <div class="badge-tag text-primary mb-1">Rule 3(2) IT Rules, 2021</div>
@@ -915,7 +980,7 @@
     <!-- DPDP Act 2023 Data Principal Rights (DSR) Modal -->
     <div id="datarights-modal" class="modal-overlay" onclick="if(event.target===this)closeDataRightsModal()" role="dialog" aria-modal="true">
         <div class="bg-ivory-base rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border relative animate-fade-in-up">
-            <button onclick="closeDataRightsModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5 cursor-pointer" aria-label="Close Modal">
+            <button type="button" data-modal-close="datarights-modal" onclick="closeDataRightsModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5 cursor-pointer" aria-label="Close Modal">
                 <span class="material-symbols-outlined">close</span>
             </button>
             <div class="badge-tag text-primary mb-1">Digital Personal Data Protection Act, 2023</div>
@@ -953,7 +1018,7 @@
     <!-- Venture Studio Pitch Modal -->
     <div id="pitch-modal" class="modal-overlay" onclick="if(event.target===this)closePitchModal()" role="dialog" aria-modal="true">
         <div class="bg-ivory-base rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border relative animate-fade-in-up">
-            <button onclick="closePitchModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5 cursor-pointer" aria-label="Close Modal">
+            <button type="button" data-modal-close="pitch-modal" onclick="closePitchModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5 cursor-pointer" aria-label="Close Modal">
                 <span class="material-symbols-outlined">close</span>
             </button>
             <div class="badge-tag text-primary mb-1">Aneevarp Venture Studio</div>
@@ -987,7 +1052,7 @@
     <!-- Media Kit & Brand Asset Modal -->
     <div id="mediakit-modal" class="modal-overlay" onclick="if(event.target===this)closeMediaKitModal()" role="dialog" aria-modal="true">
         <div class="bg-ivory-base rounded-2xl sm:rounded-3xl max-w-xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border relative animate-fade-in-up">
-            <button onclick="closeMediaKitModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5" aria-label="Close Modal">
+            <button type="button" data-modal-close="mediakit-modal" onclick="closeMediaKitModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5 cursor-pointer" aria-label="Close Modal">
                 <span class="material-symbols-outlined">close</span>
             </button>
             <div class="badge-tag text-primary mb-1">Press & Media Desk</div>

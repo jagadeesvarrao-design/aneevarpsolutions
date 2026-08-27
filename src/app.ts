@@ -195,15 +195,24 @@ app.use('/api/v1/governance', governanceRouter);
 app.use('/api/v1/contact', contactRouter);
 app.use('/api/v1/metrics', metricsRouter);
 
+function getIndexHtml(): string {
+  const possiblePaths = [
+    path.join(process.cwd(), 'public/index.html'),
+    path.join(__dirname, '../public/index.html'),
+    path.join(__dirname, '../../public/index.html'),
+  ];
+  for (const p of possiblePaths) {
+    if (fs.existsSync(p)) {
+      return fs.readFileSync(p, 'utf8');
+    }
+  }
+  return indexHtmlContent || '<!DOCTYPE html><html><body><h1>Aneevarp Solutions</h1></body></html>';
+}
+
 // Root & Landing Page Handler
 app.get('/', (req: Request, res: Response) => {
-  if (indexHtmlContent) {
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    return res.status(200).send(indexHtmlContent);
-  }
-  const p = path.join(publicDir, 'index.html');
-  if (fs.existsSync(p)) return res.sendFile(p);
-  return res.status(200).send('<!DOCTYPE html><html><body><h1>Aneevarp Solutions</h1></body></html>');
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  return res.status(200).send(getIndexHtml());
 });
 
 // Favicon handler
@@ -216,11 +225,8 @@ app.get('*', (req: Request, res: Response, next: NextFunction) => {
   if (req.path.startsWith('/api/')) {
     return next();
   }
-  if (indexHtmlContent) {
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    return res.status(200).send(indexHtmlContent);
-  }
-  res.redirect('/');
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  return res.status(200).send(getIndexHtml());
 });
 
 // Global Error Handler
