@@ -106,6 +106,22 @@ if (fs.existsSync(publicDir)) {
   app.use(express.static(publicDir));
 }
 
+// Explicit static route for founder portrait
+app.get('/images/founder.jpg', (req: Request, res: Response) => {
+  const possiblePaths = [
+    path.join(process.cwd(), 'public/images/founder.jpg'),
+    path.join(__dirname, '../public/images/founder.jpg'),
+    path.join(__dirname, '../../public/images/founder.jpg'),
+  ];
+  for (const p of possiblePaths) {
+    if (fs.existsSync(p)) {
+      res.setHeader('Content-Type', 'image/jpeg');
+      return res.sendFile(p);
+    }
+  }
+  return res.status(204).end();
+});
+
 /**
  * System health check endpoint (Sanitized, zero internal architecture leakage)
  */
