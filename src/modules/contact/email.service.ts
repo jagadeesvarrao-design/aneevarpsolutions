@@ -130,6 +130,7 @@ export class EmailService {
       await this.sendViaHttpsGateway({
         _subject: subject,
         _template: 'table',
+        _captcha: 'false',
         _replyto: data.email,
         form_type: data.formType,
         ticket_number: data.ticketNumber,
