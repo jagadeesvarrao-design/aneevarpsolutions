@@ -159,6 +159,9 @@ export class EmailService {
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
+            'Referer': 'https://aneevarpsolutions.vercel.app/',
+            'Origin': 'https://aneevarpsolutions.vercel.app',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
             'Content-Length': Buffer.byteLength(dataString),
           },
           timeout: 6000,

@@ -33,9 +33,9 @@ export class ContactService {
       formType = 'DATA_PRIVACY';
     }
 
-    // Trigger email dispatch asynchronously (never blocks HTTP response)
-    emailService
-      .sendSubmissionEmail({
+    // Trigger email dispatch (awaited to prevent Vercel Serverless early process freeze)
+    try {
+      await emailService.sendSubmissionEmail({
         formType,
         ticketNumber,
         name: data.name,
@@ -44,8 +44,10 @@ export class ContactService {
         category,
         message: data.message,
         submittedAt: new Date(),
-      })
-      .catch((err) => console.error('[ContactService] Error in background email delivery:', err));
+      });
+    } catch (err) {
+      console.error('[ContactService] Error in email delivery:', err);
+    }
 
     try {
       const created = await prisma.contactSubmission.create({
