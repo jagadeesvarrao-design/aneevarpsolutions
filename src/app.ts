@@ -56,19 +56,28 @@ app.use(
   })
 );
 
+const TRUSTED_ORIGIN_REGEX = /^https?:\/\/([a-z0-9-]+\.)*(aneevarp\.com|zenresume\.online|vercel\.app)(:\d+)?$/i;
+
 // Strict CORS Configuration
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (e.g. mobile apps, curl, Vercel serverless) or matching domains
-      if (!origin || env.CORS_ORIGIN === '*' || origin.includes('aneevarp') || origin.includes('zenresume') || origin.includes('vercel.app')) {
-        callback(null, true);
-      } else {
-        callback(null, true);
+      // Allow requests with no origin (e.g. mobile apps, curl, same-origin serverless)
+      if (!origin) return callback(null, true);
+
+      if (env.CORS_ORIGIN === '*') {
+        return callback(null, true);
       }
+
+      if (TRUSTED_ORIGIN_REGEX.test(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error('CORS policy: Origin not allowed'), false);
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-API-Key', 'X-Correlation-ID', 'X-Request-ID'],
+    credentials: true,
   })
 );
 
@@ -172,7 +181,7 @@ app.get('/api/swagger.json', (req: Request, res: Response) => {
 
 // Standalone High-Speed Swagger UI Endpoint (CDN-powered for 100% Vercel Serverless Reliability)
 app.get('/docs', (req: Request, res: Response) => {
-  const specJson = JSON.stringify(swaggerSpec);
+  const specJson = JSON.stringify(swaggerSpec).replace(/</g, '\\u003c');
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>

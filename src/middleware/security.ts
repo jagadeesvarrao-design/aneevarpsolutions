@@ -85,8 +85,12 @@ function sanitizeValue(value: any): any {
     return value.map(sanitizeValue);
   }
   if (value !== null && typeof value === 'object') {
-    const sanitizedObj: Record<string, any> = {};
+    const sanitizedObj: Record<string, any> = Object.create(null);
     for (const key of Object.keys(value)) {
+      // Prevent Prototype Pollution
+      if (key === '__proto__' || key === 'constructor' || key === 'prototype') {
+        continue;
+      }
       sanitizedObj[key] = sanitizeValue(value[key]);
     }
     return sanitizedObj;

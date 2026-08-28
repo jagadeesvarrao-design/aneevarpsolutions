@@ -1,5 +1,8 @@
 import { Router } from 'express';
 import { PressController } from './press.controller';
+import { requireApiKey, sensitiveEndpointLimiter } from '../../middleware/security';
+import { validateRequest } from '../../middleware/validate';
+import { createPressReleaseSchema } from './press.schema';
 
 const router = Router();
 const controller = new PressController();
@@ -58,8 +61,10 @@ router.get('/:slug', (req, res, next) => controller.getPressReleaseBySlug(req, r
  * @openapi
  * /api/v1/press:
  *   post:
- *     summary: Publish a corporate announcement or press release
+ *     summary: Publish a corporate announcement or press release (Admin Protected)
  *     tags: [Press & Newsroom]
+ *     security:
+ *       - ApiKeyAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -81,7 +86,17 @@ router.get('/:slug', (req, res, next) => controller.getPressReleaseBySlug(req, r
  *     responses:
  *       201:
  *         description: Press release published
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
  */
-router.post('/', (req, res, next) => controller.createPressRelease(req, res, next));
+router.post(
+  '/',
+  sensitiveEndpointLimiter,
+  requireApiKey,
+  validateRequest(createPressReleaseSchema),
+  (req, res, next) => controller.createPressRelease(req, res, next)
+);
 
 export default router;

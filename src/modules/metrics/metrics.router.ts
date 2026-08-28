@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { MetricsController } from './metrics.controller';
 import { requireApiKey, sensitiveEndpointLimiter } from '../../middleware/security';
+import { validateRequest } from '../../middleware/validate';
+import { syncMetricSchema } from './metrics.schema';
 
 const router = Router();
 const controller = new MetricsController();
@@ -51,8 +53,12 @@ router.get('/live', (req, res, next) => controller.getLiveMetrics(req, res, next
  *       403:
  *         description: Forbidden
  */
-router.post('/sync', sensitiveEndpointLimiter, requireApiKey, (req, res, next) =>
-  controller.syncMetric(req, res, next)
+router.post(
+  '/sync',
+  sensitiveEndpointLimiter,
+  requireApiKey,
+  validateRequest(syncMetricSchema),
+  (req, res, next) => controller.syncMetric(req, res, next)
 );
 
 export default router;

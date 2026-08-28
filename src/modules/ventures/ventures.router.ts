@@ -1,5 +1,8 @@
 import { Router } from 'express';
 import { VenturesController } from './ventures.controller';
+import { requireApiKey, sensitiveEndpointLimiter } from '../../middleware/security';
+import { validateRequest } from '../../middleware/validate';
+import { createVentureSchema } from './ventures.schema';
 
 const router = Router();
 const controller = new VenturesController();
@@ -52,8 +55,10 @@ router.get('/:slug', (req, res, next) => controller.getVentureBySlug(req, res, n
  * @openapi
  * /api/v1/ventures:
  *   post:
- *     summary: Register a new incubated product in the Aneevarp Solutions portfolio
+ *     summary: Register a new incubated product in the Aneevarp Solutions portfolio (Admin Protected)
  *     tags: [Ventures]
+ *     security:
+ *       - ApiKeyAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -79,7 +84,17 @@ router.get('/:slug', (req, res, next) => controller.getVentureBySlug(req, res, n
  *     responses:
  *       201:
  *         description: Venture registered successfully
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
  */
-router.post('/', (req, res, next) => controller.createVenture(req, res, next));
+router.post(
+  '/',
+  sensitiveEndpointLimiter,
+  requireApiKey,
+  validateRequest(createVentureSchema),
+  (req, res, next) => controller.createVenture(req, res, next)
+);
 
 export default router;
