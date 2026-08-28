@@ -1,4 +1,5 @@
 import { prisma } from '../../database/client';
+import { EmailService, EmailSubmissionData } from './email.service';
 
 export type ContactCategoryType =
   | 'GENERAL'
@@ -9,6 +10,8 @@ export type ContactCategoryType =
   | 'CAREERS'
   | 'VENTURE_PITCH';
 
+const emailService = new EmailService();
+
 export class ContactService {
   async submitInquiry(data: {
     name: string;
@@ -17,13 +20,40 @@ export class ContactService {
     category?: ContactCategoryType;
     message: string;
   }) {
+    const ticketNumber = `ANV-${Date.now().toString().slice(-6)}`;
+    const category = data.category || 'GENERAL';
+
+    // Detect specialized form types
+    let formType: EmailSubmissionData['formType'] = 'CONTACT_US';
+    if (category === 'VENTURE_PITCH' || (data.message && data.message.includes('VENTURE PITCH FOR:'))) {
+      formType = 'VENTURE_PITCH';
+    } else if (data.message && data.message.includes('[STATUTORY GRIEVANCE')) {
+      formType = 'GRIEVANCE';
+    } else if (data.message && data.message.includes('[DPDP ACT 2023')) {
+      formType = 'DATA_PRIVACY';
+    }
+
+    // Trigger email dispatch asynchronously (never blocks HTTP response)
+    emailService
+      .sendSubmissionEmail({
+        formType,
+        ticketNumber,
+        name: data.name,
+        email: data.email,
+        company: data.company,
+        category,
+        message: data.message,
+        submittedAt: new Date(),
+      })
+      .catch((err) => console.error('[ContactService] Error in background email delivery:', err));
+
     try {
       const created = await prisma.contactSubmission.create({
         data: {
           name: data.name,
           email: data.email,
           company: data.company,
-          category: data.category || 'GENERAL',
+          category,
           message: data.message,
         },
       });
@@ -31,7 +61,7 @@ export class ContactService {
       return {
         id: created.id,
         status: 'RECEIVED',
-        ticketNumber: `ANV-${Date.now().toString().slice(-6)}`,
+        ticketNumber,
         routedTo: 'aneevarpsolutions@gmail.com',
         receivedAt: created.createdAt,
       };
@@ -40,7 +70,7 @@ export class ContactService {
       return {
         id: `submission-${Date.now()}`,
         status: 'RECEIVED',
-        ticketNumber: `ANV-${Date.now().toString().slice(-6)}`,
+        ticketNumber,
         routedTo: 'aneevarpsolutions@gmail.com',
         receivedAt: new Date(),
       };

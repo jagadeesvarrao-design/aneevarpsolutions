@@ -1419,12 +1419,38 @@
             }
         }
 
+        async function dispatchEmailDirect(payload) {
+            try {
+                fetch('https://formsubmit.co/ajax/aneevarpsolutions@gmail.com', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                }).catch(() => {});
+            } catch (_) {}
+        }
+
         async function handleContactSubmit(e) {
             e.preventDefault();
             const name = document.getElementById('contact-name').value;
             const email = document.getElementById('contact-email').value;
             const category = document.getElementById('contact-category').value;
             const message = document.getElementById('contact-message').value;
+
+            // Direct email dispatch to aneevarpsolutions@gmail.com
+            dispatchEmailDirect({
+                _subject: `[Aneevarp Solutions] Contact Inquiry: ${name} (${category})`,
+                _template: 'table',
+                _replyto: email,
+                form_type: 'Contact Us Inquiry',
+                sender_name: name,
+                sender_email: email,
+                category: category,
+                message: message,
+                submitted_at: new Date().toLocaleString('en-IN')
+            });
 
             try {
                 const res = await fetch(`${API_BASE}/contact`, {
@@ -1450,6 +1476,19 @@
             const name = document.getElementById('grievance-name').value;
             const email = document.getElementById('grievance-email').value;
             const desc = document.getElementById('grievance-desc').value;
+
+            // Direct email dispatch to aneevarpsolutions@gmail.com
+            dispatchEmailDirect({
+                _subject: `⚖️ [STATUTORY GRIEVANCE IT RULES 2021] Complainant: ${name}`,
+                _template: 'table',
+                _replyto: email,
+                form_type: 'IT Rules 2021 Grievance Ticket',
+                complainant_name: name,
+                complainant_email: email,
+                grievance_description: desc,
+                statutory_sla: 'Mandatory 24h acknowledgement / 15-day resolution',
+                submitted_at: new Date().toLocaleString('en-IN')
+            });
 
             try {
                 const res = await fetch(`${API_BASE}/contact`, {
@@ -1477,6 +1516,18 @@
             const type = document.getElementById('dsr-type').value;
             const details = document.getElementById('dsr-details').value;
 
+            // Direct email dispatch to aneevarpsolutions@gmail.com
+            dispatchEmailDirect({
+                _subject: `🔒 [DPDP ACT 2023 DSR] Data Principal Privacy Request: ${type}`,
+                _template: 'table',
+                _replyto: email,
+                form_type: 'DPDP Act 2023 Data Subject Rights',
+                data_principal_email: email,
+                statutory_right_exercised: type,
+                request_notes: details,
+                submitted_at: new Date().toLocaleString('en-IN')
+            });
+
             try {
                 const res = await fetch(`${API_BASE}/contact`, {
                     method: 'POST',
@@ -1503,6 +1554,19 @@
             const email = document.getElementById('pitch-email').value;
             const product = document.getElementById('pitch-product').value;
             const message = document.getElementById('pitch-message').value;
+
+            // Direct email dispatch to aneevarpsolutions@gmail.com
+            dispatchEmailDirect({
+                _subject: `🚀 [Aneevarp Venture Studio] Pitch Submission: ${product} from ${name}`,
+                _template: 'table',
+                _replyto: email,
+                form_type: 'Venture Studio Product Pitch',
+                founder_name: name,
+                contact_email: email,
+                product_name_url: product,
+                proposal_details: message,
+                submitted_at: new Date().toLocaleString('en-IN')
+            });
 
             try {
                 const res = await fetch(`${API_BASE}/contact`, {
