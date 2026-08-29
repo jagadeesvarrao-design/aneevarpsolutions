@@ -194,8 +194,8 @@
 
         /* Scroll Reveal Utility Classes */
         .scroll-reveal {
-            opacity: 0;
-            transform: translateY(24px);
+            opacity: 1;
+            transform: translateY(0);
             transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: opacity, transform;
         }
@@ -303,6 +303,31 @@
 
         window.openDataRightsModal = function() { window.openModal('datarights-modal'); };
         window.closeDataRightsModal = function() { window.closeModal('datarights-modal'); };
+
+        window.acceptDpdpConsent = function() {
+            try {
+                localStorage.setItem('aneevarp_dpdp_consent', 'accepted');
+            } catch(e) {}
+            var banner = document.getElementById('dpdp-consent-banner');
+            if (banner) {
+                banner.style.display = 'none';
+                banner.classList.add('hidden');
+            }
+            if (window.showToast) window.showToast('DPDP Privacy Preferences Acknowledged');
+        };
+
+        // Check consent early to hide banner immediately
+        try {
+            if (localStorage.getItem('aneevarp_dpdp_consent') === 'accepted') {
+                document.addEventListener('DOMContentLoaded', function() {
+                    var banner = document.getElementById('dpdp-consent-banner');
+                    if (banner) {
+                        banner.style.display = 'none';
+                        banner.classList.add('hidden');
+                    }
+                });
+            }
+        } catch(e) {}
 
         // Global Event Delegation for all modal buttons
         document.addEventListener('click', function(e) {
@@ -1142,7 +1167,6 @@
         let allVenturesData = [];
 
         // Industry Standard Anti-XSS Sanitizer for Client-side DOM injection
-        // Industry Standard Anti-XSS Sanitizer for Client-side DOM injection
         function escapeHtml(str) {
             if (str === null || str === undefined) return '';
             return String(str)
@@ -1167,6 +1191,7 @@
             const toast = document.getElementById('toast');
             const toastMsg = document.getElementById('toast-message');
             const toastIcon = document.getElementById('toast-icon');
+            if (!toast || !toastMsg || !toastIcon) return;
             
             toastMsg.innerText = message;
             toastIcon.innerText = isError ? 'error' : 'check_circle';
@@ -1181,6 +1206,7 @@
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             const icon = document.getElementById('menu-icon');
+            if (!menu) return;
             const isHidden = menu.classList.contains('hidden');
             
             if (isHidden) {
@@ -1240,15 +1266,28 @@
         });
 
         function acceptDpdpConsent() {
-            localStorage.setItem('aneevarp_dpdp_consent', 'accepted');
-            document.getElementById('dpdp-consent-banner').classList.add('translate-y-full');
+            try {
+                localStorage.setItem('aneevarp_dpdp_consent', 'accepted');
+            } catch(e) {}
+            const banner = document.getElementById('dpdp-consent-banner');
+            if (banner) {
+                banner.style.display = 'none';
+                banner.classList.add('hidden');
+            }
             showToast('DPDP Privacy Preferences Acknowledged');
         }
+        window.acceptDpdpConsent = acceptDpdpConsent;
 
         function checkDpdpConsent() {
-            if (localStorage.getItem('aneevarp_dpdp_consent') === 'accepted') {
-                document.getElementById('dpdp-consent-banner').classList.add('translate-y-full');
-            }
+            try {
+                if (localStorage.getItem('aneevarp_dpdp_consent') === 'accepted') {
+                    const banner = document.getElementById('dpdp-consent-banner');
+                    if (banner) {
+                        banner.style.display = 'none';
+                        banner.classList.add('hidden');
+                    }
+                }
+            } catch(e) {}
         }
 
         function initButtonRipples() {
@@ -1273,13 +1312,14 @@
         }
 
         function initScrollAnimations() {
+            if (!('IntersectionObserver' in window)) return;
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('active');
                     }
                 });
-            }, { threshold: 0.08 });
+            }, { threshold: 0.05 });
 
             document.querySelectorAll('.scroll-reveal').forEach((el) => {
                 observer.observe(el);
@@ -1317,6 +1357,7 @@
 
         function renderVentures(ventures) {
             const container = document.getElementById('ventures-container');
+            if (!container) return;
             if (ventures.length === 0) {
                 container.innerHTML = '<div class="col-span-3 text-center text-secondary py-12 text-sm">No products in this category.</div>';
                 return;
@@ -1371,8 +1412,10 @@
                 btn.classList.remove('bg-primary', 'text-on-primary', 'font-bold', 'shadow-sm');
                 btn.classList.add('bg-surface-container', 'text-secondary');
             });
-            event.target.classList.remove('bg-surface-container', 'text-secondary');
-            event.target.classList.add('bg-primary', 'text-on-primary', 'font-bold', 'shadow-sm');
+            if (event && event.target) {
+                event.target.classList.remove('bg-surface-container', 'text-secondary');
+                event.target.classList.add('bg-primary', 'text-on-primary', 'font-bold', 'shadow-sm');
+            }
 
             if (category === 'ALL') renderVentures(allVenturesData);
             else if (category === 'CONSUMER') renderVentures(allVenturesData.filter(v => v.slug === 'zenresume'));
@@ -1387,6 +1430,7 @@
                 const json = await res.json();
                 if (json.success && json.data) {
                     const container = document.getElementById('press-container');
+                    if (!container) return;
                     container.innerHTML = json.data.map(p => `
                         <div class="bg-white p-6 sm:p-8 rounded-2xl border border-sage-border shadow-sm hover:shadow-md hover:border-primary/40 transition-all flex flex-col justify-between">
                             <div>
@@ -1411,13 +1455,16 @@
                 const resOverview = await fetch(`${API_BASE}/governance/overview`);
                 const jsonOverview = await resOverview.json();
                 if (jsonOverview.success && jsonOverview.data) {
-                    document.getElementById('governance-mission').innerText = jsonOverview.data.missionStatement;
+                    const el = document.getElementById('governance-mission');
+                    if (el) el.innerText = jsonOverview.data.missionStatement;
                 }
 
                 const resPolicies = await fetch(`${API_BASE}/governance/policies`);
                 const jsonPolicies = await resPolicies.json();
                 if (jsonPolicies.success && jsonPolicies.data) {
-                    document.getElementById('policies-container').innerHTML = jsonPolicies.data.map(pol => `
+                    const container = document.getElementById('policies-container');
+                    if (!container) return;
+                    container.innerHTML = jsonPolicies.data.map(pol => `
                         <div class="bg-white p-5 sm:p-6 rounded-2xl border border-sage-border shadow-sm hover:border-primary/40 transition-all">
                             <div class="badge-tag text-[10px] text-primary mb-2">${escapeHtml(pol.type)}</div>
                             <h4 class="font-bold text-slate-deep mb-1.5 text-sm sm:text-base">${escapeHtml(pol.title)}</h4>
@@ -1430,7 +1477,6 @@
             }
         }
 
-        
         async function dispatchEmailDirect(payload) {
             try {
                 fetch('https://formsubmit.co/ajax/aneevarpsolutions@gmail.com', {
@@ -1444,7 +1490,7 @@
             } catch (_) {}
         }
 
-async function handleContactSubmit(e) {
+        async function handleContactSubmit(e) {
             e.preventDefault();
             const name = document.getElementById('contact-name').value;
             const email = document.getElementById('contact-email').value;
@@ -1483,7 +1529,6 @@ async function handleContactSubmit(e) {
                 showToast('Error submitting inquiry.', true);
             }
         }
-        }
 
         async function handleGrievanceSubmit(e) {
             e.preventDefault();
@@ -1520,10 +1565,6 @@ async function handleContactSubmit(e) {
                 showToast(`Grievance filed! Ticket ${json.data.ticketNumber || 'ANV-GRV-01'} acknowledged within 24 hours.`);
                 closeGrievanceModal();
             } catch (err) {
-                showToast('Grievance recorded successfully.');
-                closeGrievanceModal();
-            }
-        } catch (err) {
                 showToast('Grievance recorded successfully.');
                 closeGrievanceModal();
             }
@@ -1566,10 +1607,6 @@ async function handleContactSubmit(e) {
                 showToast('Data privacy request logged.');
                 closeDataRightsModal();
             }
-        } catch (err) {
-                showToast('Data privacy request logged.');
-                closeDataRightsModal();
-            }
         }
 
         async function handlePitchSubmit(e) {
@@ -1578,6 +1615,20 @@ async function handleContactSubmit(e) {
             const email = document.getElementById('pitch-email').value;
             const product = document.getElementById('pitch-product').value;
             const message = document.getElementById('pitch-message').value;
+
+            // Direct email dispatch to aneevarpsolutions@gmail.com
+            dispatchEmailDirect({
+                _subject: `🚀 [Aneevarp Venture Studio] Pitch Submission: ${product} from ${name}`,
+                _template: 'table',
+                _captcha: 'false',
+                _replyto: email,
+                form_type: 'Venture Studio Product Pitch',
+                founder_name: name,
+                contact_email: email,
+                product_name_url: product,
+                proposal_details: message,
+                submitted_at: new Date().toLocaleString('en-IN')
+            });
 
             try {
                 const res = await fetch(`${API_BASE}/contact`, {
@@ -1605,13 +1656,13 @@ async function handleContactSubmit(e) {
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            checkDpdpConsent();
             loadMetrics();
             loadVentures();
             loadPress();
             loadGovernance();
             initScrollAnimations();
             initButtonRipples();
-            checkDpdpConsent();
         });
     </script>
 </body>
