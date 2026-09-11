@@ -268,6 +268,30 @@
         .modal-overlay.active {
             display: flex !important;
         }
+
+        /* Dark Mode Overrides */
+        .dark body {
+            background-color: #06110D;
+            color: #F8FAFC;
+        }
+        .dark .hero-gradient {
+            background: radial-gradient(circle at 50% 20%, rgba(45, 212, 191, 0.08) 0%, #06110D 70%);
+        }
+        .dark .glass-card {
+            background: rgba(13, 23, 20, 0.92);
+            border: 1px solid rgba(45, 212, 191, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        .dark .glass-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border-color: rgba(45, 212, 191, 0.4);
+        }
+        .dark .nav-link::after {
+            background-color: #2DD4BF;
+        }
+        .dark .btn-animate:hover {
+            box-shadow: 0 8px 20px -4px rgba(45, 212, 191, 0.28);
+        }
     </style>
     
     <!-- Instant Modal Activation Engine (Zero Race Condition) -->
@@ -355,9 +379,45 @@
                 });
             }
         });
+
+        window.toggleTheme = function() {
+            var html = document.documentElement;
+            var isDark = html.classList.contains('dark');
+            if (isDark) {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                localStorage.setItem('aneevarp_theme', 'light');
+            } else {
+                html.classList.remove('light');
+                html.classList.add('dark');
+                localStorage.setItem('aneevarp_theme', 'dark');
+            }
+            updateThemeIcons();
+        };
+
+        window.updateThemeIcons = function() {
+            var isDark = document.documentElement.classList.contains('dark');
+            document.querySelectorAll('.theme-icon').forEach(function(el) {
+                el.innerText = isDark ? 'light_mode' : 'dark_mode';
+            });
+        };
+
+        // Initialize theme from localStorage or system preference
+        (function() {
+            try {
+                var saved = localStorage.getItem('aneevarp_theme');
+                if (saved === 'dark') {
+                    document.documentElement.classList.remove('light');
+                    document.documentElement.classList.add('dark');
+                } else if (!saved && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.classList.remove('light');
+                    document.documentElement.classList.add('dark');
+                }
+            } catch(e) {}
+        })();
     </script>
 </head>
-<body class="font-body-md antialiased selection:bg-primary-light selection:text-primary">
+<body class="font-body-md antialiased selection:bg-primary-light selection:text-primary dark:bg-[#06110D] dark:text-[#F8FAFC] dark:selection:bg-[#2DD4BF] dark:selection:text-[#061B18]">
 
     <!-- Accessibility Skip Link (RPwD Act 2016 & GIGW 3.0 Compliance) -->
     <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-on-primary focus:rounded-lg focus:shadow-xl font-bold">
@@ -396,7 +456,7 @@
     </div>
 
     <!-- Top Navigation (Redesigned & Responsive Across All Screen Sizes) -->
-    <nav class="fixed top-0 inset-x-0 w-full z-40 bg-ivory-base/90 backdrop-blur-md border-b border-sage-border/50" aria-label="Main Navigation">
+    <nav class="fixed top-0 inset-x-0 w-full z-40 bg-ivory-base/90 dark:bg-[#06110D]/90 backdrop-blur-md border-b border-sage-border/50 dark:border-[rgba(45,212,191,0.15)]" aria-label="Main Navigation">
         <div class="content-container h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-4">
             
             <!-- Brand Logo & Entity Title -->
@@ -405,28 +465,31 @@
                     <img src="/images/brand-logo.jpg" alt="Aneevarp Solutions Logo" class="w-full h-full object-cover object-center"/>
                 </div>
                 <div class="flex flex-col justify-center leading-none">
-                    <span class="font-display-lg text-sm sm:text-base font-extrabold text-slate-deep tracking-tight whitespace-nowrap">Aneevarp Solutions</span>
-                    <span class="text-[9px] sm:text-[10px] text-primary font-label-caps uppercase tracking-wider mt-0.5 whitespace-nowrap">Parent Holding Entity</span>
+                    <span class="font-display-lg text-sm sm:text-base font-extrabold text-slate-deep dark:text-white tracking-tight whitespace-nowrap">Aneevarp Solutions</span>
+                    <span class="text-[9px] sm:text-[10px] text-primary dark:text-[#2DD4BF] font-label-caps uppercase tracking-wider mt-0.5 whitespace-nowrap">Parent Holding Entity</span>
                 </div>
             </a>
 
             <!-- Clean Desktop Navigation Links (Visible on Large Desktops, Clutter-Free) -->
-            <div class="hidden lg:flex items-center gap-3 xl:gap-5 font-label-caps text-[11px] xl:text-xs uppercase font-semibold text-secondary">
-                <a class="nav-link hover:text-primary transition-colors py-1 flex items-center gap-1.5" href="#portfolio">
+            <div class="hidden lg:flex items-center gap-3 xl:gap-5 font-label-caps text-[11px] xl:text-xs uppercase font-semibold text-secondary dark:text-[#CBD5E1]">
+                <a class="nav-link hover:text-primary dark:hover:text-[#2DD4BF] transition-colors py-1 flex items-center gap-1.5" href="#portfolio">
                     Ventures
-                    <span class="px-1.5 py-0.2 rounded-full bg-primary/10 text-primary text-[10px] font-bold">3</span>
+                    <span class="px-1.5 py-0.2 rounded-full bg-primary/10 text-primary dark:text-[#2DD4BF] text-[10px] font-bold">3</span>
                 </a>
-                <a class="nav-link hover:text-primary transition-colors py-1" href="#identity">SSO Vault</a>
-                <a class="nav-link hover:text-primary transition-colors py-1" href="#founder">Founder</a>
-                <a class="nav-link hover:text-primary transition-colors py-1" href="#studio">Studio</a>
-                <a class="nav-link hover:text-primary transition-colors py-1" href="#timeline">Roadmap</a>
-                <a class="nav-link hover:text-primary transition-colors py-1" href="#press">Newsroom</a>
-                <a class="nav-link hover:text-primary transition-colors py-1" href="#compliance">Governance</a>
-                <a class="nav-link hover:text-primary transition-colors py-1" href="/docs">APIs</a>
+                <a class="nav-link hover:text-primary dark:hover:text-[#2DD4BF] transition-colors py-1" href="#identity">SSO Vault</a>
+                <a class="nav-link hover:text-primary dark:hover:text-[#2DD4BF] transition-colors py-1" href="#founder">Founder</a>
+                <a class="nav-link hover:text-primary dark:hover:text-[#2DD4BF] transition-colors py-1" href="#studio">Studio</a>
+                <a class="nav-link hover:text-primary dark:hover:text-[#2DD4BF] transition-colors py-1" href="#timeline">Roadmap</a>
+                <a class="nav-link hover:text-primary dark:hover:text-[#2DD4BF] transition-colors py-1" href="#press">Newsroom</a>
+                <a class="nav-link hover:text-primary dark:hover:text-[#2DD4BF] transition-colors py-1" href="#compliance">Governance</a>
+                <a class="nav-link hover:text-primary dark:hover:text-[#2DD4BF] transition-colors py-1" href="/docs">APIs</a>
             </div>
 
             <!-- Action Buttons Area (Clean Single CTA) -->
             <div class="hidden sm:flex items-center gap-3 shrink-0">
+                <button onclick="window.toggleTheme()" class="w-9 h-9 flex items-center justify-center rounded-full border border-sage-border/60 dark:border-[rgba(45,212,191,0.25)] text-slate-deep dark:text-[#F8FAFC] hover:bg-surface-container dark:hover:bg-[#121E1A] transition-colors" aria-label="Toggle Theme">
+                    <span class="material-symbols-outlined theme-icon text-lg">dark_mode</span>
+                </button>
                 <button type="button" onclick="openContactModal()" class="btn-animate btn-shimmer bg-primary text-on-primary font-label-caps text-xs uppercase px-5 py-2.5 rounded-xl hover:bg-primary-hover transition-all shadow-sm font-bold whitespace-nowrap cursor-pointer">
                     Contact Us
                 </button>
@@ -437,51 +500,54 @@
                 <button onclick="openContactModal()" class="sm:hidden btn-animate bg-primary text-on-primary font-label-caps text-[11px] uppercase px-3.5 py-1.5 rounded-lg font-bold">
                     Contact
                 </button>
-                <button onclick="toggleMobileMenu()" class="btn-animate text-slate-deep hover:text-primary p-2 rounded-xl border border-sage-border/60 hover:bg-white transition-colors" aria-label="Toggle Navigation Menu">
+                <button onclick="toggleMobileMenu()" class="btn-animate text-slate-deep hover:text-primary dark:text-white dark:hover:bg-[#121E1A] p-2 rounded-xl border border-sage-border/60 dark:border-[rgba(45,212,191,0.25)] hover:bg-white transition-colors" aria-label="Toggle Navigation Menu">
                     <span class="material-symbols-outlined text-2xl" id="menu-icon">menu</span>
                 </button>
             </div>
         </div>
 
         <!-- Mobile & Tablet Dropdown Navigation Drawer -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-ivory-base border-b border-sage-border px-4 sm:px-6 py-4 flex-col gap-1 shadow-2xl transition-all duration-300">
-            <div class="grid grid-cols-2 gap-2 text-xs font-label-caps uppercase text-slate-deep font-semibold pb-3 border-b border-sage-border/40">
-                <a class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-primary-light hover:text-primary" href="#portfolio" onclick="toggleMobileMenu()">
-                    <span class="material-symbols-outlined text-primary text-sm">rocket_launch</span>
+        <div id="mobile-menu" class="hidden lg:hidden bg-ivory-base dark:bg-[#06110D] border-b border-sage-border dark:border-[rgba(45,212,191,0.15)] px-4 sm:px-6 py-4 flex-col gap-1 shadow-2xl transition-all duration-300">
+            <div class="grid grid-cols-2 gap-2 text-xs font-label-caps uppercase text-slate-deep dark:text-[#CBD5E1] font-semibold pb-3 border-b border-sage-border/40 dark:border-[rgba(45,212,191,0.15)]">
+                <a class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-primary-light hover:text-primary dark:hover:bg-[#121E1A] dark:hover:text-[#2DD4BF]" href="#portfolio" onclick="toggleMobileMenu()">
+                    <span class="material-symbols-outlined text-primary dark:text-[#2DD4BF] text-sm">rocket_launch</span>
                     Ventures (3 Live)
                 </a>
-                <a class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-primary-light hover:text-primary" href="#identity" onclick="toggleMobileMenu()">
-                    <span class="material-symbols-outlined text-primary text-sm">key</span>
+                <a class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-primary-light hover:text-primary dark:hover:bg-[#121E1A] dark:hover:text-[#2DD4BF]" href="#identity" onclick="toggleMobileMenu()">
+                    <span class="material-symbols-outlined text-primary dark:text-[#2DD4BF] text-sm">key</span>
                     SSO Vault
                 </a>
-                <a class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-primary-light hover:text-primary" href="#founder" onclick="toggleMobileMenu()">
-                    <span class="material-symbols-outlined text-primary text-sm">person</span>
+                <a class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-primary-light hover:text-primary dark:hover:bg-[#121E1A] dark:hover:text-[#2DD4BF]" href="#founder" onclick="toggleMobileMenu()">
+                    <span class="material-symbols-outlined text-primary dark:text-[#2DD4BF] text-sm">person</span>
                     Founder
                 </a>
-                <a class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-primary-light hover:text-primary" href="#studio" onclick="toggleMobileMenu()">
-                    <span class="material-symbols-outlined text-primary text-sm">apartment</span>
+                <a class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-primary-light hover:text-primary dark:hover:bg-[#121E1A] dark:hover:text-[#2DD4BF]" href="#studio" onclick="toggleMobileMenu()">
+                    <span class="material-symbols-outlined text-primary dark:text-[#2DD4BF] text-sm">apartment</span>
                     Venture Studio
                 </a>
-                <a class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-primary-light hover:text-primary" href="#timeline" onclick="toggleMobileMenu()">
-                    <span class="material-symbols-outlined text-primary text-sm">timeline</span>
+                <a class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-primary-light hover:text-primary dark:hover:bg-[#121E1A] dark:hover:text-[#2DD4BF]" href="#timeline" onclick="toggleMobileMenu()">
+                    <span class="material-symbols-outlined text-primary dark:text-[#2DD4BF] text-sm">timeline</span>
                     Roadmap
                 </a>
-                <a class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-primary-light hover:text-primary" href="#press" onclick="toggleMobileMenu()">
-                    <span class="material-symbols-outlined text-primary text-sm">newspaper</span>
+                <a class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-primary-light hover:text-primary dark:hover:bg-[#121E1A] dark:hover:text-[#2DD4BF]" href="#press" onclick="toggleMobileMenu()">
+                    <span class="material-symbols-outlined text-primary dark:text-[#2DD4BF] text-sm">newspaper</span>
                     Newsroom
                 </a>
-                <a class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-primary-light hover:text-primary" href="#compliance" onclick="toggleMobileMenu()">
-                    <span class="material-symbols-outlined text-primary text-sm">policy</span>
+                <a class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-primary-light hover:text-primary dark:hover:bg-[#121E1A] dark:hover:text-[#2DD4BF]" href="#compliance" onclick="toggleMobileMenu()">
+                    <span class="material-symbols-outlined text-primary dark:text-[#2DD4BF] text-sm">policy</span>
                     Governance
                 </a>
-                <a class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-primary-light hover:text-primary col-span-2" href="/docs">
-                    <span class="material-symbols-outlined text-primary text-sm">api</span>
+                <a class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-primary-light hover:text-primary dark:hover:bg-[#121E1A] dark:hover:text-[#2DD4BF] col-span-2" href="/docs">
+                    <span class="material-symbols-outlined text-primary dark:text-[#2DD4BF] text-sm">api</span>
                     OpenAPI Documentation (/docs)
                 </a>
             </div>
 
             <!-- Quick Action Button inside Mobile Menu -->
-            <div class="pt-3">
+            <div class="pt-3 flex flex-col gap-2">
+                <button onclick="window.toggleTheme()" class="btn-animate w-full border border-sage-border/60 dark:border-[rgba(45,212,191,0.25)] text-slate-deep dark:text-[#F8FAFC] py-2.5 rounded-xl flex items-center justify-center gap-2 text-xs font-label-caps uppercase font-bold hover:bg-surface-container dark:hover:bg-[#121E1A]">
+                    <span class="material-symbols-outlined theme-icon text-lg">dark_mode</span> Toggle Theme
+                </button>
                 <button onclick="openContactModal(); toggleMobileMenu();" class="btn-animate btn-shimmer w-full bg-primary text-on-primary py-2.5 rounded-xl text-center text-xs font-label-caps uppercase font-bold">
                     Contact Us
                 </button>
@@ -506,13 +572,13 @@
                 </div>
 
                 <!-- Main Display Headline (Fluid Typography for All Displays) -->
-                <h1 class="font-display-lg text-3xl xs:text-4xl sm:text-5xl lg:text-6xl text-slate-deep font-extrabold leading-[1.15] tracking-tight">
-                    Architecting the <br class="hidden xs:inline"/><span class="text-primary italic">Future of Work, Autonomous AI & Document Intelligence</span>.
+                <h1 class="font-display-lg text-3xl xs:text-4xl sm:text-5xl lg:text-6xl text-slate-deep dark:text-[#F8FAFC] font-extrabold leading-[1.15] tracking-tight">
+                    Architecting the <br class="hidden xs:inline"/><span class="text-primary dark:text-[#2DD4BF] italic">Future of Work, Autonomous AI & Document Intelligence</span>.
                 </h1>
 
                 <!-- Sub-Headline -->
-                <p class="font-body-md text-sm sm:text-base md:text-lg text-secondary max-w-2xl mx-auto leading-relaxed px-2">
-                    Aneevarp Solutions builds and governs high-impact software ecosystems powering career acceleration and autonomous productivity across 3 flagship ventures: <strong class="text-slate-deep">ZenResume</strong>, <strong class="text-slate-deep">ZenScout AI</strong>, and <strong class="text-slate-deep">ZenDoc AI</strong>.
+                <p class="font-body-md text-sm sm:text-base md:text-lg text-secondary dark:text-[#CBD5E1] max-w-2xl mx-auto leading-relaxed px-2">
+                    Aneevarp Solutions builds and governs high-impact software ecosystems powering career acceleration and autonomous productivity across 3 flagship ventures: <strong class="text-slate-deep dark:text-white">ZenResume</strong>, <strong class="text-slate-deep dark:text-white">ZenScout AI</strong>, and <strong class="text-slate-deep dark:text-white">ZenDoc AI</strong>.
                 </p>
 
                 <!-- Primary CTAs -->
@@ -525,67 +591,67 @@
                         Pitch Venture Studio
                         <span class="material-symbols-outlined text-sm group-hover:rotate-12 transition-transform">rocket_launch</span>
                     </button>
-                    <a href="/docs" class="btn-animate group w-full sm:w-auto border border-slate-deep/20 text-slate-deep hover:bg-slate-deep hover:text-on-primary font-label-caps text-xs uppercase px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl font-semibold gap-2 flex items-center justify-center">
+                    <a href="/docs" class="btn-animate group w-full sm:w-auto border border-slate-deep/20 text-slate-deep hover:bg-slate-deep hover:text-on-primary dark:border-[rgba(45,212,191,0.25)] dark:text-[#F8FAFC] dark:hover:bg-[#2DD4BF] dark:hover:text-[#061B18] font-label-caps text-xs uppercase px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl font-semibold gap-2 flex items-center justify-center">
                         Swagger APIs
                         <span class="material-symbols-outlined text-sm group-hover:scale-110 transition-transform">api</span>
                     </a>
                 </div>
 
                 <!-- Trust & Indian Legal Badges -->
-                <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-6 pt-4 text-[11px] sm:text-xs text-secondary font-label-caps">
-                    <span class="flex items-center gap-1.5 hover:text-primary transition-colors"><span class="material-symbols-outlined text-primary text-sm sm:text-base">verified_user</span> DPDP Act 2023</span>
-                    <span class="flex items-center gap-1.5 hover:text-primary transition-colors"><span class="material-symbols-outlined text-primary text-sm sm:text-base">lock</span> Zero Data Selling</span>
-                    <span class="flex items-center gap-1.5 hover:text-primary transition-colors"><span class="material-symbols-outlined text-primary text-sm sm:text-base">security</span> CERT-In Aligned</span>
-                    <span class="flex items-center gap-1.5 hover:text-primary transition-colors"><span class="material-symbols-outlined text-primary text-sm sm:text-base">gavel</span> IT Rules 2021</span>
+                <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-6 pt-4 text-[11px] sm:text-xs text-secondary dark:text-[#94A3B8] font-label-caps">
+                    <span class="flex items-center gap-1.5 hover:text-primary transition-colors"><span class="material-symbols-outlined text-primary dark:text-[#2DD4BF] text-sm sm:text-base">verified_user</span> DPDP Act 2023</span>
+                    <span class="flex items-center gap-1.5 hover:text-primary transition-colors"><span class="material-symbols-outlined text-primary dark:text-[#2DD4BF] text-sm sm:text-base">lock</span> Zero Data Selling</span>
+                    <span class="flex items-center gap-1.5 hover:text-primary transition-colors"><span class="material-symbols-outlined text-primary dark:text-[#2DD4BF] text-sm sm:text-base">security</span> CERT-In Aligned</span>
+                    <span class="flex items-center gap-1.5 hover:text-primary transition-colors"><span class="material-symbols-outlined text-primary dark:text-[#2DD4BF] text-sm sm:text-base">gavel</span> IT Rules 2021</span>
                 </div>
 
                 <!-- Live Ecosystem Stats Counter Bar (Adaptive Grid) -->
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mt-8 sm:mt-12 pt-8 sm:pt-10 border-t border-sage-border text-left max-w-3xl mx-auto px-2" id="metrics-counter-bar">
-                    <div class="p-4 sm:p-5 bg-white/80 backdrop-blur-md rounded-2xl border border-sage-border shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
-                        <div class="text-[10px] sm:text-xs text-secondary uppercase font-label-caps">Resumes Built</div>
-                        <div class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-deep mt-1" id="stat-resumes">125,000+</div>
+                    <div class="p-4 sm:p-5 bg-white/80 dark:bg-[#0D1714]/80 backdrop-blur-md rounded-2xl border border-sage-border dark:border-[rgba(45,212,191,0.15)] shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
+                        <div class="text-[10px] sm:text-xs text-secondary dark:text-[#94A3B8] uppercase font-label-caps">Resumes Built</div>
+                        <div class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-deep dark:text-[#F8FAFC] mt-1" id="stat-resumes">125,000+</div>
                     </div>
-                    <div class="p-4 sm:p-5 bg-white/80 backdrop-blur-md rounded-2xl border border-sage-border shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
-                        <div class="text-[10px] sm:text-xs text-secondary uppercase font-label-caps">Jobs Indexed</div>
-                        <div class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-deep mt-1" id="stat-jobs">850,000+</div>
+                    <div class="p-4 sm:p-5 bg-white/80 dark:bg-[#0D1714]/80 backdrop-blur-md rounded-2xl border border-sage-border dark:border-[rgba(45,212,191,0.15)] shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
+                        <div class="text-[10px] sm:text-xs text-secondary dark:text-[#94A3B8] uppercase font-label-caps">Jobs Indexed</div>
+                        <div class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-deep dark:text-[#F8FAFC] mt-1" id="stat-jobs">850,000+</div>
                     </div>
-                    <div class="p-4 sm:p-5 bg-white/80 backdrop-blur-md rounded-2xl border border-sage-border shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
-                        <div class="text-[10px] sm:text-xs text-secondary uppercase font-label-caps">PDFs Analyzed</div>
-                        <div class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-deep mt-1" id="stat-pdfs">95,000+</div>
+                    <div class="p-4 sm:p-5 bg-white/80 dark:bg-[#0D1714]/80 backdrop-blur-md rounded-2xl border border-sage-border dark:border-[rgba(45,212,191,0.15)] shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
+                        <div class="text-[10px] sm:text-xs text-secondary dark:text-[#94A3B8] uppercase font-label-caps">PDFs Analyzed</div>
+                        <div class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-deep dark:text-[#F8FAFC] mt-1" id="stat-pdfs">95,000+</div>
                     </div>
-                    <div class="p-4 sm:p-5 bg-white/80 backdrop-blur-md rounded-2xl border border-sage-border shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
-                        <div class="text-[10px] sm:text-xs text-secondary uppercase font-label-caps">Live Products</div>
-                        <div class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-deep mt-1" id="stat-ventures">3 Active</div>
+                    <div class="p-4 sm:p-5 bg-white/80 dark:bg-[#0D1714]/80 backdrop-blur-md rounded-2xl border border-sage-border dark:border-[rgba(45,212,191,0.15)] shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
+                        <div class="text-[10px] sm:text-xs text-secondary dark:text-[#94A3B8] uppercase font-label-caps">Live Products</div>
+                        <div class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-deep dark:text-[#F8FAFC] mt-1" id="stat-ventures">3 Active</div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Portfolio Companies Section -->
-        <section class="py-16 sm:py-24 bg-white relative z-20 scroll-reveal" id="portfolio">
+        <section class="py-16 sm:py-24 bg-white dark:bg-[#06110D] relative z-20 scroll-reveal" id="portfolio">
             <div class="content-container">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
                     <div>
-                        <div class="badge-tag text-primary mb-2">Portfolio Ecosystem</div>
-                        <h2 class="font-display-lg text-2xl sm:text-3xl lg:text-4xl text-slate-deep font-bold">Operating Tech Ventures</h2>
+                        <div class="badge-tag text-primary dark:text-[#2DD4BF] mb-2">Portfolio Ecosystem</div>
+                        <h2 class="font-display-lg text-2xl sm:text-3xl lg:text-4xl text-slate-deep dark:text-[#F8FAFC] font-bold">Operating Tech Ventures</h2>
                     </div>
-                    <p class="text-xs sm:text-sm text-secondary max-w-md">
+                    <p class="text-xs sm:text-sm text-secondary dark:text-[#CBD5E1] max-w-md">
                         Autonomous AI engines, document comprehension systems, and career advancement platforms.
                     </p>
                 </div>
 
                 <!-- Category Filter Matrix Buttons -->
-                <div class="flex flex-wrap gap-2 mb-8 pb-4 border-b border-sage-border font-label-caps text-xs uppercase" id="category-filter-bar">
+                <div class="flex flex-wrap gap-2 mb-8 pb-4 border-b border-sage-border dark:border-[rgba(45,212,191,0.15)] font-label-caps text-xs uppercase" id="category-filter-bar">
                     <button onclick="filterVentures('ALL')" class="btn-animate category-btn active px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-primary text-on-primary font-bold shadow-sm">All Products (3)</button>
-                    <button onclick="filterVentures('CONSUMER')" class="btn-animate category-btn px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-surface-container text-secondary hover:bg-sage-border/40">Consumer AI</button>
-                    <button onclick="filterVentures('AUTONOMOUS')" class="btn-animate category-btn px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-surface-container text-secondary hover:bg-sage-border/40">Autonomous Agents</button>
-                    <button onclick="filterVentures('DOCUMENT')" class="btn-animate category-btn px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-surface-container text-secondary hover:bg-sage-border/40">Document AI</button>
-                    <button onclick="filterVentures('INCUBATING')" class="btn-animate category-btn px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-surface-container text-secondary hover:bg-sage-border/40">Cloud Labs</button>
+                    <button onclick="filterVentures('CONSUMER')" class="btn-animate category-btn px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-surface-container text-secondary dark:bg-[#121E1A] dark:text-[#94A3B8] hover:bg-sage-border/40">Consumer AI</button>
+                    <button onclick="filterVentures('AUTONOMOUS')" class="btn-animate category-btn px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-surface-container text-secondary dark:bg-[#121E1A] dark:text-[#94A3B8] hover:bg-sage-border/40">Autonomous Agents</button>
+                    <button onclick="filterVentures('DOCUMENT')" class="btn-animate category-btn px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-surface-container text-secondary dark:bg-[#121E1A] dark:text-[#94A3B8] hover:bg-sage-border/40">Document AI</button>
+                    <button onclick="filterVentures('INCUBATING')" class="btn-animate category-btn px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-surface-container text-secondary dark:bg-[#121E1A] dark:text-[#94A3B8] hover:bg-sage-border/40">Cloud Labs</button>
                 </div>
 
                 <!-- Dynamic Ventures Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" id="ventures-container">
-                    <div class="glass-card rounded-2xl p-8 animate-pulse min-h-[300px] flex items-center justify-center text-secondary">
+                    <div class="glass-card rounded-2xl p-8 animate-pulse min-h-[300px] flex items-center justify-center text-secondary dark:text-[#CBD5E1]">
                         Loading Aneevarp ventures portfolio...
                     </div>
                 </div>
@@ -593,70 +659,70 @@
         </section>
 
         <!-- Single Sign-On & Unified Identity Section -->
-        <section class="py-16 sm:py-24 bg-ivory-base border-t border-sage-border scroll-reveal" id="identity">
+        <section class="py-16 sm:py-24 bg-ivory-base dark:bg-[#0D1714] border-t border-sage-border dark:border-[rgba(45,212,191,0.15)] scroll-reveal" id="identity">
             <div class="content-container">
-                <div class="glass-card rounded-3xl p-6 sm:p-10 lg:p-12 border border-sage-border relative overflow-hidden">
+                <div class="glass-card rounded-3xl p-6 sm:p-10 lg:p-12 border border-sage-border dark:border-[rgba(45,212,191,0.2)] relative overflow-hidden">
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                         <div class="space-y-4 sm:space-y-6">
-                            <div class="badge-tag text-primary">Cross-Product Architecture</div>
-                            <h2 class="font-display-lg text-2xl sm:text-3xl lg:text-4xl text-slate-deep font-extrabold leading-tight">
-                                One Aneevarp Account.<br/><span class="text-primary italic">Universal Career & Document Identity.</span>
+                            <div class="badge-tag text-primary dark:text-[#2DD4BF]">Cross-Product Architecture</div>
+                            <h2 class="font-display-lg text-2xl sm:text-3xl lg:text-4xl text-slate-deep dark:text-[#F8FAFC] font-extrabold leading-tight">
+                                One Aneevarp Account.<br/><span class="text-primary dark:text-[#2DD4BF] italic">Universal Career & Document Identity.</span>
                             </h2>
-                            <p class="text-xs sm:text-sm text-secondary leading-relaxed">
-                                Aneevarp Solutions is building a unified single sign-on (SSO) identity layer. Your career profiles, ATS resumes built on <strong class="text-slate-deep">ZenResume</strong>, job search history on <strong class="text-slate-deep">ZenScout AI</strong>, and analyzed document vaults on <strong class="text-slate-deep">ZenDoc AI</strong> sync automatically with complete privacy.
+                            <p class="text-xs sm:text-sm text-secondary dark:text-[#CBD5E1] leading-relaxed">
+                                Aneevarp Solutions is building a unified single sign-on (SSO) identity layer. Your career profiles, ATS resumes built on <strong class="text-slate-deep dark:text-white">ZenResume</strong>, job search history on <strong class="text-slate-deep dark:text-white">ZenScout AI</strong>, and analyzed document vaults on <strong class="text-slate-deep dark:text-white">ZenDoc AI</strong> sync automatically with complete privacy.
                             </p>
                             
                             <div class="space-y-2.5 pt-2">
-                                <div class="flex items-center gap-3 text-xs sm:text-sm text-slate-deep font-medium">
-                                    <span class="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs shrink-0">✓</span>
+                                <div class="flex items-center gap-3 text-xs sm:text-sm text-slate-deep dark:text-[#F8FAFC] font-medium">
+                                    <span class="w-5 h-5 rounded-full bg-primary/10 text-primary dark:bg-[rgba(45,212,191,0.1)] dark:text-[#2DD4BF] flex items-center justify-center font-bold text-xs shrink-0">✓</span>
                                     Instant synchronization across ZenResume, ZenScout AI & ZenDoc AI
                                 </div>
-                                <div class="flex items-center gap-3 text-xs sm:text-sm text-slate-deep font-medium">
-                                    <span class="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs shrink-0">✓</span>
+                                <div class="flex items-center gap-3 text-xs sm:text-sm text-slate-deep dark:text-[#F8FAFC] font-medium">
+                                    <span class="w-5 h-5 rounded-full bg-primary/10 text-primary dark:bg-[rgba(45,212,191,0.1)] dark:text-[#2DD4BF] flex items-center justify-center font-bold text-xs shrink-0">✓</span>
                                     Zero duplicate data entry across new Aneevarp applications
                                 </div>
-                                <div class="flex items-center gap-3 text-xs sm:text-sm text-slate-deep font-medium">
-                                    <span class="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs shrink-0">✓</span>
+                                <div class="flex items-center gap-3 text-xs sm:text-sm text-slate-deep dark:text-[#F8FAFC] font-medium">
+                                    <span class="w-5 h-5 rounded-full bg-primary/10 text-primary dark:bg-[rgba(45,212,191,0.1)] dark:text-[#2DD4BF] flex items-center justify-center font-bold text-xs shrink-0">✓</span>
                                     DPDP Act 2023 Encrypted data vault with strict access boundaries
                                 </div>
                             </div>
                         </div>
 
                         <!-- Visual SSO Flow Graphic -->
-                        <div class="bg-surface-container-low p-5 sm:p-8 rounded-2xl border border-sage-border space-y-4 shadow-inner">
-                            <div class="text-[10px] sm:text-xs font-label-caps uppercase text-secondary mb-2 text-center">Unified Identity Token Flow</div>
-                            <div class="p-3.5 bg-white rounded-xl border border-sage-border flex items-center justify-between shadow-sm">
+                        <div class="bg-surface-container-low dark:bg-[#121E1A] p-5 sm:p-8 rounded-2xl border border-sage-border dark:border-[rgba(45,212,191,0.15)] space-y-4 shadow-inner">
+                            <div class="text-[10px] sm:text-xs font-label-caps uppercase text-secondary dark:text-[#94A3B8] mb-2 text-center">Unified Identity Token Flow</div>
+                            <div class="p-3.5 bg-white dark:bg-[#0D1714] rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.15)] flex items-center justify-between shadow-sm">
                                 <div class="flex items-center gap-3">
                                     <div class="w-9 h-9 rounded-lg overflow-hidden border border-slate-deep/20 shrink-0 bg-slate-deep">
                                         <img src="/images/brand-logo.jpg" alt="Aneevarp Identity" class="w-full h-full object-cover"/>
                                     </div>
                                     <div>
-                                        <div class="font-bold text-slate-deep text-xs sm:text-sm">Aneevarp Identity Vault</div>
-                                        <div class="text-[10px] text-primary font-label-caps">sso.aneevarp.com</div>
+                                        <div class="font-bold text-slate-deep dark:text-[#F8FAFC] text-xs sm:text-sm">Aneevarp Identity Vault</div>
+                                        <div class="text-[10px] text-primary dark:text-[#2DD4BF] font-label-caps">sso.aneevarp.com</div>
                                     </div>
                                 </div>
-                                <span class="px-2.5 py-1 bg-primary/10 text-primary rounded-full text-[10px] sm:text-xs font-label-caps font-bold">JWT SSO</span>
+                                <span class="px-2.5 py-1 bg-primary/10 text-primary dark:bg-[rgba(45,212,191,0.1)] dark:text-[#2DD4BF] rounded-full text-[10px] sm:text-xs font-label-caps font-bold">JWT SSO</span>
                             </div>
 
-                            <div class="flex justify-center text-secondary">
+                            <div class="flex justify-center text-secondary dark:text-[#94A3B8]">
                                 <span class="material-symbols-outlined text-2xl animate-bounce">arrow_downward</span>
                             </div>
 
                             <div class="grid grid-cols-3 gap-2 sm:gap-3">
-                                <div class="p-3 bg-white rounded-xl border border-sage-border text-center hover:border-primary transition-all flex flex-col items-center justify-center">
+                                <div class="p-3 bg-white dark:bg-[#0D1714] rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.15)] text-center hover:border-primary dark:hover:border-[#2DD4BF] transition-all flex flex-col items-center justify-center">
                                     <img src="/images/zenresume-logo.png" alt="ZenResume" class="w-7 h-7 object-contain mb-1"/>
-                                    <div class="font-bold text-[10px] sm:text-xs text-slate-deep">ZenResume</div>
-                                    <div class="text-[8px] sm:text-[9px] text-secondary truncate">zenresume.online</div>
+                                    <div class="font-bold text-[10px] sm:text-xs text-slate-deep dark:text-[#F8FAFC]">ZenResume</div>
+                                    <div class="text-[8px] sm:text-[9px] text-secondary dark:text-[#CBD5E1] truncate">zenresume.online</div>
                                 </div>
-                                <div class="p-3 bg-white rounded-xl border border-sage-border text-center hover:border-primary transition-all">
-                                    <span class="material-symbols-outlined text-slate-deep text-xl sm:text-2xl mb-1">radar</span>
-                                    <div class="font-bold text-[10px] sm:text-xs text-slate-deep">ZenScout AI</div>
-                                    <div class="text-[8px] sm:text-[9px] text-secondary truncate">vercel.app</div>
+                                <div class="p-3 bg-white dark:bg-[#0D1714] rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.15)] text-center hover:border-primary dark:hover:border-[#2DD4BF] transition-all">
+                                    <span class="material-symbols-outlined text-slate-deep dark:text-[#F8FAFC] text-xl sm:text-2xl mb-1">radar</span>
+                                    <div class="font-bold text-[10px] sm:text-xs text-slate-deep dark:text-[#F8FAFC]">ZenScout AI</div>
+                                    <div class="text-[8px] sm:text-[9px] text-secondary dark:text-[#CBD5E1] truncate">vercel.app</div>
                                 </div>
-                                <div class="p-3 bg-white rounded-xl border border-sage-border text-center hover:border-primary transition-all">
+                                <div class="p-3 bg-white dark:bg-[#0D1714] rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.15)] text-center hover:border-primary dark:hover:border-[#2DD4BF] transition-all">
                                     <span class="material-symbols-outlined text-red-700 text-xl sm:text-2xl mb-1">picture_as_pdf</span>
-                                    <div class="font-bold text-[10px] sm:text-xs text-slate-deep">ZenDoc AI</div>
-                                    <div class="text-[8px] sm:text-[9px] text-secondary truncate">vercel.app</div>
+                                    <div class="font-bold text-[10px] sm:text-xs text-slate-deep dark:text-[#F8FAFC]">ZenDoc AI</div>
+                                    <div class="text-[8px] sm:text-[9px] text-secondary dark:text-[#CBD5E1] truncate">vercel.app</div>
                                 </div>
                             </div>
                         </div>
@@ -666,7 +732,7 @@
         </section>
 
         <!-- Venture Studio Section -->
-        <section class="py-16 sm:py-24 bg-white scroll-reveal" id="studio">
+        <section class="py-16 sm:py-24 bg-white dark:bg-[#06110D] scroll-reveal" id="studio">
             <div class="content-container">
                 <div class="bg-slate-deep text-ivory-base rounded-3xl p-6 sm:p-10 lg:p-14 relative overflow-hidden shadow-2xl">
                     <div class="max-w-3xl space-y-4 sm:space-y-6 relative z-10">
@@ -693,34 +759,34 @@
         </section>
 
         <!-- Founder & Leadership Spotlight Section (Indie Studio & High-Trust Founder Model) -->
-        <section class="py-16 sm:py-24 bg-surface-container-low/50 border-t border-sage-border scroll-reveal" id="founder">
+        <section class="py-16 sm:py-24 bg-surface-container-low/50 dark:bg-[#0D1714]/50 border-t border-sage-border dark:border-[rgba(45,212,191,0.15)] scroll-reveal" id="founder">
             <div class="content-container">
                 <div class="mb-10 sm:mb-12 text-center max-w-2xl mx-auto">
-                    <div class="badge-tag text-primary mb-2">Leadership & Builder</div>
-                    <h2 class="font-display-lg text-2xl sm:text-3xl lg:text-4xl text-slate-deep font-bold">Behind the Studio</h2>
-                    <p class="text-xs sm:text-sm text-secondary mt-2">Built with relentless engineering speed, lean architecture, and human accountability.</p>
+                    <div class="badge-tag text-primary dark:text-[#2DD4BF] mb-2">Leadership & Builder</div>
+                    <h2 class="font-display-lg text-2xl sm:text-3xl lg:text-4xl text-slate-deep dark:text-[#F8FAFC] font-bold">Behind the Studio</h2>
+                    <p class="text-xs sm:text-sm text-secondary dark:text-[#CBD5E1] mt-2">Built with relentless engineering speed, lean architecture, and human accountability.</p>
                 </div>
 
-                <div class="max-w-3xl mx-auto bg-white rounded-3xl p-6 sm:p-10 border border-sage-border shadow-xl relative overflow-hidden">
+                <div class="max-w-3xl mx-auto bg-white dark:bg-[#121E1A] rounded-3xl p-6 sm:p-10 border border-sage-border dark:border-[rgba(45,212,191,0.2)] shadow-xl relative overflow-hidden">
                     <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
                         <div class="relative flex-shrink-0">
-                            <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl overflow-hidden shadow-md border-2 border-primary/20 bg-surface-container-low">
+                            <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl overflow-hidden shadow-md border-2 border-primary/20 bg-surface-container-low dark:bg-[#0D1714]">
                                 <img src="/images/founder.jpg" alt="Jagadeeswara Rao Peddada - Founder of Aneevarp Solutions" class="w-full h-full object-cover"/>
                             </div>
-                            <div class="absolute -bottom-2 -right-2 px-2.5 py-1 bg-white rounded-full shadow border border-sage-border flex items-center gap-1.5 text-[10px] font-bold text-primary">
+                            <div class="absolute -bottom-2 -right-2 px-2.5 py-1 bg-white dark:bg-[#06110D] rounded-full shadow border border-sage-border dark:border-[rgba(45,212,191,0.2)] flex items-center gap-1.5 text-[10px] font-bold text-primary dark:text-[#2DD4BF]">
                                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Active Builder
                             </div>
                         </div>
 
                         <div class="flex-1 text-center sm:text-left space-y-3">
                             <div>
-                                <div class="badge-tag text-[10px] text-primary mb-1">Founder & Chief Architect</div>
-                                <h3 class="font-display-lg text-xl sm:text-2xl font-bold text-slate-deep">Jagadeeswara Rao Peddada</h3>
-                                <p class="text-xs font-semibold text-secondary">Founder, Aneevarp Solutions Private Limited</p>
+                                <div class="badge-tag text-[10px] text-primary dark:text-[#2DD4BF] mb-1">Founder & Chief Architect</div>
+                                <h3 class="font-display-lg text-xl sm:text-2xl font-bold text-slate-deep dark:text-[#F8FAFC]">Jagadeeswara Rao Peddada</h3>
+                                <p class="text-xs font-semibold text-secondary dark:text-[#94A3B8]">Founder, Aneevarp Solutions Private Limited</p>
                             </div>
 
-                            <p class="text-xs sm:text-sm text-secondary leading-relaxed">
-                                "I architect and build autonomous AI tools and software platforms—including <strong>ZenResume</strong>, <strong>ZenScout AI</strong>, and <strong>ZenDoc AI</strong>. We believe in high execution velocity, zero-bloat engineering, and building software that directly solves real human problems."
+                            <p class="text-xs sm:text-sm text-secondary dark:text-[#CBD5E1] leading-relaxed">
+                                "I architect and build autonomous AI tools and software platforms—including <strong class="dark:text-white">ZenResume</strong>, <strong class="dark:text-white">ZenScout AI</strong>, and <strong class="dark:text-white">ZenDoc AI</strong>. We believe in high execution velocity, zero-bloat engineering, and building software that directly solves real human problems."
                             </p>
 
                             <div class="pt-2 flex flex-wrap items-center justify-center sm:justify-start gap-3 text-xs">
@@ -738,47 +804,47 @@
         </section>
 
         <!-- Corporate Milestones Timeline Section -->
-        <section class="py-16 sm:py-24 bg-ivory-base border-t border-sage-border scroll-reveal" id="timeline">
+        <section class="py-16 sm:py-24 bg-ivory-base dark:bg-[#06110D] border-t border-sage-border dark:border-[rgba(45,212,191,0.15)] scroll-reveal" id="timeline">
             <div class="content-container">
                 <div class="mb-10 sm:mb-12 text-center max-w-2xl mx-auto">
-                    <div class="badge-tag text-primary mb-2">Company Growth</div>
-                    <h2 class="font-display-lg text-2xl sm:text-3xl lg:text-4xl text-slate-deep font-bold">Aneevarp Corporate Roadmap</h2>
-                    <p class="text-xs sm:text-sm text-secondary mt-2">Chronological journey from parent entity registration in India to 3 live product launches.</p>
+                    <div class="badge-tag text-primary dark:text-[#2DD4BF] mb-2">Company Growth</div>
+                    <h2 class="font-display-lg text-2xl sm:text-3xl lg:text-4xl text-slate-deep dark:text-[#F8FAFC] font-bold">Aneevarp Corporate Roadmap</h2>
+                    <p class="text-xs sm:text-sm text-secondary dark:text-[#CBD5E1] mt-2">Chronological journey from parent entity registration in India to 3 live product launches.</p>
                 </div>
 
-                <div class="relative border-l-2 border-primary/30 max-w-2xl mx-auto space-y-8 sm:space-y-10 pl-6 sm:pl-8">
+                <div class="relative border-l-2 border-primary/30 dark:border-[#2DD4BF]/30 max-w-2xl mx-auto space-y-8 sm:space-y-10 pl-6 sm:pl-8">
                     <div class="relative">
-                        <span class="absolute -left-[31px] sm:-left-[39px] top-1 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-primary border-4 border-ivory-base shadow-sm"></span>
-                        <div class="badge-tag text-primary text-[10px] sm:text-xs mb-1">May 2026</div>
-                        <h3 class="font-display-lg text-lg sm:text-xl font-bold text-slate-deep">Incorporation & ZenResume Launch</h3>
-                        <p class="text-xs sm:text-sm text-secondary mt-1.5 leading-relaxed">
+                        <span class="absolute -left-[31px] sm:-left-[39px] top-1 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-primary border-4 border-ivory-base dark:border-[#06110D] shadow-sm"></span>
+                        <div class="badge-tag text-primary dark:text-[#2DD4BF] text-[10px] sm:text-xs mb-1">May 2026</div>
+                        <h3 class="font-display-lg text-lg sm:text-xl font-bold text-slate-deep dark:text-[#F8FAFC]">Incorporation & ZenResume Launch</h3>
+                        <p class="text-xs sm:text-sm text-secondary dark:text-[#CBD5E1] mt-1.5 leading-relaxed">
                             Official incorporation of <strong>Aneevarp Solutions</strong> (MCA India) and rollout of <strong>ZenResume</strong> (`zenresume.online`), providing ATS resume generation to thousands of job seekers.
                         </p>
                     </div>
 
                     <div class="relative">
-                        <span class="absolute -left-[31px] sm:-left-[39px] top-1 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-primary border-4 border-ivory-base shadow-sm"></span>
-                        <div class="badge-tag text-primary text-[10px] sm:text-xs mb-1">August 2026</div>
-                        <h3 class="font-display-lg text-lg sm:text-xl font-bold text-slate-deep">ZenScout AI Unveiled</h3>
-                        <p class="text-xs sm:text-sm text-secondary mt-1.5 leading-relaxed">
+                        <span class="absolute -left-[31px] sm:-left-[39px] top-1 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-primary border-4 border-ivory-base dark:border-[#06110D] shadow-sm"></span>
+                        <div class="badge-tag text-primary dark:text-[#2DD4BF] text-[10px] sm:text-xs mb-1">August 2026</div>
+                        <h3 class="font-display-lg text-lg sm:text-xl font-bold text-slate-deep dark:text-[#F8FAFC]">ZenScout AI Unveiled</h3>
+                        <p class="text-xs sm:text-sm text-secondary dark:text-[#CBD5E1] mt-1.5 leading-relaxed">
                             Launch of second flagship venture, <strong>ZenScout AI</strong> (`ai-job-search-agent-chi.vercel.app`), orchestrating real-time job indexing and career matching.
                         </p>
                     </div>
 
                     <div class="relative">
-                        <span class="absolute -left-[31px] sm:-left-[39px] top-1 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-primary border-4 border-ivory-base shadow-sm"></span>
-                        <div class="badge-tag text-primary text-[10px] sm:text-xs mb-1">August 2026</div>
-                        <h3 class="font-display-lg text-lg sm:text-xl font-bold text-slate-deep">ZenDoc AI Launched</h3>
-                        <p class="text-xs sm:text-sm text-secondary mt-1.5 leading-relaxed">
+                        <span class="absolute -left-[31px] sm:-left-[39px] top-1 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-primary border-4 border-ivory-base dark:border-[#06110D] shadow-sm"></span>
+                        <div class="badge-tag text-primary dark:text-[#2DD4BF] text-[10px] sm:text-xs mb-1">August 2026</div>
+                        <h3 class="font-display-lg text-lg sm:text-xl font-bold text-slate-deep dark:text-[#F8FAFC]">ZenDoc AI Launched</h3>
+                        <p class="text-xs sm:text-sm text-secondary dark:text-[#CBD5E1] mt-1.5 leading-relaxed">
                             Rollout of third flagship product, <strong>ZenDoc AI</strong> (`pdf-analizing-and-answering-bot.vercel.app`), providing high-speed semantic document question answering.
                         </p>
                     </div>
 
                     <div class="relative">
-                        <span class="absolute -left-[31px] sm:-left-[39px] top-1 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-sage-muted border-4 border-ivory-base shadow-sm"></span>
-                        <div class="badge-tag text-secondary text-[10px] sm:text-xs mb-1">Q4 2026 — Upcoming</div>
-                        <h3 class="font-display-lg text-lg sm:text-xl font-bold text-slate-deep">Aneevarp Unified Identity & Cloud Labs</h3>
-                        <p class="text-xs sm:text-sm text-secondary mt-1.5 leading-relaxed">
+                        <span class="absolute -left-[31px] sm:-left-[39px] top-1 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-sage-muted border-4 border-ivory-base dark:border-[#06110D] shadow-sm"></span>
+                        <div class="badge-tag text-secondary dark:text-[#94A3B8] text-[10px] sm:text-xs mb-1">Q4 2026 — Upcoming</div>
+                        <h3 class="font-display-lg text-lg sm:text-xl font-bold text-slate-deep dark:text-[#F8FAFC]">Aneevarp Unified Identity & Cloud Labs</h3>
+                        <p class="text-xs sm:text-sm text-secondary dark:text-[#CBD5E1] mt-1.5 leading-relaxed">
                             Deployment of single sign-on (SSO) identity vault and microservice infrastructure powering seamless cross-product synchronization.
                         </p>
                     </div>
@@ -787,14 +853,14 @@
         </section>
 
         <!-- Press & Newsroom Section -->
-        <section class="py-16 sm:py-24 bg-white scroll-reveal" id="press">
+        <section class="py-16 sm:py-24 bg-white dark:bg-[#06110D] scroll-reveal" id="press">
             <div class="content-container">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 sm:mb-12 gap-4">
                     <div>
-                        <div class="badge-tag text-primary mb-2">Corporate Newsroom</div>
-                        <h2 class="font-display-lg text-2xl sm:text-3xl lg:text-4xl text-slate-deep font-bold">Press & Announcements</h2>
+                        <div class="badge-tag text-primary dark:text-[#2DD4BF] mb-2">Corporate Newsroom</div>
+                        <h2 class="font-display-lg text-2xl sm:text-3xl lg:text-4xl text-slate-deep dark:text-[#F8FAFC] font-bold">Press & Announcements</h2>
                     </div>
-                    <button type="button" data-modal-target="mediakit-modal" onclick="openMediaKitModal()" class="btn-animate border border-sage-border text-primary font-label-caps text-xs uppercase px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl hover:bg-primary-light font-bold shadow-sm gap-2 cursor-pointer inline-flex items-center">
+                    <button type="button" data-modal-target="mediakit-modal" onclick="openMediaKitModal()" class="btn-animate border border-sage-border dark:border-[rgba(45,212,191,0.25)] text-primary dark:text-[#2DD4BF] font-label-caps text-xs uppercase px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl hover:bg-primary-light dark:hover:bg-[#121E1A] font-bold shadow-sm gap-2 cursor-pointer inline-flex items-center">
                         <span class="material-symbols-outlined text-sm">download</span> Open Media Kit
                     </button>
                 </div>
@@ -806,36 +872,36 @@
         </section>
 
         <!-- Mandatory Indian Governance, MCA & Statutory Compliance Section -->
-        <section class="py-16 sm:py-24 bg-ivory-base border-t border-sage-border scroll-reveal" id="compliance">
+        <section class="py-16 sm:py-24 bg-ivory-base dark:bg-[#0D1714] border-t border-sage-border dark:border-[rgba(45,212,191,0.15)] scroll-reveal" id="compliance">
             <div class="content-container space-y-12 sm:space-y-16">
                 <div class="max-w-3xl">
-                    <div class="badge-tag text-primary mb-2">Statutory & Regulatory Governance</div>
-                    <h2 class="font-display-lg text-2xl sm:text-3xl lg:text-4xl text-slate-deep font-bold mb-4">Indian Corporate Standards & Compliance</h2>
-                    <p class="text-sm sm:text-base text-secondary leading-relaxed" id="governance-mission">
+                    <div class="badge-tag text-primary dark:text-[#2DD4BF] mb-2">Statutory & Regulatory Governance</div>
+                    <h2 class="font-display-lg text-2xl sm:text-3xl lg:text-4xl text-slate-deep dark:text-[#F8FAFC] font-bold mb-4">Indian Corporate Standards & Compliance</h2>
+                    <p class="text-sm sm:text-base text-secondary dark:text-[#CBD5E1] leading-relaxed" id="governance-mission">
                         Loading corporate mission statement...
                     </p>
                 </div>
 
                 <!-- Statutory MCA India Disclosures & Grievance Quick Actions -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-white p-6 sm:p-8 rounded-2xl sm:rounded-3xl border border-sage-border shadow-sm flex flex-col justify-between">
+                    <div class="bg-white dark:bg-[#121E1A] p-6 sm:p-8 rounded-2xl sm:rounded-3xl border border-sage-border dark:border-[rgba(45,212,191,0.15)] shadow-sm flex flex-col justify-between">
                         <div>
-                            <div class="badge-tag text-primary mb-2">Companies Act, 2013</div>
-                            <h3 class="font-display-lg text-lg sm:text-xl font-bold text-slate-deep mb-2">MCA Incorporation Details</h3>
-                            <p class="text-xs text-secondary leading-relaxed mb-4">
+                            <div class="badge-tag text-primary dark:text-[#2DD4BF] mb-2">Companies Act, 2013</div>
+                            <h3 class="font-display-lg text-lg sm:text-xl font-bold text-slate-deep dark:text-[#F8FAFC] mb-2">MCA Incorporation Details</h3>
+                            <p class="text-xs text-secondary dark:text-[#CBD5E1] leading-relaxed mb-4">
                                 Registered in India under the Ministry of Corporate Affairs (RoC Hyderabad). Fully compliant with Section 12(3) statutory website disclosures.
                             </p>
                         </div>
-                        <div class="text-xs text-slate-deep font-mono bg-surface-container-low p-3 rounded-xl border border-sage-border/60">
+                        <div class="text-xs text-slate-deep dark:text-[#F8FAFC] font-mono bg-surface-container-low dark:bg-[#0D1714] p-3 rounded-xl border border-sage-border/60 dark:border-[rgba(45,212,191,0.2)]">
                             CIN: U72900TG2026PTC184920
                         </div>
                     </div>
 
-                    <div class="bg-white p-6 sm:p-8 rounded-2xl sm:rounded-3xl border border-sage-border shadow-sm flex flex-col justify-between">
+                    <div class="bg-white dark:bg-[#121E1A] p-6 sm:p-8 rounded-2xl sm:rounded-3xl border border-sage-border dark:border-[rgba(45,212,191,0.15)] shadow-sm flex flex-col justify-between">
                         <div>
-                            <div class="badge-tag text-primary mb-2">IT Rules 2021 (Rule 3(2))</div>
-                            <h3 class="font-display-lg text-lg sm:text-xl font-bold text-slate-deep mb-2">Statutory Grievance Redressal</h3>
-                            <p class="text-xs text-secondary leading-relaxed mb-4">
+                            <div class="badge-tag text-primary dark:text-[#2DD4BF] mb-2">IT Rules 2021 (Rule 3(2))</div>
+                            <h3 class="font-display-lg text-lg sm:text-xl font-bold text-slate-deep dark:text-[#F8FAFC] mb-2">Statutory Grievance Redressal</h3>
+                            <p class="text-xs text-secondary dark:text-[#CBD5E1] leading-relaxed mb-4">
                                 Formal grievance redressal mechanism with mandatory 24-hour statutory acknowledgment and 15-day resolution turnaround.
                             </p>
                         </div>
@@ -844,15 +910,15 @@
                         </button>
                     </div>
 
-                    <div class="bg-white p-6 sm:p-8 rounded-2xl sm:rounded-3xl border border-sage-border shadow-sm flex flex-col justify-between">
+                    <div class="bg-white dark:bg-[#121E1A] p-6 sm:p-8 rounded-2xl sm:rounded-3xl border border-sage-border dark:border-[rgba(45,212,191,0.15)] shadow-sm flex flex-col justify-between">
                         <div>
-                            <div class="badge-tag text-primary mb-2">DPDP Act, 2023</div>
-                            <h3 class="font-display-lg text-lg sm:text-xl font-bold text-slate-deep mb-2">Data Subject Rights (DSR)</h3>
-                            <p class="text-xs text-secondary leading-relaxed mb-4">
+                            <div class="badge-tag text-primary dark:text-[#2DD4BF] mb-2">DPDP Act, 2023</div>
+                            <h3 class="font-display-lg text-lg sm:text-xl font-bold text-slate-deep dark:text-[#F8FAFC] mb-2">Data Subject Rights (DSR)</h3>
+                            <p class="text-xs text-secondary dark:text-[#CBD5E1] leading-relaxed mb-4">
                                 Exercise your statutory rights under Indian Data Protection Law — access personal summaries, correct records, or request complete data erasure.
                             </p>
                         </div>
-                        <button type="button" data-modal-target="datarights-modal" onclick="openDataRightsModal()" class="btn-animate border border-primary text-primary hover:bg-primary-light py-2.5 px-4 rounded-xl text-xs font-label-caps uppercase font-bold text-center cursor-pointer">
+                        <button type="button" data-modal-target="datarights-modal" onclick="openDataRightsModal()" class="btn-animate border border-primary dark:border-[#2DD4BF] text-primary dark:text-[#2DD4BF] hover:bg-primary-light dark:hover:bg-[#121E1A] py-2.5 px-4 rounded-xl text-xs font-label-caps uppercase font-bold text-center cursor-pointer">
                             Submit Data Privacy Request
                         </button>
                     </div>
@@ -860,7 +926,7 @@
 
                 <!-- Policies & AI Ethics Charter -->
                 <div>
-                    <h3 class="font-display-lg text-lg sm:text-xl font-bold text-slate-deep mb-6">Corporate Standards & Compliance Policies</h3>
+                    <h3 class="font-display-lg text-lg sm:text-xl font-bold text-slate-deep dark:text-[#F8FAFC] mb-6">Corporate Standards & Compliance Policies</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6" id="policies-container">
                         <!-- Dynamic policies loaded from API -->
                     </div>
@@ -938,27 +1004,27 @@
 
     <!-- Contact Modal -->
     <div id="contact-modal" class="modal-overlay" onclick="if(event.target===this)closeContactModal()" role="dialog" aria-modal="true">
-        <div class="bg-ivory-base rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border relative animate-fade-in-up">
-            <button type="button" data-modal-close="contact-modal" onclick="closeContactModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5 cursor-pointer" aria-label="Close Modal">
+        <div class="bg-ivory-base dark:bg-[#0D1714] rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] relative animate-fade-in-up">
+            <button type="button" data-modal-close="contact-modal" onclick="closeContactModal()" class="absolute top-5 right-5 text-secondary dark:text-[#94A3B8] hover:text-slate-deep dark:hover:text-[#F8FAFC] p-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer" aria-label="Close Modal">
                 <span class="material-symbols-outlined">close</span>
             </button>
-            <h3 class="font-display-lg text-xl sm:text-2xl font-bold text-slate-deep mb-1">Contact Aneevarp Solutions</h3>
-            <p class="text-xs text-secondary mb-4">
-                Official Support: <a href="mailto:aneevarpsolutions@gmail.com" class="text-primary font-bold underline">aneevarpsolutions@gmail.com</a>
+            <h3 class="font-display-lg text-xl sm:text-2xl font-bold text-slate-deep dark:text-[#F8FAFC] mb-1">Contact Aneevarp Solutions</h3>
+            <p class="text-xs text-secondary dark:text-[#CBD5E1] mb-4">
+                Official Support: <a href="mailto:aneevarpsolutions@gmail.com" class="text-primary dark:text-[#2DD4BF] font-bold underline">aneevarpsolutions@gmail.com</a>
             </p>
 
             <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-3.5">
                 <div>
-                    <label class="block text-[11px] font-label-caps uppercase text-secondary mb-1">Full Name</label>
-                    <input type="text" id="contact-name" required class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border bg-white text-slate-deep focus:outline-none focus:border-primary text-xs sm:text-sm"/>
+                    <label class="block text-[11px] font-label-caps uppercase text-secondary dark:text-[#94A3B8] mb-1">Full Name</label>
+                    <input type="text" id="contact-name" required class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] bg-white dark:bg-[#121E1A] text-slate-deep dark:text-[#F8FAFC] focus:outline-none focus:border-primary text-xs sm:text-sm"/>
                 </div>
                 <div>
-                    <label class="block text-[11px] font-label-caps uppercase text-secondary mb-1">Work Email</label>
-                    <input type="email" id="contact-email" required class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border bg-white text-slate-deep focus:outline-none focus:border-primary text-xs sm:text-sm"/>
+                    <label class="block text-[11px] font-label-caps uppercase text-secondary dark:text-[#94A3B8] mb-1">Work Email</label>
+                    <input type="email" id="contact-email" required class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] bg-white dark:bg-[#121E1A] text-slate-deep dark:text-[#F8FAFC] focus:outline-none focus:border-primary text-xs sm:text-sm"/>
                 </div>
                 <div>
-                    <label class="block text-[11px] font-label-caps uppercase text-secondary mb-1">Inquiry Category</label>
-                    <select id="contact-category" class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border bg-white text-slate-deep focus:outline-none focus:border-primary text-xs sm:text-sm">
+                    <label class="block text-[11px] font-label-caps uppercase text-secondary dark:text-[#94A3B8] mb-1">Inquiry Category</label>
+                    <select id="contact-category" class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] bg-white dark:bg-[#121E1A] text-slate-deep dark:text-[#F8FAFC] focus:outline-none focus:border-primary text-xs sm:text-sm">
                         <option value="GENERAL">General Support & Info</option>
                         <option value="PARTNERSHIP">Strategic Partnerships</option>
                         <option value="ENTERPRISE_LICENSING">B2B Enterprise Licensing</option>
@@ -968,8 +1034,8 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-[11px] font-label-caps uppercase text-secondary mb-1">Message</label>
-                    <textarea id="contact-message" required rows="3" class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border bg-white text-slate-deep focus:outline-none focus:border-primary text-xs sm:text-sm"></textarea>
+                    <label class="block text-[11px] font-label-caps uppercase text-secondary dark:text-[#94A3B8] mb-1">Message</label>
+                    <textarea id="contact-message" required rows="3" class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] bg-white dark:bg-[#121E1A] text-slate-deep dark:text-[#F8FAFC] focus:outline-none focus:border-primary text-xs sm:text-sm"></textarea>
                 </div>
                 <button type="submit" class="btn-animate btn-shimmer w-full bg-primary text-on-primary py-3 rounded-xl font-label-caps text-xs uppercase hover:bg-primary-hover font-bold shadow-md cursor-pointer">
                     Send Inquiry
@@ -980,34 +1046,34 @@
 
     <!-- Statutory IT Rules 2021 Grievance Redressal Modal -->
     <div id="grievance-modal" class="modal-overlay" onclick="if(event.target===this)closeGrievanceModal()" role="dialog" aria-modal="true">
-        <div class="bg-ivory-base rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border relative animate-fade-in-up">
-            <button type="button" data-modal-close="grievance-modal" onclick="closeGrievanceModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5 cursor-pointer" aria-label="Close Modal">
+        <div class="bg-ivory-base dark:bg-[#0D1714] rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] relative animate-fade-in-up">
+            <button type="button" data-modal-close="grievance-modal" onclick="closeGrievanceModal()" class="absolute top-5 right-5 text-secondary dark:text-[#94A3B8] hover:text-slate-deep dark:hover:text-[#F8FAFC] p-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer" aria-label="Close Modal">
                 <span class="material-symbols-outlined">close</span>
             </button>
-            <div class="badge-tag text-primary mb-1">Rule 3(2) IT Rules, 2021</div>
-            <h3 class="font-display-lg text-xl sm:text-2xl font-bold text-slate-deep mb-2">Grievance Redressal Officer</h3>
-            <p class="text-xs text-secondary mb-4 leading-relaxed">
+            <div class="badge-tag text-primary dark:text-[#2DD4BF] mb-1">Rule 3(2) IT Rules, 2021</div>
+            <h3 class="font-display-lg text-xl sm:text-2xl font-bold text-slate-deep dark:text-[#F8FAFC] mb-2">Grievance Redressal Officer</h3>
+            <p class="text-xs text-secondary dark:text-[#CBD5E1] mb-4 leading-relaxed">
                 In statutory compliance with the Information Technology Act, 2000 and Intermediary Guidelines Rules 2021:
             </p>
 
-            <div class="bg-white p-4 rounded-xl border border-sage-border space-y-2 text-xs text-secondary mb-4">
-                <div><strong class="text-slate-deep">Designation:</strong> Nodal Grievance & Compliance Officer</div>
-                <div><strong class="text-slate-deep">Entity:</strong> Aneevarp Solutions Private Limited</div>
-                <div><strong class="text-slate-deep">Physical Address:</strong> Plot No. 42, Hitech City Main Rd, Madhapur, Hyderabad, TS — 500081, India</div>
-                <div><strong class="text-slate-deep">Direct Email:</strong> <a href="mailto:aneevarpsolutions@gmail.com" class="text-primary font-bold underline">aneevarpsolutions@gmail.com</a></div>
-                <div><strong class="text-slate-deep">Phone Support:</strong> <a href="tel:+918790906267" class="text-primary font-bold underline">+91 8790906267</a></div>
-                <div class="pt-2 border-t border-sage-border/60 text-slate-deep">
+            <div class="bg-white dark:bg-[#121E1A] p-4 rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.15)] space-y-2 text-xs text-secondary dark:text-[#CBD5E1] mb-4">
+                <div><strong class="text-slate-deep dark:text-white">Designation:</strong> Nodal Grievance & Compliance Officer</div>
+                <div><strong class="text-slate-deep dark:text-white">Entity:</strong> Aneevarp Solutions Private Limited</div>
+                <div><strong class="text-slate-deep dark:text-white">Physical Address:</strong> Plot No. 42, Hitech City Main Rd, Madhapur, Hyderabad, TS — 500081, India</div>
+                <div><strong class="text-slate-deep dark:text-white">Direct Email:</strong> <a href="mailto:aneevarpsolutions@gmail.com" class="text-primary dark:text-[#2DD4BF] font-bold underline">aneevarpsolutions@gmail.com</a></div>
+                <div><strong class="text-slate-deep dark:text-white">Phone Support:</strong> <a href="tel:+918790906267" class="text-primary dark:text-[#2DD4BF] font-bold underline">+91 8790906267</a></div>
+                <div class="pt-2 border-t border-sage-border/60 dark:border-[rgba(45,212,191,0.15)] text-slate-deep dark:text-[#F8FAFC]">
                     <strong>Statutory SLAs:</strong> Acknowledgment within <strong>24h</strong> • Resolution within <strong>15 Days</strong>
                 </div>
             </div>
 
             <form onsubmit="handleGrievanceSubmit(event)" class="space-y-3">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    <input type="text" id="grievance-name" required placeholder="Your Full Name" class="px-3 py-2 rounded-lg border border-sage-border bg-white text-xs"/>
-                    <input type="email" id="grievance-email" required placeholder="Your Email Address" class="px-3 py-2 rounded-lg border border-sage-border bg-white text-xs"/>
+                    <input type="text" id="grievance-name" required placeholder="Your Full Name" class="px-3 py-2 rounded-lg border border-sage-border dark:border-[rgba(45,212,191,0.2)] bg-white dark:bg-[#121E1A] text-slate-deep dark:text-[#F8FAFC] text-xs"/>
+                    <input type="email" id="grievance-email" required placeholder="Your Email Address" class="px-3 py-2 rounded-lg border border-sage-border dark:border-[rgba(45,212,191,0.2)] bg-white dark:bg-[#121E1A] text-slate-deep dark:text-[#F8FAFC] text-xs"/>
                 </div>
                 <div>
-                    <textarea id="grievance-desc" required rows="3" placeholder="Describe the grievance or concern..." class="w-full px-3 py-2 rounded-lg border border-sage-border bg-white text-xs"></textarea>
+                    <textarea id="grievance-desc" required rows="3" placeholder="Describe the grievance or concern..." class="w-full px-3 py-2 rounded-lg border border-sage-border dark:border-[rgba(45,212,191,0.2)] bg-white dark:bg-[#121E1A] text-slate-deep dark:text-[#F8FAFC] text-xs"></textarea>
                 </div>
                 <button type="submit" class="btn-animate btn-shimmer w-full bg-slate-deep text-ivory-base py-3 rounded-xl font-label-caps text-xs uppercase font-bold shadow-md cursor-pointer">
                     File Statutory Grievance Ticket
@@ -1018,24 +1084,24 @@
 
     <!-- DPDP Act 2023 Data Principal Rights (DSR) Modal -->
     <div id="datarights-modal" class="modal-overlay" onclick="if(event.target===this)closeDataRightsModal()" role="dialog" aria-modal="true">
-        <div class="bg-ivory-base rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border relative animate-fade-in-up">
-            <button type="button" data-modal-close="datarights-modal" onclick="closeDataRightsModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5 cursor-pointer" aria-label="Close Modal">
+        <div class="bg-ivory-base dark:bg-[#0D1714] rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] relative animate-fade-in-up">
+            <button type="button" data-modal-close="datarights-modal" onclick="closeDataRightsModal()" class="absolute top-5 right-5 text-secondary dark:text-[#94A3B8] hover:text-slate-deep dark:hover:text-[#F8FAFC] p-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer" aria-label="Close Modal">
                 <span class="material-symbols-outlined">close</span>
             </button>
-            <div class="badge-tag text-primary mb-1">Digital Personal Data Protection Act, 2023</div>
-            <h3 class="font-display-lg text-xl sm:text-2xl font-bold text-slate-deep mb-2">Data Privacy & Subject Rights (DSR)</h3>
-            <p class="text-xs text-secondary mb-4 leading-relaxed">
+            <div class="badge-tag text-primary dark:text-[#2DD4BF] mb-1">Digital Personal Data Protection Act, 2023</div>
+            <h3 class="font-display-lg text-xl sm:text-2xl font-bold text-slate-deep dark:text-[#F8FAFC] mb-2">Data Privacy & Subject Rights (DSR)</h3>
+            <p class="text-xs text-secondary dark:text-[#CBD5E1] mb-4 leading-relaxed">
                 Exercise your statutory rights under Indian Data Protection Law across ZenResume, ZenScout AI, and ZenDoc AI:
             </p>
 
             <form onsubmit="handleDataRightsSubmit(event)" class="space-y-3.5">
                 <div>
-                    <label class="block text-[11px] font-label-caps uppercase text-secondary mb-1">Registered Account Email</label>
-                    <input type="email" id="dsr-email" required placeholder="Email used across Aneevarp products" class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border bg-white text-slate-deep text-xs"/>
+                    <label class="block text-[11px] font-label-caps uppercase text-secondary dark:text-[#94A3B8] mb-1">Registered Account Email</label>
+                    <input type="email" id="dsr-email" required placeholder="Email used across Aneevarp products" class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] bg-white dark:bg-[#121E1A] text-slate-deep dark:text-[#F8FAFC] text-xs"/>
                 </div>
                 <div>
-                    <label class="block text-[11px] font-label-caps uppercase text-secondary mb-1">Select Statutory Right to Exercise</label>
-                    <select id="dsr-type" class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border bg-white text-slate-deep text-xs">
+                    <label class="block text-[11px] font-label-caps uppercase text-secondary dark:text-[#94A3B8] mb-1">Select Statutory Right to Exercise</label>
+                    <select id="dsr-type" class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] bg-white dark:bg-[#121E1A] text-slate-deep dark:text-[#F8FAFC] text-xs">
                         <option value="ACCESS">Right to Access & Summary of Personal Data (Sec 11)</option>
                         <option value="CORRECTION">Right to Correction & Updating of Records (Sec 12)</option>
                         <option value="ERASURE">Right to Complete Erasure (Right to be Forgotten) (Sec 12)</option>
@@ -1044,8 +1110,8 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-[11px] font-label-caps uppercase text-secondary mb-1">Request Notes</label>
-                    <textarea id="dsr-details" required rows="3" placeholder="Provide any details for verification..." class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border bg-white text-slate-deep text-xs"></textarea>
+                    <label class="block text-[11px] font-label-caps uppercase text-secondary dark:text-[#94A3B8] mb-1">Request Notes</label>
+                    <textarea id="dsr-details" required rows="3" placeholder="Provide any details for verification..." class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] bg-white dark:bg-[#121E1A] text-slate-deep dark:text-[#F8FAFC] text-xs"></textarea>
                 </div>
                 <button type="submit" class="btn-animate btn-shimmer w-full bg-primary text-on-primary py-3 rounded-xl font-label-caps text-xs uppercase font-bold shadow-md cursor-pointer">
                     Submit Data Principal Request (DSR)
@@ -1056,30 +1122,30 @@
 
     <!-- Venture Studio Pitch Modal -->
     <div id="pitch-modal" class="modal-overlay" onclick="if(event.target===this)closePitchModal()" role="dialog" aria-modal="true">
-        <div class="bg-ivory-base rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border relative animate-fade-in-up">
-            <button type="button" data-modal-close="pitch-modal" onclick="closePitchModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5 cursor-pointer" aria-label="Close Modal">
+        <div class="bg-ivory-base dark:bg-[#0D1714] rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] relative animate-fade-in-up">
+            <button type="button" data-modal-close="pitch-modal" onclick="closePitchModal()" class="absolute top-5 right-5 text-secondary dark:text-[#94A3B8] hover:text-slate-deep dark:hover:text-[#F8FAFC] p-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer" aria-label="Close Modal">
                 <span class="material-symbols-outlined">close</span>
             </button>
-            <div class="badge-tag text-primary mb-1">Aneevarp Venture Studio</div>
-            <h3 class="font-display-lg text-xl sm:text-2xl font-bold text-slate-deep mb-1">Pitch Your Product</h3>
-            <p class="text-xs text-secondary mb-4">Submit software tools or AI products for incubation or partnership.</p>
+            <div class="badge-tag text-primary dark:text-[#2DD4BF] mb-1">Aneevarp Venture Studio</div>
+            <h3 class="font-display-lg text-xl sm:text-2xl font-bold text-slate-deep dark:text-[#F8FAFC] mb-1">Pitch Your Product</h3>
+            <p class="text-xs text-secondary dark:text-[#CBD5E1] mb-4">Submit software tools or AI products for incubation or partnership.</p>
 
             <form id="pitch-form" onsubmit="handlePitchSubmit(event)" class="space-y-3.5">
                 <div>
-                    <label class="block text-[11px] font-label-caps uppercase text-secondary mb-1">Founder Name</label>
-                    <input type="text" id="pitch-name" required class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border bg-white text-slate-deep text-xs sm:text-sm"/>
+                    <label class="block text-[11px] font-label-caps uppercase text-secondary dark:text-[#94A3B8] mb-1">Founder Name</label>
+                    <input type="text" id="pitch-name" required class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] bg-white dark:bg-[#121E1A] text-slate-deep dark:text-[#F8FAFC] text-xs sm:text-sm"/>
                 </div>
                 <div>
-                    <label class="block text-[11px] font-label-caps uppercase text-secondary mb-1">Contact Email</label>
-                    <input type="email" id="pitch-email" required class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border bg-white text-slate-deep text-xs sm:text-sm"/>
+                    <label class="block text-[11px] font-label-caps uppercase text-secondary dark:text-[#94A3B8] mb-1">Contact Email</label>
+                    <input type="email" id="pitch-email" required class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] bg-white dark:bg-[#121E1A] text-slate-deep dark:text-[#F8FAFC] text-xs sm:text-sm"/>
                 </div>
                 <div>
-                    <label class="block text-[11px] font-label-caps uppercase text-secondary mb-1">Product Name & Live URL</label>
-                    <input type="text" id="pitch-product" required placeholder="e.g. MyProduct.com" class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border bg-white text-slate-deep text-xs sm:text-sm"/>
+                    <label class="block text-[11px] font-label-caps uppercase text-secondary dark:text-[#94A3B8] mb-1">Product Name & Live URL</label>
+                    <input type="text" id="pitch-product" required placeholder="e.g. MyProduct.com" class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] bg-white dark:bg-[#121E1A] text-slate-deep dark:text-[#F8FAFC] text-xs sm:text-sm"/>
                 </div>
                 <div>
-                    <label class="block text-[11px] font-label-caps uppercase text-secondary mb-1">Executive Summary / Pitch</label>
-                    <textarea id="pitch-message" required rows="3" placeholder="Describe product value, tech stack, and partnership vision..." class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border bg-white text-slate-deep text-xs sm:text-sm"></textarea>
+                    <label class="block text-[11px] font-label-caps uppercase text-secondary dark:text-[#94A3B8] mb-1">Executive Summary / Pitch</label>
+                    <textarea id="pitch-message" required rows="3" placeholder="Describe product value, tech stack, and partnership vision..." class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] bg-white dark:bg-[#121E1A] text-slate-deep dark:text-[#F8FAFC] text-xs sm:text-sm"></textarea>
                 </div>
                 <button type="submit" class="btn-animate btn-shimmer w-full bg-slate-deep text-ivory-base py-3 rounded-xl font-label-caps text-xs uppercase hover:bg-primary font-bold shadow-md cursor-pointer">
                     Submit Proposal to Studio Desk
@@ -1090,14 +1156,14 @@
 
     <!-- Media Kit & Brand Asset Modal -->
     <div id="mediakit-modal" class="modal-overlay" onclick="if(event.target===this)closeMediaKitModal()" role="dialog" aria-modal="true">
-        <div class="bg-ivory-base rounded-2xl sm:rounded-3xl max-w-xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border relative animate-fade-in-up">
-            <button type="button" data-modal-close="mediakit-modal" onclick="closeMediaKitModal()" class="absolute top-5 right-5 text-secondary hover:text-slate-deep p-1 rounded-lg hover:bg-black/5 cursor-pointer" aria-label="Close Modal">
+        <div class="bg-ivory-base dark:bg-[#0D1714] rounded-2xl sm:rounded-3xl max-w-xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] relative animate-fade-in-up">
+            <button type="button" data-modal-close="mediakit-modal" onclick="closeMediaKitModal()" class="absolute top-5 right-5 text-secondary dark:text-[#94A3B8] hover:text-slate-deep dark:hover:text-[#F8FAFC] p-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer" aria-label="Close Modal">
                 <span class="material-symbols-outlined">close</span>
             </button>
-            <div class="badge-tag text-primary mb-1">Press & Media Desk</div>
-            <h3 class="font-display-lg text-xl sm:text-2xl font-bold text-slate-deep mb-4">Aneevarp Solutions Brand Kit</h3>
+            <div class="badge-tag text-primary dark:text-[#2DD4BF] mb-1">Press & Media Desk</div>
+            <h3 class="font-display-lg text-xl sm:text-2xl font-bold text-slate-deep dark:text-[#F8FAFC] mb-4">Aneevarp Solutions Brand Kit</h3>
 
-            <div class="space-y-5 text-xs sm:text-sm text-secondary">
+            <div class="space-y-5 text-xs sm:text-sm text-secondary dark:text-[#CBD5E1]">
                 <!-- Brand Visual Preview Card -->
                 <div class="p-4 bg-slate-deep rounded-2xl border border-white/10 flex items-center justify-between gap-4">
                     <div class="flex items-center gap-3">
@@ -1115,46 +1181,46 @@
                 </div>
 
                 <div>
-                    <div class="font-bold text-slate-deep mb-2 uppercase font-label-caps text-[11px]">Official Brand Color Palette</div>
+                    <div class="font-bold text-slate-deep dark:text-[#F8FAFC] mb-2 uppercase font-label-caps text-[11px]">Official Brand Color Palette</div>
                     <div class="grid grid-cols-4 gap-2 text-center text-[10px] sm:text-xs">
                         <div class="p-2.5 rounded-xl bg-[#476550] text-white font-bold shadow-sm">Sage<br/>#476550</div>
                         <div class="p-2.5 rounded-xl bg-[#1A1F1F] text-white font-bold shadow-sm">Slate<br/>#1A1F1F</div>
-                        <div class="p-2.5 rounded-xl bg-[#FCFAF5] text-slate-deep border border-sage-border font-bold shadow-sm">Ivory<br/>#FCFAF5</div>
+                        <div class="p-2.5 rounded-xl bg-[#FCFAF5] text-slate-deep border border-sage-border dark:border-[rgba(45,212,191,0.2)] font-bold shadow-sm">Ivory<br/>#FCFAF5</div>
                         <div class="p-2.5 rounded-xl bg-[#F59E0B] text-slate-deep font-bold shadow-sm">Amber<br/>#F59E0B</div>
                     </div>
                 </div>
 
                 <div>
-                    <div class="font-bold text-slate-deep mb-2 uppercase font-label-caps text-[11px]">Approved Brand & Product Assets</div>
+                    <div class="font-bold text-slate-deep dark:text-[#F8FAFC] mb-2 uppercase font-label-caps text-[11px]">Approved Brand & Product Assets</div>
                     <div class="space-y-2">
-                        <a href="/images/brand-logo.jpg" download="Aneevarp_Brand_Logo.jpg" class="btn-animate flex items-center justify-between p-3 bg-white rounded-xl border border-sage-border hover:border-primary text-xs cursor-pointer">
+                        <a href="/images/brand-logo.jpg" download="Aneevarp_Brand_Logo.jpg" class="btn-animate flex items-center justify-between p-3 bg-white dark:bg-[#121E1A] rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] hover:border-primary dark:hover:border-[#2DD4BF] text-xs cursor-pointer">
                             <div class="flex items-center gap-2.5">
-                                <span class="material-symbols-outlined text-primary">image</span>
-                                <span class="font-medium text-slate-deep">Aneevarp Master Brand Logo (High-Res JPG)</span>
+                                <span class="material-symbols-outlined text-primary dark:text-[#2DD4BF]">image</span>
+                                <span class="font-medium text-slate-deep dark:text-[#F8FAFC]">Aneevarp Master Brand Logo (High-Res JPG)</span>
                             </div>
-                            <span class="material-symbols-outlined text-primary">download</span>
+                            <span class="material-symbols-outlined text-primary dark:text-[#2DD4BF]">download</span>
                         </a>
-                        <a href="/images/zenresume-logo.png" download="ZenResume_Logo.png" class="btn-animate flex items-center justify-between p-3 bg-white rounded-xl border border-sage-border hover:border-primary text-xs cursor-pointer">
+                        <a href="/images/zenresume-logo.png" download="ZenResume_Logo.png" class="btn-animate flex items-center justify-between p-3 bg-white dark:bg-[#121E1A] rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] hover:border-primary dark:hover:border-[#2DD4BF] text-xs cursor-pointer">
                             <div class="flex items-center gap-2.5">
-                                <span class="material-symbols-outlined text-primary">description</span>
-                                <span class="font-medium text-slate-deep">ZenResume Official Product Logo (PNG)</span>
+                                <span class="material-symbols-outlined text-primary dark:text-[#2DD4BF]">description</span>
+                                <span class="font-medium text-slate-deep dark:text-[#F8FAFC]">ZenResume Official Product Logo (PNG)</span>
                             </div>
-                            <span class="material-symbols-outlined text-primary">download</span>
+                            <span class="material-symbols-outlined text-primary dark:text-[#2DD4BF]">download</span>
                         </a>
-                        <a href="/api/v1/press/media-kit" target="_blank" class="btn-animate flex items-center justify-between p-3 bg-white rounded-xl border border-sage-border hover:border-primary text-xs cursor-pointer">
+                        <a href="/api/v1/press/media-kit" target="_blank" class="btn-animate flex items-center justify-between p-3 bg-white dark:bg-[#121E1A] rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] hover:border-primary dark:hover:border-[#2DD4BF] text-xs cursor-pointer">
                             <div class="flex items-center gap-2.5">
-                                <span class="material-symbols-outlined text-primary">newspaper</span>
-                                <span class="font-medium text-slate-deep">JSON Media Kit & Verified Corporate Portfolio</span>
+                                <span class="material-symbols-outlined text-primary dark:text-[#2DD4BF]">newspaper</span>
+                                <span class="font-medium text-slate-deep dark:text-[#F8FAFC]">JSON Media Kit & Verified Corporate Portfolio</span>
                             </div>
-                            <span class="material-symbols-outlined text-primary">open_in_new</span>
+                            <span class="material-symbols-outlined text-primary dark:text-[#2DD4BF]">open_in_new</span>
                         </a>
                     </div>
                 </div>
 
                 <div>
-                    <div class="font-bold text-slate-deep uppercase font-label-caps text-[11px] mb-1">Press Contact & Communications</div>
-                    <p class="text-xs text-secondary">
-                        Official Desk: <a href="mailto:aneevarpsolutions@gmail.com" class="text-primary font-bold underline">aneevarpsolutions@gmail.com</a> • Phone: <a href="tel:+918790906267" class="text-primary font-bold underline">+91 8790906267</a>
+                    <div class="font-bold text-slate-deep dark:text-[#F8FAFC] uppercase font-label-caps text-[11px] mb-1">Press Contact & Communications</div>
+                    <p class="text-xs text-secondary dark:text-[#CBD5E1]">
+                        Official Desk: <a href="mailto:aneevarpsolutions@gmail.com" class="text-primary dark:text-[#2DD4BF] font-bold underline">aneevarpsolutions@gmail.com</a> • Phone: <a href="tel:+918790906267" class="text-primary dark:text-[#2DD4BF] font-bold underline">+91 8790906267</a>
                     </p>
                 </div>
             </div>
@@ -1377,25 +1443,25 @@
                     ? '<span class="inline-flex items-center gap-1.5 text-xs text-primary font-bold"><span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span> 🟢 Live & Operational</span>'
                     : '<span class="inline-flex items-center gap-1.5 text-xs text-amber-600 font-bold"><span class="w-2 h-2 rounded-full bg-amber-500"></span> 🟡 In Cloud Incubation</span>';
 
-                const techBadges = (v.techStack || []).slice(0, 4).map(t => `<span class="px-2 py-0.5 bg-surface-container rounded text-[11px] text-secondary font-label-caps">${escapeHtml(t)}</span>`).join(' ');
+                const techBadges = (v.techStack || []).slice(0, 4).map(t => `<span class="px-2 py-0.5 bg-surface-container dark:bg-[#121E1A] rounded text-[11px] text-secondary dark:text-[#94A3B8] font-label-caps">${escapeHtml(t)}</span>`).join(' ');
 
                 return `
                     <div class="glass-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between relative group">
                         <div>
                             <div class="flex items-center justify-between mb-5">
-                                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-surface-container-low rounded-xl border border-sage-border flex items-center justify-center group-hover:scale-105 transition-transform overflow-hidden">
+                                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-surface-container-low dark:bg-[#0D1714] rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] flex items-center justify-center group-hover:scale-105 transition-transform overflow-hidden">
                                     ${iconOrLogo}
                                 </div>
-                                <span class="badge-tag px-3 py-1 bg-primary/10 text-primary rounded-full text-[10px]">${escapeHtml(v.stage)}</span>
+                                <span class="badge-tag px-3 py-1 bg-primary/10 text-primary dark:bg-[rgba(45,212,191,0.1)] dark:text-[#2DD4BF] rounded-full text-[10px]">${escapeHtml(v.stage)}</span>
                             </div>
-                            <h3 class="font-display-lg text-xl sm:text-2xl font-bold text-slate-deep mb-1">${escapeHtml(v.name)}</h3>
+                            <h3 class="font-display-lg text-xl sm:text-2xl font-bold text-slate-deep dark:text-[#F8FAFC] mb-1">${escapeHtml(v.name)}</h3>
                             <div class="mb-3">${statusPill}</div>
-                            <p class="text-xs font-semibold text-primary mb-2.5">${escapeHtml(v.tagline)}</p>
-                            <p class="text-xs sm:text-sm text-secondary mb-5 leading-relaxed">${escapeHtml(v.description)}</p>
+                            <p class="text-xs font-semibold text-primary dark:text-[#2DD4BF] mb-2.5">${escapeHtml(v.tagline)}</p>
+                            <p class="text-xs sm:text-sm text-secondary dark:text-[#CBD5E1] mb-5 leading-relaxed">${escapeHtml(v.description)}</p>
                             <div class="flex flex-wrap gap-1.5 mb-6">${techBadges}</div>
                         </div>
-                        <div class="pt-4 border-t border-sage-border/60 flex items-center justify-between">
-                            <a href="${sanitizeUrl(v.websiteUrl)}" target="_blank" rel="noopener noreferrer" class="btn-animate group/link inline-flex items-center gap-1.5 text-primary font-label-caps text-xs uppercase font-bold hover:gap-2.5 transition-all px-3 py-2 rounded-lg hover:bg-primary-light">
+                        <div class="pt-4 border-t border-sage-border/60 dark:border-[rgba(45,212,191,0.2)] flex items-center justify-between">
+                            <a href="${sanitizeUrl(v.websiteUrl)}" target="_blank" rel="noopener noreferrer" class="btn-animate group/link inline-flex items-center gap-1.5 text-primary dark:text-[#2DD4BF] font-label-caps text-xs uppercase font-bold hover:gap-2.5 transition-all px-3 py-2 rounded-lg hover:bg-primary-light dark:hover:bg-[#121E1A]">
                                 Visit Product <span class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">open_in_new</span>
                             </a>
                         </div>
@@ -1432,16 +1498,16 @@
                     const container = document.getElementById('press-container');
                     if (!container) return;
                     container.innerHTML = json.data.map(p => `
-                        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-sage-border shadow-sm hover:shadow-md hover:border-primary/40 transition-all flex flex-col justify-between">
+                        <div class="bg-white dark:bg-[#121E1A] p-6 sm:p-8 rounded-2xl border border-sage-border dark:border-[rgba(45,212,191,0.15)] shadow-sm hover:shadow-md hover:border-primary/40 dark:hover:border-[#2DD4BF]/40 transition-all flex flex-col justify-between">
                             <div>
-                                <div class="flex items-center justify-between text-[11px] text-secondary font-label-caps uppercase mb-2.5">
+                                <div class="flex items-center justify-between text-[11px] text-secondary dark:text-[#94A3B8] font-label-caps uppercase mb-2.5">
                                     <span>${escapeHtml(p.category)}</span>
                                     <span>${new Date(p.publishedAt).toLocaleDateString()}</span>
                                 </div>
-                                <h3 class="font-display-lg text-lg sm:text-xl font-bold text-slate-deep mb-2.5">${escapeHtml(p.title)}</h3>
-                                <p class="text-xs sm:text-sm text-secondary leading-relaxed mb-4">${escapeHtml(p.summary)}</p>
+                                <h3 class="font-display-lg text-lg sm:text-xl font-bold text-slate-deep dark:text-[#F8FAFC] mb-2.5">${escapeHtml(p.title)}</h3>
+                                <p class="text-xs sm:text-sm text-secondary dark:text-[#CBD5E1] leading-relaxed mb-4">${escapeHtml(p.summary)}</p>
                             </div>
-                            <div class="text-[11px] text-secondary-light italic pt-2 border-t border-sage-border/40">— ${escapeHtml(p.author)}</div>
+                            <div class="text-[11px] text-secondary-light dark:text-[#94A3B8] italic pt-2 border-t border-sage-border/40 dark:border-[rgba(45,212,191,0.15)]">— ${escapeHtml(p.author)}</div>
                         </div>
                     `).join('');
                 }
@@ -1465,10 +1531,10 @@
                     const container = document.getElementById('policies-container');
                     if (!container) return;
                     container.innerHTML = jsonPolicies.data.map(pol => `
-                        <div class="bg-white p-5 sm:p-6 rounded-2xl border border-sage-border shadow-sm hover:border-primary/40 transition-all">
-                            <div class="badge-tag text-[10px] text-primary mb-2">${escapeHtml(pol.type)}</div>
-                            <h4 class="font-bold text-slate-deep mb-1.5 text-sm sm:text-base">${escapeHtml(pol.title)}</h4>
-                            <p class="text-xs text-secondary leading-relaxed">${escapeHtml(pol.content)}</p>
+                        <div class="bg-white dark:bg-[#121E1A] p-5 sm:p-6 rounded-2xl border border-sage-border dark:border-[rgba(45,212,191,0.15)] shadow-sm hover:border-primary/40 dark:hover:border-[#2DD4BF]/40 transition-all">
+                            <div class="badge-tag text-[10px] text-primary dark:text-[#2DD4BF] mb-2">${escapeHtml(pol.type)}</div>
+                            <h4 class="font-bold text-slate-deep dark:text-[#F8FAFC] mb-1.5 text-sm sm:text-base">${escapeHtml(pol.title)}</h4>
+                            <p class="text-xs text-secondary dark:text-[#CBD5E1] leading-relaxed">${escapeHtml(pol.content)}</p>
                         </div>
                     `).join('');
                 }
@@ -1656,6 +1722,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            updateThemeIcons();
             checkDpdpConsent();
             loadMetrics();
             loadVentures();
