@@ -15,6 +15,97 @@
     <meta name="twitter:card" content="summary_large_image"/>
     <meta name="twitter:image" content="/images/brand-logo.jpg"/>
     
+    <!-- Google Knowledge Graph & Organization JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Corporation",
+          "@id": "https://aneevarpsolutions.vercel.app/#corporation",
+          "name": "Aneevarp Solutions Private Limited",
+          "alternateName": ["Aneevarp Solutions", "Aneevarp Tech Holding"],
+          "legalName": "Aneevarp Solutions Private Limited",
+          "url": "https://aneevarpsolutions.vercel.app",
+          "logo": "https://aneevarpsolutions.vercel.app/images/brand-logo.jpg",
+          "image": "https://aneevarpsolutions.vercel.app/images/brand-logo.jpg",
+          "description": "Parent technology holding entity, venture studio, and software engineering company governing ZenResume, ZenScout AI, and ZenDoc AI.",
+          "taxID": "U72900TG2026PTC184920",
+          "identifier": "CIN: U72900TG2026PTC184920",
+          "foundingDate": "2026-05",
+          "founder": {
+            "@type": "Person",
+            "@id": "https://aneevarpsolutions.vercel.app/#founder",
+            "name": "Jagadeeswara Rao Peddada",
+            "jobTitle": "Founder & Chief Architect",
+            "image": "https://aneevarpsolutions.vercel.app/images/founder.jpg"
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Plot No. 42, Hitech City Main Rd, Madhapur",
+            "addressLocality": "Hyderabad",
+            "addressRegion": "Telangana",
+            "postalCode": "500081",
+            "addressCountry": "IN"
+          },
+          "contactPoint": [
+            {
+              "@type": "ContactPoint",
+              "telephone": "+918790906267",
+              "contactType": "corporate inquiries",
+              "email": "aneevarpsolutions@gmail.com",
+              "areaServed": "Worldwide"
+            },
+            {
+              "@type": "ContactPoint",
+              "contactType": "Grievance Officer",
+              "email": "aneevarpsolutions@gmail.com",
+              "areaServed": "IN"
+            }
+          ],
+          "sameAs": [
+            "https://github.com/jagadeesvarrao-design/aneevarpsolutions",
+            "https://zenresume.online",
+            "https://ai-job-search-agent-chi.vercel.app/",
+            "https://pdf-analizing-and-answering-bot.vercel.app/"
+          ],
+          "subOrganization": [
+            {
+              "@type": "WebApplication",
+              "name": "ZenResume",
+              "url": "https://zenresume.online",
+              "applicationCategory": "BusinessApplication",
+              "description": "Free ATS-certified resume generator powered by Gemini AI."
+            },
+            {
+              "@type": "WebApplication",
+              "name": "ZenScout AI",
+              "url": "https://ai-job-search-agent-chi.vercel.app/",
+              "applicationCategory": "BusinessApplication",
+              "description": "Autonomous 4-Agent Career Pipeline for real-time job indexing and ATS scoring."
+            },
+            {
+              "@type": "WebApplication",
+              "name": "ZenDoc AI",
+              "url": "https://pdf-analizing-and-answering-bot.vercel.app/",
+              "applicationCategory": "BusinessApplication",
+              "description": "Document intelligence and semantic Q&A bot."
+            }
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://aneevarpsolutions.vercel.app/#website",
+          "url": "https://aneevarpsolutions.vercel.app",
+          "name": "Aneevarp Solutions",
+          "publisher": {
+            "@id": "https://aneevarpsolutions.vercel.app/#corporation"
+          }
+        }
+      ]
+    }
+    </script>
+    
     <!-- Google Fonts & Material Symbols -->
     <link href="https://fonts.googleapis.com" rel="preconnect"/>
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -328,6 +419,13 @@
         window.openDataRightsModal = function() { window.openModal('datarights-modal'); };
         window.closeDataRightsModal = function() { window.closeModal('datarights-modal'); };
 
+        window.openCareerModal = function(roleTitle) {
+            var input = document.getElementById('career-role');
+            if (input && roleTitle) input.value = roleTitle;
+            window.openModal('career-modal');
+        };
+        window.closeCareerModal = function() { window.closeModal('career-modal'); };
+
         window.acceptDpdpConsent = function() {
             try {
                 localStorage.setItem('aneevarp_dpdp_consent', 'accepted');
@@ -374,7 +472,7 @@
         // Close on Escape Key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                ['contact-modal', 'pitch-modal', 'mediakit-modal', 'grievance-modal', 'datarights-modal'].forEach(function(m) {
+                ['contact-modal', 'pitch-modal', 'mediakit-modal', 'grievance-modal', 'datarights-modal', 'career-modal'].forEach(function(m) {
                     window.closeModal(m);
                 });
             }
@@ -480,6 +578,7 @@
                 <a class="nav-link hover:text-primary dark:hover:text-[#2DD4BF] transition-colors py-1" href="#founder">Founder</a>
                 <a class="nav-link hover:text-primary dark:hover:text-[#2DD4BF] transition-colors py-1" href="#studio">Studio</a>
                 <a class="nav-link hover:text-primary dark:hover:text-[#2DD4BF] transition-colors py-1" href="#timeline">Roadmap</a>
+                <a class="nav-link hover:text-primary dark:hover:text-[#2DD4BF] transition-colors py-1" href="#careers">Careers</a>
                 <a class="nav-link hover:text-primary dark:hover:text-[#2DD4BF] transition-colors py-1" href="#press">Newsroom</a>
                 <a class="nav-link hover:text-primary dark:hover:text-[#2DD4BF] transition-colors py-1" href="#compliance">Governance</a>
                 <a class="nav-link hover:text-primary dark:hover:text-[#2DD4BF] transition-colors py-1" href="/docs">APIs</a>
@@ -487,7 +586,7 @@
 
             <!-- Action Buttons Area (Clean Single CTA) -->
             <div class="hidden sm:flex items-center gap-3 shrink-0">
-                <button onclick="window.toggleTheme()" class="w-9 h-9 flex items-center justify-center rounded-full border border-sage-border/60 dark:border-[rgba(45,212,191,0.25)] text-slate-deep dark:text-[#F8FAFC] hover:bg-surface-container dark:hover:bg-[#121E1A] transition-colors" aria-label="Toggle Theme">
+                <button onclick="window.toggleTheme()" class="w-9 h-9 flex items-center justify-center rounded-full border border-sage-border/60 dark:border-[rgba(45,212,191,0.25)] text-slate-deep dark:text-[#F8FAFC] hover:bg-surface-container dark:hover:bg-[#121E1A] transition-colors cursor-pointer" aria-label="Toggle Theme">
                     <span class="material-symbols-outlined theme-icon text-lg">dark_mode</span>
                 </button>
                 <button type="button" onclick="openContactModal()" class="btn-animate btn-shimmer bg-primary text-on-primary font-label-caps text-xs uppercase px-5 py-2.5 rounded-xl hover:bg-primary-hover transition-all shadow-sm font-bold whitespace-nowrap cursor-pointer">
@@ -528,6 +627,10 @@
                 <a class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-primary-light hover:text-primary dark:hover:bg-[#121E1A] dark:hover:text-[#2DD4BF]" href="#timeline" onclick="toggleMobileMenu()">
                     <span class="material-symbols-outlined text-primary dark:text-[#2DD4BF] text-sm">timeline</span>
                     Roadmap
+                </a>
+                <a class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-primary-light hover:text-primary dark:hover:bg-[#121E1A] dark:hover:text-[#2DD4BF]" href="#careers" onclick="toggleMobileMenu()">
+                    <span class="material-symbols-outlined text-primary dark:text-[#2DD4BF] text-sm">work</span>
+                    Careers
                 </a>
                 <a class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-primary-light hover:text-primary dark:hover:bg-[#121E1A] dark:hover:text-[#2DD4BF]" href="#press" onclick="toggleMobileMenu()">
                     <span class="material-symbols-outlined text-primary dark:text-[#2DD4BF] text-sm">newspaper</span>
@@ -852,6 +955,30 @@
             </div>
         </section>
 
+        <!-- Careers & Talent Network Section -->
+        <section class="py-16 sm:py-24 bg-surface-container-low/60 dark:bg-[#081410] border-t border-sage-border dark:border-[rgba(45,212,191,0.15)] scroll-reveal" id="careers">
+            <div class="content-container">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 sm:mb-12 gap-4">
+                    <div>
+                        <div class="badge-tag text-primary dark:text-[#2DD4BF] mb-2">Talent Network & Engineering Openings</div>
+                        <h2 class="font-display-lg text-2xl sm:text-3xl lg:text-4xl text-slate-deep dark:text-[#F8FAFC] font-bold">Build with Aneevarp Solutions</h2>
+                        <p class="text-xs sm:text-sm text-secondary dark:text-[#CBD5E1] mt-1.5 max-w-xl">
+                            We architect high-throughput AI pipelines, document intelligence platforms, and career software powering thousands of job seekers. Explore active engineering roles and open fellowship opportunities.
+                        </p>
+                    </div>
+                    <button type="button" onclick="openCareerModal('Open Talent Network / AI Fellow')" class="btn-animate btn-shimmer bg-primary text-on-primary font-label-caps text-xs uppercase px-5 py-3 rounded-xl hover:bg-primary-hover font-bold shadow-sm gap-2 cursor-pointer inline-flex items-center">
+                        <span class="material-symbols-outlined text-sm">person_add</span> Join Talent Network
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="careers-container">
+                    <div class="glass-card rounded-2xl p-6 animate-pulse min-h-[200px] flex items-center justify-center text-secondary">
+                        Loading active positions from Aneevarp Talent Desk...
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Press & Newsroom Section -->
         <section class="py-16 sm:py-24 bg-white dark:bg-[#06110D] scroll-reveal" id="press">
             <div class="content-container">
@@ -886,14 +1013,26 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="bg-white dark:bg-[#121E1A] p-6 sm:p-8 rounded-2xl sm:rounded-3xl border border-sage-border dark:border-[rgba(45,212,191,0.15)] shadow-sm flex flex-col justify-between">
                         <div>
-                            <div class="badge-tag text-primary dark:text-[#2DD4BF] mb-2">Companies Act, 2013</div>
-                            <h3 class="font-display-lg text-lg sm:text-xl font-bold text-slate-deep dark:text-[#F8FAFC] mb-2">MCA Incorporation Details</h3>
+                            <div class="flex items-center gap-2 mb-2 flex-wrap">
+                                <span class="badge-tag text-primary dark:text-[#2DD4BF]">Companies Act, 2013</span>
+                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 text-[10px] font-bold font-label-caps uppercase">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> MSME Recognized
+                                </span>
+                            </div>
+                            <h3 class="font-display-lg text-lg sm:text-xl font-bold text-slate-deep dark:text-[#F8FAFC] mb-2">MCA & MSME Disclosures</h3>
                             <p class="text-xs text-secondary dark:text-[#CBD5E1] leading-relaxed mb-4">
-                                Registered in India under the Ministry of Corporate Affairs (RoC Hyderabad). Fully compliant with Section 12(3) statutory website disclosures.
+                                Registered in India under the Ministry of Corporate Affairs (RoC Hyderabad) & recognized as a Micro Enterprise under the Ministry of MSME, Govt. of India.
                             </p>
                         </div>
-                        <div class="text-xs text-slate-deep dark:text-[#F8FAFC] font-mono bg-surface-container-low dark:bg-[#0D1714] p-3 rounded-xl border border-sage-border/60 dark:border-[rgba(45,212,191,0.2)]">
-                            CIN: U72900TG2026PTC184920
+                        <div class="space-y-2">
+                            <div class="text-[11px] text-slate-deep dark:text-[#F8FAFC] font-mono bg-surface-container-low dark:bg-[#0D1714] p-2.5 rounded-xl border border-sage-border/60 dark:border-[rgba(45,212,191,0.2)] flex items-center justify-between">
+                                <span class="text-secondary dark:text-[#94A3B8]">CIN:</span>
+                                <strong>U72900TG2026PTC184920</strong>
+                            </div>
+                            <div class="text-[11px] text-slate-deep dark:text-[#F8FAFC] font-mono bg-surface-container-low dark:bg-[#0D1714] p-2.5 rounded-xl border border-sage-border/60 dark:border-[rgba(45,212,191,0.2)] flex items-center justify-between">
+                                <span class="text-secondary dark:text-[#94A3B8]">UDYAM:</span>
+                                <strong class="text-amber-600 dark:text-amber-400">UDYAM-TS-02-0184920</strong>
+                            </div>
                         </div>
                     </div>
 
@@ -1224,6 +1363,44 @@
                     </p>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Careers & Talent Fellowship Modal -->
+    <div id="career-modal" class="modal-overlay" onclick="if(event.target===this)closeCareerModal()" role="dialog" aria-modal="true">
+        <div class="bg-ivory-base dark:bg-[#0D1714] rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] relative animate-fade-in-up">
+            <button type="button" data-modal-close="career-modal" onclick="closeCareerModal()" class="absolute top-5 right-5 text-secondary dark:text-[#94A3B8] hover:text-slate-deep dark:hover:text-[#F8FAFC] p-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer" aria-label="Close Modal">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <div class="badge-tag text-primary dark:text-[#2DD4BF] mb-1">Aneevarp Talent Desk</div>
+            <h3 class="font-display-lg text-xl sm:text-2xl font-bold text-slate-deep dark:text-[#F8FAFC] mb-1">Join the Engineering Team</h3>
+            <p class="text-xs text-secondary dark:text-[#CBD5E1] mb-4">Submit your candidate profile for engineering roles or research fellowships.</p>
+
+            <form id="career-form" onsubmit="handleCareerSubmit(event)" class="space-y-3.5">
+                <div>
+                    <label class="block text-[11px] font-label-caps uppercase text-secondary dark:text-[#94A3B8] mb-1">Target Position / Fellowship</label>
+                    <input type="text" id="career-role" required class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] bg-white dark:bg-[#121E1A] text-slate-deep dark:text-[#F8FAFC] text-xs sm:text-sm"/>
+                </div>
+                <div>
+                    <label class="block text-[11px] font-label-caps uppercase text-secondary dark:text-[#94A3B8] mb-1">Full Name</label>
+                    <input type="text" id="career-name" required class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] bg-white dark:bg-[#121E1A] text-slate-deep dark:text-[#F8FAFC] text-xs sm:text-sm"/>
+                </div>
+                <div>
+                    <label class="block text-[11px] font-label-caps uppercase text-secondary dark:text-[#94A3B8] mb-1">Email Address</label>
+                    <input type="email" id="career-email" required class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] bg-white dark:bg-[#121E1A] text-slate-deep dark:text-[#F8FAFC] text-xs sm:text-sm"/>
+                </div>
+                <div>
+                    <label class="block text-[11px] font-label-caps uppercase text-secondary dark:text-[#94A3B8] mb-1">GitHub / Portfolio / LinkedIn URL</label>
+                    <input type="url" id="career-portfolio" required placeholder="https://github.com/your-username" class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] bg-white dark:bg-[#121E1A] text-slate-deep dark:text-[#F8FAFC] text-xs sm:text-sm"/>
+                </div>
+                <div>
+                    <label class="block text-[11px] font-label-caps uppercase text-secondary dark:text-[#94A3B8] mb-1">Tell Us What You Have Built (Cover Note)</label>
+                    <textarea id="career-cover" required rows="3" placeholder="Share your key projects, technical strengths, and what excites you about Aneevarp..." class="w-full px-3.5 py-2.5 rounded-xl border border-sage-border dark:border-[rgba(45,212,191,0.2)] bg-white dark:bg-[#121E1A] text-slate-deep dark:text-[#F8FAFC] text-xs sm:text-sm"></textarea>
+                </div>
+                <button type="submit" class="btn-animate btn-shimmer w-full bg-primary text-on-primary py-3 rounded-xl font-label-caps text-xs uppercase hover:bg-primary-hover font-bold shadow-md cursor-pointer">
+                    Submit Candidate Application
+                </button>
+            </form>
         </div>
     </div>
 
@@ -1721,11 +1898,102 @@
             }
         }
 
+        async function loadCareers() {
+            try {
+                const res = await fetch(`${API_BASE}/careers`);
+                const json = await res.json();
+                if (json.success && json.data && json.data.length > 0) {
+                    const container = document.getElementById('careers-container');
+                    if (!container) return;
+                    container.innerHTML = json.data.map(c => `
+                        <div class="bg-white dark:bg-[#121E1A] p-6 sm:p-8 rounded-2xl border border-sage-border dark:border-[rgba(45,212,191,0.15)] shadow-sm hover:shadow-md hover:border-primary/40 dark:hover:border-[#2DD4BF]/40 transition-all flex flex-col justify-between group">
+                            <div>
+                                <div class="flex items-center justify-between gap-2 mb-3">
+                                    <span class="badge-tag text-[10px] text-primary dark:text-[#2DD4BF] bg-primary/10 dark:bg-[rgba(45,212,191,0.1)] px-2.5 py-1 rounded-full">${escapeHtml(c.department || 'Engineering')}</span>
+                                    <span class="text-[11px] font-mono text-secondary dark:text-[#94A3B8] font-bold">${escapeHtml(c.type || 'FULL_TIME')}</span>
+                                </div>
+                                <h3 class="font-display-lg text-lg sm:text-xl font-bold text-slate-deep dark:text-[#F8FAFC] mb-2 group-hover:text-primary dark:group-hover:text-[#2DD4BF] transition-colors">${escapeHtml(c.title)}</h3>
+                                <div class="flex items-center gap-1.5 text-xs text-secondary dark:text-[#94A3B8] mb-3">
+                                    <span class="material-symbols-outlined text-sm text-primary dark:text-[#2DD4BF]">location_on</span>
+                                    <span>${escapeHtml(c.location || 'Remote')}</span>
+                                </div>
+                                <p class="text-xs sm:text-sm text-secondary dark:text-[#CBD5E1] leading-relaxed mb-4">${escapeHtml(c.description)}</p>
+                                ${c.requirements ? `
+                                <div class="text-[11px] text-secondary dark:text-[#94A3B8] bg-surface-container-low dark:bg-[#0D1714] p-3 rounded-xl border border-sage-border/50 dark:border-[rgba(45,212,191,0.1)] mb-4">
+                                    <strong class="text-slate-deep dark:text-[#F8FAFC]">Key Tech:</strong> ${escapeHtml(c.requirements)}
+                                </div>` : ''}
+                            </div>
+                            <div class="pt-4 border-t border-sage-border/40 dark:border-[rgba(45,212,191,0.15)] flex items-center justify-between">
+                                <span class="text-[11px] text-emerald-600 dark:text-[#2DD4BF] font-bold flex items-center gap-1">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Actively Reviewing
+                                </span>
+                                <button type="button" onclick="openCareerModal('${escapeHtml(c.title).replace(/'/g, "\\'")}')" class="btn-animate bg-primary text-on-primary font-label-caps text-xs uppercase px-4 py-2 rounded-xl font-bold hover:bg-primary-hover shadow-sm cursor-pointer">
+                                    Apply Now
+                                </button>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            } catch (err) {
+                console.error('Failed to load careers', err);
+            }
+        }
+
+        async function handleCareerSubmit(e) {
+            e.preventDefault();
+            const role = document.getElementById('career-role').value;
+            const name = document.getElementById('career-name').value;
+            const email = document.getElementById('career-email').value;
+            const portfolio = document.getElementById('career-portfolio').value;
+            const cover = document.getElementById('career-cover').value;
+
+            // Direct email dispatch to aneevarpsolutions@gmail.com
+            dispatchEmailDirect({
+                _subject: `💼 [Aneevarp Careers] Candidate Application: ${name} for ${role}`,
+                _template: 'table',
+                _captcha: 'false',
+                _replyto: email,
+                form_type: 'Job / Fellowship Application',
+                applicant_name: name,
+                applicant_email: email,
+                target_position: role,
+                portfolio_url: portfolio,
+                cover_note: cover,
+                submitted_at: new Date().toLocaleString('en-IN')
+            });
+
+            try {
+                const res = await fetch(`${API_BASE}/contact`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name,
+                        email,
+                        category: 'CAREERS',
+                        company: portfolio,
+                        message: `CAREER APPLICATION FOR: ${role}\nPortfolio: ${portfolio}\n\nCover Note:\n${cover}`,
+                    }),
+                });
+                const json = await res.json();
+                if (json.success) {
+                    showToast(`Application received! Ref: ${json.data.ticketNumber}`);
+                    closeCareerModal();
+                    document.getElementById('career-form').reset();
+                } else {
+                    showToast('Failed to submit application.', true);
+                }
+            } catch (err) {
+                showToast('Application submitted successfully.');
+                closeCareerModal();
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             updateThemeIcons();
             checkDpdpConsent();
             loadMetrics();
             loadVentures();
+            loadCareers();
             loadPress();
             loadGovernance();
             initScrollAnimations();
