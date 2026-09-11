@@ -39,7 +39,7 @@ const FALLBACK_POLICIES = [
     type: 'TERMS',
     title: 'Aneevarp Corporate Terms of Service & Intermediary Guidelines',
     content:
-      'In compliance with Rule 3(1)(b) of the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021, users agree to comply with user safety rules, fair API consumption limits, respect for intellectual property, and submission to the jurisdiction of Indian courts in Hyderabad, Telangana.',
+      'In compliance with Rule 3(1)(b) of the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021, users agree to comply with user safety rules, fair API consumption limits, respect for intellectual property, and submission to the jurisdiction of Indian courts in Visakhapatnam, Andhra Pradesh.',
   },
   {
     id: '4',
@@ -56,8 +56,8 @@ export class GovernanceService {
       companyName: 'Aneevarp Solutions Private Limited',
       cin: 'U72900TG2026PTC184920',
       incorporationYear: '2026',
-      rocJurisdiction: 'RoC Hyderabad, Ministry of Corporate Affairs (MCA), India',
-      registeredOffice: 'Plot No. 42, Hitech City Main Rd, Madhapur, Hyderabad, Telangana — 500081, India',
+      rocJurisdiction: 'Ministry of Corporate Affairs (MCA), India',
+      registeredOffice: 'Visakhapatnam, Andhra Pradesh, AP — 530011, India',
       contactPhone: '+91 8790906267',
       officialEmail: 'aneevarpsolutions@gmail.com',
       grievanceOfficerEmail: 'aneevarpsolutions@gmail.com',

@@ -91,7 +91,7 @@ export class EmailService {
           </div>
         </div>
         <div style="background-color: #F1F5F9; border-top: 1px solid #E2E8F0; padding: 12px 24px; font-size: 11px; color: #64748B; text-align: center;">
-          Aneevarp Solutions Private Limited • MCA CIN: U72900TG2026PTC184920 • Regd. Office: Hitech City, Hyderabad
+          Aneevarp Solutions Private Limited • MCA CIN: U72900TG2026PTC184920 • Regd. Office: Visakhapatnam, Andhra Pradesh — 530011
         </div>
       </div>
     `;

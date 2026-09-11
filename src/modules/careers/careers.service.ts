@@ -7,7 +7,7 @@ const FALLBACK_CAREERS: any[] = [
     id: 'career-ai-eng-01',
     title: 'AI Systems Architect / LLM Engineer',
     department: 'Engineering & AI Labs',
-    location: 'Remote / Hyderabad, India',
+    location: 'Remote / Visakhapatnam, India',
     type: 'FULL_TIME',
     description: 'Lead high-throughput Gemini model orchestration, structured output prompt architecture, and agent pipelines across ZenResume, ZenScout AI, and ZenDoc AI.',
     requirements: 'Proficiency with TypeScript, Node.js, Google Gemini API / Vertex AI, Vector DBs, and low-latency microservices.',
