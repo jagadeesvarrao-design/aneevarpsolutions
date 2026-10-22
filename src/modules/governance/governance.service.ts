@@ -55,6 +55,7 @@ export class GovernanceService {
     return {
       companyName: 'Aneevarp Solutions Private Limited',
       cin: 'U72900TG2026PTC184920',
+      udyam: 'UDYAM-AP-10-0144446',
       incorporationYear: '2026',
       rocJurisdiction: 'Ministry of Corporate Affairs (MCA), India',
       registeredOffice: 'Visakhapatnam, Andhra Pradesh, AP — 530011, India',
